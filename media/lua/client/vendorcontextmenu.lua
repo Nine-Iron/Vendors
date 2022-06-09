@@ -14,7 +14,7 @@ local vendorsFoods = {};
 vendorsFoods[1] = {"farming.BaconBits", "farming.BaconRashers", "Crisps", "Chocolate", "EggBoiled", "EggPoached", "FriedOnionRingsCraft", "DehydratedMeatStick", "NoodleSoup"};
 vendorsFoods[2] = {"BeanBowl", "CerealBowl", "PastaBowl", "RiceBowl", "SoupBowl", "StewBowl", "Oatmeal", "SushiFish"}
 vendorsFoods[3] = {};
-vendorFoods["Green"] = {};
+vendorsFoods["Green"] = {};
 jewelry["Green"] = {"OzCannabis", "DryCannabisFanLeaf", "KgCannabis", "curedDelCannaCigar"};
 
 function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, test)
