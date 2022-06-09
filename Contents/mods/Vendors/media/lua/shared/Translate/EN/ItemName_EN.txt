@@ -1,0 +1,8 @@
+ItemName_EN = {
+	ItemName_Vendors.MoneyVendor = "ATM Machine"
+	ItemName_Vendors.VehicleVendor = "Vehicle Vendor"
+	ItemName_Vendors.ToolVendor = "Tool Vendor"
+	ItemName_Vendors.FoodVendor = "Food Vendor"
+	ItemName_Vendors.WeaponVendor = "Weapon Vendor"
+	
+	}
