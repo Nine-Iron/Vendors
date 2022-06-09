@@ -25,7 +25,7 @@ module Vendors {
 
         Result:	Base.CannedSardines,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -37,7 +37,7 @@ module Vendors {
 
         Result:	Base.CannedBolognese,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -49,7 +49,7 @@ module Vendors {
 
         Result:	Base.Pop2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -61,7 +61,7 @@ module Vendors {
 
         Result:	Base.WaterBottleFull,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -73,7 +73,7 @@ module Vendors {
 
         Result:	Base.TinOpener,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }

@@ -1,9 +1,9 @@
 module Base
 {
-	model MoneyVendor
+	model ATMMachine
 	{
 		mesh = vendor,
-		texture = WorldItems/MoneyVendor,
+		texture = WorldItems/ATMMachine,
 		scale = 0.6,
 	}
 	

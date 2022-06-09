@@ -25,7 +25,7 @@ module Vendors {
 
         Result:Base.EngineParts,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -38,7 +38,7 @@ module Vendors {
 
         Result:Base.CarBattery1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -50,7 +50,7 @@ module Vendors {
 
         Result:Base.CarBattery2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -62,7 +62,7 @@ module Vendors {
 
         Result:Base.CarBattery3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -75,7 +75,7 @@ module Vendors {
 
         Result:Base.EngineDoor1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -87,7 +87,7 @@ module Vendors {
 
         Result:Base.EngineDoor2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -99,7 +99,7 @@ module Vendors {
 
         Result:Base.EngineDoor3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -112,7 +112,7 @@ module Vendors {
 
         Result:Base.TrunkDoor1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -124,7 +124,7 @@ module Vendors {
 
         Result:Base.TrunkDoor2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -136,7 +136,7 @@ module Vendors {
 
         Result:Base.TrunkDoor3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -148,7 +148,7 @@ module Vendors {
 
         Result:Base.OldBrake1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -160,7 +160,7 @@ module Vendors {
 
         Result:Base.OldBrake2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -172,7 +172,7 @@ module Vendors {
 
         Result:Base.OldBrake3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -184,7 +184,7 @@ module Vendors {
 
         Result:Base.NormalBrake1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -196,7 +196,7 @@ module Vendors {
 
         Result:Base.NormalBrake2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -208,7 +208,7 @@ module Vendors {
 
         Result:Base.NormalBrake3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -220,7 +220,7 @@ module Vendors {
 
         Result:Base.ModernBrake1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -232,7 +232,7 @@ module Vendors {
 
         Result:Base.ModernBrake2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -244,7 +244,7 @@ module Vendors {
 
         Result:Base.ModernBrake3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -258,7 +258,7 @@ module Vendors {
 
         Result:Base.FrontCarDoor1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -270,7 +270,7 @@ module Vendors {
 
         Result:Base.FrontCarDoor2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -282,7 +282,7 @@ module Vendors {
 
         Result:Base.FrontCarDoor3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -294,7 +294,7 @@ module Vendors {
 
         Result:Base.RearCarDoor1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -306,7 +306,7 @@ module Vendors {
 
         Result:Base.RearCarDoor2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -318,7 +318,7 @@ module Vendors {
 
         Result:Base.RearCarDoor3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -330,7 +330,7 @@ module Vendors {
 
         Result:Base.RearCarDoorDouble1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -342,7 +342,7 @@ module Vendors {
 
         Result:Base.RearCarDoorDouble2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -354,7 +354,7 @@ module Vendors {
 
         Result:Base.RearCarDoorDouble3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -368,7 +368,7 @@ module Vendors {
 
         Result:Base.SmallGasTank1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -380,7 +380,7 @@ module Vendors {
 
         Result:Base.SmallGasTank2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -392,7 +392,7 @@ module Vendors {
 
         Result:Base.SmallGasTank3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -404,7 +404,7 @@ module Vendors {
 
         Result:Base.NormalGasTank1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -416,7 +416,7 @@ module Vendors {
 
         Result:Base.NormalGasTank2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -428,7 +428,7 @@ module Vendors {
 
         Result:Base.NormalGasTank3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -440,7 +440,7 @@ module Vendors {
 
         Result:Base.BigGasTank1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -452,7 +452,7 @@ module Vendors {
 
         Result:Base.BigGasTank2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -464,7 +464,7 @@ module Vendors {
 
         Result:Base.BigGasTank3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -478,7 +478,7 @@ module Vendors {
 
         Result:Base.OldCarMuffler1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -490,7 +490,7 @@ module Vendors {
 
         Result:Base.OldCarMuffler2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -502,7 +502,7 @@ module Vendors {
 
         Result:Base.OldCarMuffler3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -514,7 +514,7 @@ module Vendors {
 
         Result:Base.NormalCarMuffler1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -526,7 +526,7 @@ module Vendors {
 
         Result:Base.NormalCarMuffler2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -538,7 +538,7 @@ module Vendors {
 
         Result:Base.NormalCarMuffler3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -550,7 +550,7 @@ module Vendors {
 
         Result:Base.ModernCarMuffler1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -562,7 +562,7 @@ module Vendors {
 
         Result:Base.ModernCarMuffler2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -574,7 +574,7 @@ module Vendors {
 
         Result:Base.ModernCarMuffler3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -588,7 +588,7 @@ module Vendors {
 
         Result:Base.NormalSuspension1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -600,7 +600,7 @@ module Vendors {
 
         Result:Base.NormalSuspension2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -612,7 +612,7 @@ module Vendors {
 
         Result:Base.NormalSuspension3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -624,7 +624,7 @@ module Vendors {
 
         Result:Base.ModernSuspension1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -636,7 +636,7 @@ module Vendors {
 
         Result:Base.ModernSuspension2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -648,7 +648,7 @@ module Vendors {
 
         Result:Base.ModernSuspension3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -662,7 +662,7 @@ module Vendors {
 
         Result:Base.NormalCarSeat1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -674,7 +674,7 @@ module Vendors {
 
         Result:Base.NormalCarSeat2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -686,7 +686,7 @@ module Vendors {
 
         Result:Base.NormalCarSeat3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -701,7 +701,7 @@ module Vendors {
 
         Result:Base.OldTire1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -713,7 +713,7 @@ module Vendors {
 
         Result:Base.OldTire2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -725,7 +725,7 @@ module Vendors {
 
         Result:Base.OldTire3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -737,7 +737,7 @@ module Vendors {
 
         Result:Base.NormalTire1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -749,7 +749,7 @@ module Vendors {
 
         Result:Base.NormalTire2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -761,7 +761,7 @@ module Vendors {
 
         Result:Base.NormalTire3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -773,7 +773,7 @@ module Vendors {
 
         Result:Base.ModernTire1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -785,7 +785,7 @@ module Vendors {
 
         Result:Base.ModernTire2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -797,7 +797,7 @@ module Vendors {
 
         Result:Base.ModernTire3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:5,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -811,7 +811,7 @@ module Vendors {
 
         Result:Base.Windshield1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -823,7 +823,7 @@ module Vendors {
 
         Result:Base.Windshield2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -835,7 +835,7 @@ module Vendors {
 
         Result:Base.Windshield3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -847,7 +847,7 @@ module Vendors {
 
         Result:Base.RearWindshield1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -859,7 +859,7 @@ module Vendors {
 
         Result:Base.RearWindshield2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -871,7 +871,7 @@ module Vendors {
 
         Result:Base.RearWindshield3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -883,7 +883,7 @@ module Vendors {
 
         Result:Base.FrontWindow1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -895,7 +895,7 @@ module Vendors {
 
         Result:Base.FrontWindow2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -907,7 +907,7 @@ module Vendors {
 
         Result:Base.FrontWindow3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -919,7 +919,7 @@ module Vendors {
 
         Result:Base.RearWindow1,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -931,7 +931,7 @@ module Vendors {
 
         Result:Base.RearWindow2,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
@@ -943,7 +943,7 @@ module Vendors {
 
         Result:Base.RearWindow3,
         CanBeDoneFromFloor:true,
-        Category:Money,
+        --Category:Money,
         Time:10,
         OnTest:Change_All_For_Money_OnTest,
     }
