@@ -1,5 +1,11 @@
 module Base
 {
+
+	model Money
+	{
+		mesh = Money,
+		texture = WorldItems/Money
+	}
 	model ATMMachine
 	{
 		mesh = vendor,
