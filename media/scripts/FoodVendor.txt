@@ -2,7 +2,7 @@ module Vendors {
     imports {
         Base
     }
-/*****maquina para hacer los canjes******/
+
 	item FoodVendor
     {
         Weight          = 60.0,
@@ -12,69 +12,5 @@ module Vendors {
 		StaticModel = FoodVendor,
 		WorldStaticModel = FoodVendor,
 		DisplayCategory	= Vendors,
-    }
-	
-	/**************objetos intercambiables**************/
-	
-	/*Comida*/
-	
-	recipe Comida ligera por Dinero
-    {
-        destroy Money=3,
-        keep FoodVendor,
-
-        Result:	Base.CannedSardines,
-        CanBeDoneFromFloor:true,
-        --Category:Money,
-        Time:5,
-        OnTest:Change_All_For_Money_OnTest,
-    }
-	
-	recipe Comida enlatada por Dinero
-    {
-        destroy Money=4,
-        keep FoodVendor,
-
-        Result:	Base.CannedBolognese,
-        CanBeDoneFromFloor:true,
-        --Category:Money,
-        Time:5,
-        OnTest:Change_All_For_Money_OnTest,
-    }
-	
-	recipe Soda por Dinero
-    {
-        destroy Money=1,
-        keep FoodVendor,
-
-        Result:	Base.Pop2,
-        CanBeDoneFromFloor:true,
-        --Category:Money,
-        Time:5,
-        OnTest:Change_All_For_Money_OnTest,
-    }
-	
-	recipe Agua por Dinero
-    {
-        destroy Money=2,
-        keep FoodVendor,
-
-        Result:	Base.WaterBottleFull,
-        CanBeDoneFromFloor:true,
-        --Category:Money,
-        Time:5,
-        OnTest:Change_All_For_Money_OnTest,
-    }
-	
-	recipe Abrelatas por Dinero
-    {
-        destroy Money=2,
-        keep FoodVendor,
-
-        Result:	Base.TinOpener,
-        CanBeDoneFromFloor:true,
-        --Category:Money,
-        Time:5,
-        OnTest:Change_All_For_Money_OnTest,
     }
 }
