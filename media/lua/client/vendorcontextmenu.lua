@@ -9,7 +9,7 @@ local filibuster = nil;
 local vendMoney = {};
 vendMoney.total = 0;
 local jewelry = {};
-local venderTools = {{"Axe", {2,5,0,0}, 2500}, {"CarBatteryCharger", {1,0,0,0}, 1000}, {"GardenSaw", {0,5,0,0}, 500}, {"Hammer", {1,5,0,0}, 1500}, {"Jack", {0,5,0,0}, 500}, {"LugWrench", {0,5,0,0}, 500}, {"Needle", {0,2,5,0}, 250}, {"PropaneTorch", {2,5,0,0}, 2500}, {"Screwdriver", {2,5,0,0}, 2500}, {"TirePump", {0,5,0,0}, 500}, {"WelderMask", {2,5,0,0}, 2500}};
+local venderTools = {{"Axe", {2,5,0,0}, 2500}, {"CarBatteryCharger", {1,0,0,0}, 1000}, {"GardenSaw", {0,5,0,0}, 500}, {"Hammer", {1,5,0,0}, 1500}, {"Jack", {0,5,0,0}, 500}, {"LugWrench", {0,5,0,0}, 500}, {"Needle", {0,2,5,0}, 250}, {"BlowTorch", {2,5,0,0}, 2500}, {"Screwdriver", {2,5,0,0}, 2500}, {"TirePump", {0,5,0,0}, 500}, {"WeldingMask", {2,5,0,0}, 2500}};
 local vehicles = {};
 vehicles.parts = {}
 vehicles.vehicles = {"generallee"};
@@ -29,7 +29,7 @@ jewelry.tags = {};
 local vendorsFoods = {};
 vendorsFoods[1] = {{"farming.BaconBits", {0,0,1,0}, 10}, {"farming.BaconRashers", {0,0,1,0}, 10}, {"Crisps", {0,0,1,0}, 10}, {"Chocolate", {0,0,1,0}, 10}, {"EggBoiled", {0,0,1,0}, 10}, {"EggPoached", {0,0,1,0}, 10}, {"FriedOnionRingsCraft", {0,0,1,0}, 10}, {"DehydratedMeatStick", {0,0,1,0}, 10}, {"NoodleSoup", {0,0,1,0}, 10}};
 vendorsFoods[2] = {{"BeanBowl", {0,0,4,0}, 40}, {"CerealBowl", {0,0,4,0}, 40}, {"PastaBowl", {0,0,4,0}, 40}, {"RiceBowl", {0,0,4,0}, 40}, {"SoupBowl", {0,0,4,0}, 40}, {"StewBowl", {0,0,4,0}, 40}, {"Oatmeal", {0,0,4,0}, 40}, {"SushiFish", {0,0,4,0}, 40}};
-vendorsFoods[3] = {{"Ham", {0,1,0,0}, 100}, {"MeatPatty", {0,1,0,0}, 100}, {"Ground Beef", {0,1,0,0}, 100}, {"Steak", {0,1,0,0}, 100}, {"Chicken", {0,1,0,0}, 100}, {"Baloney", {0,1,0,0}, 100}, {"MuttonChop", {0,1,0,0}, 100}, {"PorkChop", {0,1,0,0}, 100}, {"Lobster", {0,1,0,0}, 100}, {"Salmon", {0,1,0,0}, 100}, {"Squid", {0,1,0,0}, 100}, {"Watermelon", {0,1,0,0}, 100}};
+vendorsFoods[3] = {{"Ham", {0,1,0,0}, 100}, {"MeatPatty", {0,1,0,0}, 100}, {"MincedMeat", {0,1,0,0}, 100}, {"Steak", {0,1,0,0}, 100}, {"Chicken", {0,1,0,0}, 100}, {"Baloney", {0,1,0,0}, 100}, {"MuttonChop", {0,1,0,0}, 100}, {"PorkChop", {0,1,0,0}, 100}, {"Lobster", {0,1,0,0}, 100}, {"Salmon", {0,1,0,0}, 100}, {"Squid", {0,1,0,0}, 100}, {"Watermelon", {0,1,0,0}, 100}};
 local vendorWallet = {}
 
 function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, test)
@@ -62,6 +62,7 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 				local dispCat = item:getDisplayCategory();
 				if item:getType() then
 					dispType = item:getType();
+					print(dispType);
 					dispName = item:getName();
 				end
 				if dispCat == "Vendors" then
@@ -147,6 +148,8 @@ function Vendors_subContextMenu(subContext, vendorList, vendorSubMenu, context, 
 end
 	-- display subsub and subsubsub context menus
 function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, context, player, vendorType, worldobjects)
+	local playerObj = getSpecificPlayer(0);
+	local playerInv = playerObj:getInventory()
 	-- searching for vendor type to display correct context menus
 	if vendorType == "ATM Machine" then
 		-- looking for jewelry items that were found during the inventory search in the initial function
@@ -200,11 +203,15 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 				local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_NSF") .. " - $" .. vendMoneys, worldobjects);
 			else
 				for i,v in pairs(vendorsFoods[1]) do
-					local foodItem = v;
+					local food = v;
 					local foodName = v[1];
+					local foodItem = playerInv:AddItem(foodName);
+					local foodItemType = foodItem:getType();
+					local foodItemName = foodItem:getName();
+					playerInv:Remove(foodItem);
 					local foodPrice = v[2];
 					local foodValue = v[3];
-					local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_" .. foodName), worldobjects, Buy_VendorsItem, player, foodItem, false, vendorPrice, false);
+					local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
 				end
 			end
 		end
@@ -218,11 +225,15 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 				local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_NSF") .. " - $" .. carryAmount, worldobjects);
 			else
 				for i,v in pairs(vendorsFoods[2]) do
-					local foodItem = v;
+					local food = v;
 					local foodName = v[1];
+					local foodItem = playerInv:AddItem(foodName);
+					local foodItemType = foodItem:getType();
+					local foodItemName = foodItem:getName();
+					playerInv:Remove(foodItem);
 					local vendorPrice = v[2];
 					local foodValue = v[3];
-					local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_" .. foodName), worldobjects, Buy_VendorsItem, player, foodItem, false, vendorPrice, false);
+					local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
 				end
 			end
 		end
@@ -238,11 +249,15 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			else
 				-- we've got it, lets buy some steak!
 				for i,v in pairs(vendorsFoods[3]) do
-					local foodItem = v;
+					local food = v;
 					local foodName = v[1];
+					local foodItem = playerInv:AddItem(foodName);
+					local foodItemType = foodItem:getType();
+					local foodItemName = foodItem:getName();
+					playerInv:Remove(foodItem);
 					local vendorPrice = v[2];
 					local foodValue = v[3];
-					local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_" .. foodName), worldobjects, Buy_VendorsItem, player, foodItem, false, vendorPrice, false);
+					local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
 				end
 			end
 		end
@@ -255,7 +270,11 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu and for comparing against the wallet
 			local toolPrice = v[2];
 			local toolValue = v[3];
-			local subSubVendorOption = subSubMenu:addOption(toolName .. "($" .. toolValue .. ")", worldobjects, Buy_VendorsItem, player, tool, false, toolPrice, false);
+			local toolItem = playerInv:AddItem(toolName);
+			local toolItemType = toolItem:getType();
+			local toolItemName = toolItem:getName();
+			playerInv:Remove(toolItem);
+			local subSubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolValue .. ")", worldobjects, Buy_VendorsItem, player, tool, false, toolPrice, false);
 		end
 	end
 end
