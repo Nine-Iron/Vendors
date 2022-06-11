@@ -62,7 +62,6 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 				local dispCat = item:getDisplayCategory();
 				if item:getType() then
 					dispType = item:getType();
-					print(dispType);
 					dispName = item:getName();
 				end
 				if dispCat == "Vendors" then
@@ -206,6 +205,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 					local food = v;
 					local foodName = v[1];
 					local foodItem = playerInv:AddItem(foodName);
+					if foodItem:isCookable() then foodItem:setCooked(true); end
 					local foodItemType = foodItem:getType();
 					local foodItemName = foodItem:getName();
 					playerInv:Remove(foodItem);
@@ -228,6 +228,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 					local food = v;
 					local foodName = v[1];
 					local foodItem = playerInv:AddItem(foodName);
+					if foodItem:isCookable() then foodItem:setCooked(true); end
 					local foodItemType = foodItem:getType();
 					local foodItemName = foodItem:getName();
 					playerInv:Remove(foodItem);
@@ -252,6 +253,8 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 					local food = v;
 					local foodName = v[1];
 					local foodItem = playerInv:AddItem(foodName);
+					if foodItem:isCookable() then foodItem:setCooked(true); end
+					if foodItem:isCookable() then foodItem:setCooked(true); end
 					local foodItemType = foodItem:getType();
 					local foodItemName = foodItem:getName();
 					playerInv:Remove(foodItem);
@@ -410,7 +413,8 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long,  giving correct change now.
 	elseif not sell and not sellAll then
 		if vendMoney.total >= moneyInteger then
-			playerInv:AddItem(item[1]);
+			local addedItem = playerInv:AddItem(item[1]);
+			if addedItem:isCookable() then addedItem:setCooked(true); end
 			local vendCashToGive = vendMoney.total - moneyInteger;
 			local vendCash = {}
 			-- clean this up if you dont need floor  i do need floor  calculating the amount of each denomination needed
@@ -424,7 +428,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			for i,v in pairs(vendCash) do
 				for j=1, v[1] do
 					playerInv:AddItem(v[2]);
-					print(v[1]);
+
 				end
 			end
 		else
