@@ -4,5 +4,4 @@ ItemName_ES = {
 	ItemName_Vendors.ToolVendor = "Dispensador de Herramientas"
 	ItemName_Vendors.FoodVendor = "Dispensador de Comida"
 	ItemName_Vendors.WeaponVendor = "Dispensador de Armas"
-	ItemName_Vendors.Cents = "Centavo"
 	}

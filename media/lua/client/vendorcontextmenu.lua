@@ -11,8 +11,10 @@ vendMoney.total = 0;
 local jewelry = {};
 local venderTools = {{"Axe", {2,5,0,0}, 2500}, {"CarBatteryCharger", {1,0,0,0}, 1000}, {"GardenSaw", {0,5,0,0}, 500}, {"Hammer", {1,5,0,0}, 1500}, {"Jack", {0,5,0,0}, 500}, {"LugWrench", {0,5,0,0}, 500}, {"Needle", {0,2,5,0}, 250}, {"BlowTorch", {2,5,0,0}, 2500}, {"Screwdriver", {2,5,0,0}, 2500}, {"TirePump", {0,5,0,0}, 500}, {"WeldingMask", {2,5,0,0}, 2500}};
 local vehicles = {};
-vehicles.parts = {}
-vehicles.vehicles = {"generallee"};
+vehicles.parts = {};
+vehicles.parts[1] = {{"CarBattery1", {1,0,0,0}, 1000}, {"FrontCarDoor1", {1,0,0,0}, 1000}, {"EngineDoor1", {1,0,0,0}, 1000}, {"ModernBrake1", {1,0,0,0}, 1000}, {"TrunkDoor1", {1,0,0,0}, 1000}, {"RearCarDoor1", {1,0,0,0}, 1000}, {"RearCarDoorDouble1", {1,0,0,0}, 1000}, {"BigGasTank1", {1,0,0,0}, 1000}, {"ModernCarMuffler1", {1,0,0,0}, 1000}, {"NormalCarSeat1", {1,0,0,0}, 1000}, {"ModernSuspension1", {1,0,0,0}, 1000}, {"ModernTire1", {1,0,0,0}, 1000}, {"Windshield1", {1,0,0,0}, 1000}, {"RearWindshield1", {1,0,0,0}, 1000}, {"FrontWindow1", {1,0,0,0}, 1000}, {"RearWindow1", {1,0,0,0}, 1000}, "Standard"};
+vehicles.parts[2] = {{"CarBattery1", {5,0,0,0}, 5000}, {"FrontCarDoor1", {5,0,0,0}, 5000}, {"EngineDoor1", {5,0,0,0}, 5000}, {"ModernBrake1", {5,0,0,0}, 5000}, {"TrunkDoor1", {5,0,0,0}, 5000}, {"RearCarDoor1", {5,0,0,0}, 5000}, {"RearCarDoorDouble1", {5,0,0,0}, 5000}, {"BigGasTank1", {5,0,0,0}, 5000}, {"ModernCarMuffler1", {5,0,0,0}, 5000}, {"NormalCarSeat1", {5,0,0,0}, 5000}, {"ModernSuspension1", {5,0,0,0}, 5000}, {"ModernTire1", {5,0,0,0}, 5000}, {"Windshield1", {5,0,0,0}, 5000}, {"RearWindshield1", {5,0,0,0}, 5000}, {"FrontWindow1", {5,0,0,0}, 5000}, {"RearWindow1", {5,0,0,0}, 5000}, "Sport"};
+vehicles.parts[3] = {{"CarBattery1", {10,0,0,0}, 10000}, {"FrontCarDoor1", {10,0,0,0}, 10000}, {"EngineDoor1", {10,0,0,0}, 10000}, {"ModernBrake1", {10,0,0,0}, 10000}, {"TrunkDoor1", {10,0,0,0}, 10000}, {"RearCarDoor1", {10,0,0,0}, 10000}, {"RearCarDoorDouble1", {10,0,0,0}, 10000}, {"BigGasTank1", {10,0,0,0}, 10000}, {"ModernCarMuffler1", {10,0,0,0}, 10000}, {"NormalCarSeat1", {10,0,0,0}, 10000}, {"ModernSuspension1", {10,0,0,0}, 10000}, {"ModernTire1", {10,0,0,0}, 10000}, {"Windshield1", {10,0,0,0}, 10000}, {"RearWindshield1", {10,0,0,0}, 10000}, {"FrontWindow1", {10,0,0,0}, 10000}, {"RearWindow1", {10,0,0,0}, 10000}, "Heavy-Duty"};
 local weapons = {};
 weapons.ammo = {};
 weapons.magazines = {};
@@ -280,6 +282,41 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			local subSubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolValue .. ")", worldobjects, Buy_VendorsItem, player, tool, false, toolPrice, false);
 		end
 	end
+	if vendorType == "Vehicle Vendor" then
+		local part = {"EngineParts", {20,0,0,0}, 20000};
+		local partName = "EngineParts";
+		local partPrice = {20,0,0,0};
+		local partItem = playerInv:AddItem(partName);
+		local partItemType = partItem:getType();
+		local partItemName = partItem:getName();
+		playerInv:Remove(partItem);
+		local subSubVendorOption = subSubMenu:addOption(partItemName .. "($" .. getText("ContextMenu_Spare_Parts") .. ")", worldobjects, Buy_VendorsItem, player, part, false, partPrice, false, 30);
+		--local heavyOption = subSubMenu:addOption(getText("ContextMenu_Heavy-Duty_Type_Car_Parts"), worldobjects)
+		--local subSubMenu = ISContextMenu:getNew(subSubMenu);
+		--local subContext = context:addSubMenu(heavyOption, subSubMenu);
+		--local performanceOption = subSubMenu:addOption(getText("ContextMenu_Performance_Type_Car_Parts"), worldobjects)
+		--local subSubMenu = ISContextMenu:getNew(subSubMenu);
+		--local subContext = context:addSubMenu(performanceOption, subSubMenu);
+		for i,v in pairs(vehicles.parts) do
+			local subTable = v;
+			local standardOption = subSubMenu:addOption(getText("ContextMenu_" .. subTable[17] .. "_Type_Car_Parts"), worldobjects);
+			local subSubMenu = ISContextMenu:getNew(subSubMenu);
+			local subContext = context:addSubMenu(standardOption, subSubMenu);
+			for h, w in pairs(subTable) do
+				if h < 17 then
+					local part = w;
+					local partName = w[1];
+					local partPrice = w[2];
+					local partValue = w[3];
+					local partItem = playerInv:AddItem(partName);
+					local partItemType = partItem:getType();
+					local partItemName = partItem:getName();
+					playerInv:Remove(partItem);
+					local subSubVendorOption = subSubMenu:addOption(partItemName .. "($" .. partValue .. ")", worldobjects, Buy_VendorsItem, player, part, false, partPrice, false);
+				end
+			end 
+		end
+	end
 end
 
 
@@ -413,6 +450,11 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long,  giving correct change now.
 	elseif not sell and not sellAll then
 		if vendMoney.total >= moneyInteger then
+			if quantity then
+				for i=1,quantity-1 do
+					local addedItem = playerInv:AddItem(item[1]);
+				end
+			end
 			local addedItem = playerInv:AddItem(item[1]);
 			if addedItem:isCookable() then addedItem:setCooked(true); end
 			local vendCashToGive = vendMoney.total - moneyInteger;
