@@ -1,8 +1,10 @@
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
+	
+britaMod = nil;
+brita_2Mod = nil;
+GreenFireMod = nil;
+filibuster = nil;
 
-local britaMod = getActivatedMods():contains("Brita");
-local brita_2Mod = getActivatedMods():contains("Brita_2");
-local GreenFireMod = getActivatedMods():contains("jiggasGreenfireMod");
 
 local vendMoney = {};
 vendMoney.total = 0;
@@ -10,7 +12,7 @@ local jewelry = {};
 local venderTools = {{"Axe", {2,5,0,0}, 2500}, {"CarBatteryCharger", {1,0,0,0}, 1000}, {"GardenSaw", {0,5,0,0}, 500}, {"Hammer", {1,5,0,0}, 1500}, {"Jack", {0,5,0,0}, 500}, {"LugWrench", {0,5,0,0}, 500}, {"Needle", {0,2,5,0}, 250}, {"PropaneTorch", {2,5,0,0}, 2500}, {"Screwdriver", {2,5,0,0}, 2500}, {"TirePump", {0,5,0,0}, 500}, {"WelderMask", {2,5,0,0}, 2500}};
 local vehicles = {};
 vehicles.parts = {}
-vehicles.vehicles = {};
+vehicles.vehicles = {"generallee"};
 local weapons = {};
 weapons.ammo = {};
 weapons.magazines = {};
@@ -56,20 +58,12 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 		for j=1,container:getItems():size() do
 			local item = container:getItems():get(j-1);
 			-- don't want to sell the fancy shit you're wearing
-			if not playerObj:isEquipped(item) then
+			if not playerObj:isEquipped(item)  and not playerObj:isAttachedItem(item) then
 				local dispCat = item:getDisplayCategory();
 				if item:getType() then
 					dispType = item:getType();
 					dispName = item:getName();
 				end
-				
-				
-				
-------------- need to count different denominations
-				
-				
-				
-
 				if dispCat == "Vendors" then
 					if not vendorList then vendorList = {}; vendorList.vendors = {}; end
 					if vendorList[dispType] then 
@@ -346,6 +340,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				local moneyQuantity = v[2];
 				if v[4] then
 					local quantity = v[4];
+					-- HERE IT IS!  i told you i've already used one in here
 					for h=1, quantity do
 						playerInv:Remove(jewelryItem:getType());
 					end
@@ -393,52 +388,27 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			playerInv:AddItem("Vendors.OneDollar");
 		end
 		playerObj:Say("SOLD!");
-		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.
+		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long,  giving correct change now.
 	elseif not sell and not sellAll then
 		if vendMoney.total >= moneyInteger then
 			playerInv:AddItem(item[1]);
 			local vendCashToGive = vendMoney.total - moneyInteger;
 			local vendCash = {}
-			-- clean this up if you dont need floor  TODO
+			-- clean this up if you dont need floor  i do need floor  calculating the amount of each denomination needed
 			vendCash[1] = {math.floor((vendCashToGive)/1000), "Vendors.ThousandDollar", true};
-			vendCash[2] = {math.floor((vendCashToGive)/100), "Vendors.HundredDollar"};
-			vendCash[3] = {math.floor((vendCashToGive)/10), "Vendors.TenDollar"};
-			vendCash[4] = {math.floor(vendCashToGive), "Vendors.OneDollar"};
---print(vendCashToGive, " - toGive");
---print(vendCash[1][1], " - thousands");
---print(vendCash[2][1], " - hundreds");
---print(vendCash[3][1], " - tens");
---print(vendCash[4][1], " - ones");
+			vendCash[2] = {(math.floor((vendCashToGive)/100) - (math.floor(vendCashToGive/1000)*10)), "Vendors.HundredDollar"};
+			vendCash[3] = {(math.floor((vendCashToGive)/10) - (math.floor(vendCashToGive/100)*10)), "Vendors.TenDollar"};
+			vendCash[4] = {(math.floor((vendCashToGive)) - (math.floor(vendCashToGive/10)*10)), "Vendors.OneDollar"};
 			for i,v in pairs(vendorWallet) do
-				--playerInv:Remove(v);
+				playerInv:Remove(v);
 			end
-			
-			
--- i think this is it here			
-
-
-
-			local vendOnes = ((vendCash[4][1] - ((vendCash[3][1])*10)))
-
-
-
-
-
-			for i,v in pairs(vendCash)  do
--- need to implement a way to calculate the amounts before we reach this spot
-				for j=1,v[1] do
-					local vendDenomAmount = v[1];
-					if v[3] then	
-						playerInv:AddItem(vendBill);
-						local vendBill = v[2];
-					else
-						local denom = vendCash[i-1];
-						local vendBill = (vendDenomAmount - (denom[1]*10));
-						--playerInv:AddItem(vendBill);
-					end
+			for i,v in pairs(vendCash) do
+				for j=1, v[1] do
+					playerInv:AddItem(v[2]);
+					print(v[1]);
 				end
 			end
-		else 
+		else
 			playerObj:Say(getText("ContextMenu_Cant_Buy"));
 		end
 	end
@@ -448,19 +418,8 @@ function Vendors_CheckMods()
 	britaMod = getActivatedMods():contains("Brita");
 	brita_2Mod = getActivatedMods():contains("Brita_2");
 	GreenFireMod = getActivatedMods():contains("jiggasGreenfireMod");
+	filibuster = getActivatedMods():contains("FRUsedCars");
 end
-    --local vendorOption = context:addOption("ATM options", worldObj);
-	--local vendorSubMenu = ISContextMenu:getNew(context);
-    --context:addSubMenu(vendorOption, vendorSubMenu);
-	--local moneyOption = vendorSubMenu:addOption("ATM machine", worldObj);
-	--local weaponOption = vendorSubMenu:addOption("Food vendor", worldObj);
-	--local weaponOption = vendorSubMenu:addOption("Tool vendor", worldObj);
-	--local weaponOption = vendorSubMenu:addOption("Vehicle vendor", worldObj);
-	--local weaponOption = vendorSubMenu:addOption("Weapon vendor", worldObj);
-	
-	
-	------ vendMoney.total = vendMoney.total - price;
-	------	
 
 Events.OnFillWorldObjectContextMenu.Add(VendISWorldObjectContextMenu.createMenu);
 Events.OnLoad.Add(Vendors_CheckMods);
