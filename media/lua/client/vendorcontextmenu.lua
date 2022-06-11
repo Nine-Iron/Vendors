@@ -101,7 +101,7 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 						table.insert(jewelry.regular, {item, {0,0,0,1}});
 					elseif string.find(dispType, "DogTag") then
 							table.insert(jewelry.tags, {item, {0,0,5,0}});
-					-- looking for GreenFireMod products
+					-- looking for GreenFireMod products  TODO Add more gfm items, add brita weapons
 					elseif GreenFireMod then
 						if dispCat == "GreenFireItem" then
 							if string.find(dispType, "Oz") then
@@ -258,7 +258,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 		for i,v in pairs(venderTools) do
 			local tool = v;
 			local toolName = v[1];
-			-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu
+			-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu and for comparing against the wallet
 			local toolPrice = v[2];
 			local toolValue = v[3];
 			local subSubVendorOption = subSubMenu:addOption(toolName .. "($" .. toolValue .. ")", worldobjects, Buy_VendorsItem, player, tool, false, toolPrice, false);
@@ -268,7 +268,7 @@ end
 
 
 -- yeah, it says buy but we sell items here too.  I thought i was going to need a seperate function at first, turns out i could get it all with one!  woot!
--- item is the item we're buying or selling, or a table of items.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment, sell 100 for $10.
+-- item is a table containing the item we're buying or selling.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment, sell 100 for $10.
 function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity)
 	local playerObj = player;
 	local playerInv = playerObj:getInventory();
@@ -412,20 +412,29 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			for i,v in pairs(vendorWallet) do
 				--playerInv:Remove(v);
 			end
+			
+			
+-- i think this is it here			
+
+
+
+			local vendOnes = ((vendCash[4][1] - ((vendCash[3][1])*10)))
+
+
+
+
+
 			for i,v in pairs(vendCash)  do
+-- need to implement a way to calculate the amounts before we reach this spot
 				for j=1,v[1] do
 					local vendDenomAmount = v[1];
---print(v[1]);
 					if v[3] then	
 						playerInv:AddItem(vendBill);
 						local vendBill = v[2];
 					else
---print("false");
 						local denom = vendCash[i-1];
 						local vendBill = (vendDenomAmount - (denom[1]*10));
-						print(denom[1], " - denom[1]", " ------------------------ ", v[2], " - DenomAmount", " ---------------------------", vendBill, " - vendBill");
 						--playerInv:AddItem(vendBill);
-						--print(vendBill);
 					end
 				end
 			end
