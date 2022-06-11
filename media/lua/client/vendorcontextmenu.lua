@@ -1,9 +1,9 @@
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
 	
-britaMod = nil;
-brita_2Mod = nil;
-GreenFireMod = nil;
-filibuster = nil;
+local britaMod = nil;
+local brita_2Mod = nil;
+local GreenFireMod = nil;
+local filibuster = nil;
 
 
 local vendMoney = {};
