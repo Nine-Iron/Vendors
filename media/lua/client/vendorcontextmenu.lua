@@ -16,13 +16,21 @@ vehicles.parts[1] = {{"CarBattery1", {1,0,0,0}, 1000}, {"FrontCarDoor1", {1,0,0,
 vehicles.parts[2] = {{"CarBattery1", {5,0,0,0}, 5000}, {"FrontCarDoor1", {5,0,0,0}, 5000}, {"EngineDoor1", {5,0,0,0}, 5000}, {"ModernBrake1", {5,0,0,0}, 5000}, {"TrunkDoor1", {5,0,0,0}, 5000}, {"RearCarDoor1", {5,0,0,0}, 5000}, {"RearCarDoorDouble1", {5,0,0,0}, 5000}, {"BigGasTank1", {5,0,0,0}, 5000}, {"ModernCarMuffler1", {5,0,0,0}, 5000}, {"NormalCarSeat1", {5,0,0,0}, 5000}, {"ModernSuspension1", {5,0,0,0}, 5000}, {"ModernTire1", {5,0,0,0}, 5000}, {"Windshield1", {5,0,0,0}, 5000}, {"RearWindshield1", {5,0,0,0}, 5000}, {"FrontWindow1", {5,0,0,0}, 5000}, {"RearWindow1", {5,0,0,0}, 5000}, "Sport"};
 vehicles.parts[3] = {{"CarBattery1", {10,0,0,0}, 10000}, {"FrontCarDoor1", {10,0,0,0}, 10000}, {"EngineDoor1", {10,0,0,0}, 10000}, {"ModernBrake1", {10,0,0,0}, 10000}, {"TrunkDoor1", {10,0,0,0}, 10000}, {"RearCarDoor1", {10,0,0,0}, 10000}, {"RearCarDoorDouble1", {10,0,0,0}, 10000}, {"BigGasTank1", {10,0,0,0}, 10000}, {"ModernCarMuffler1", {10,0,0,0}, 10000}, {"NormalCarSeat1", {10,0,0,0}, 10000}, {"ModernSuspension1", {10,0,0,0}, 10000}, {"ModernTire1", {10,0,0,0}, 10000}, {"Windshield1", {10,0,0,0}, 10000}, {"RearWindshield1", {10,0,0,0}, 10000}, {"FrontWindow1", {10,0,0,0}, 10000}, {"RearWindow1", {10,0,0,0}, 10000}, "Heavy-Duty"};
 local weapons = {};
-weapons.ammo = {};
-weapons.magazines = {};
-weapons.attachments = {};
-weapons.pistols = {};
-weapons.smg = {};
-weapons.rifle = {}
-weapons.lmg = {};
+weapons.ammo = {"Ammo Boxes", {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}};
+weapons.magazines = {"Magazines", };
+weapons.attachments = {"Attachments"};
+weapons.pistols = {"Pistols"};
+weapons.smg = {"SMGs"};
+weapons.rifle = {"Rifles"}
+weapons.lmg = {"LMGs"};
+local brita = {};
+brita.ammo = {};
+brita.magazines = {"Brita - Magazine", {"556Drum", {3,0,0,0}, 3000}}
+brita.attachments = {};
+brita.pistols = {};
+brita.smg = {};
+brita.rifle = {};
+brita.lmg = {};
 jewelry[0] = {};
 jewelry[1] = {};
 jewelry.stones = {};
@@ -134,11 +142,11 @@ function Vendors_ContextMenu(player, worldobjects, context, list, money)
 	local vendorSubMenu = ISContextMenu:getNew(context);
 	local subContext = context:addSubMenu(vendorOption, vendorSubMenu);
 	Vendors_subContextMenu(subContext, vendorList, vendorSubMenu, context, player);
-	subVendorOption = vendorSubMenu:addOption("You have ($" .. vendMoney.total .. ")", worldObj);
+	local subVendorOption = vendorSubMenu:addOptionOnTop("You have ($" .. vendMoney.total .. ")", worldObj);
 end	
 	-- display sub context menus
 function Vendors_subContextMenu(subContext, vendorList, vendorSubMenu, context, player)
-	for i,v in pairs(vendorList.vendors) do
+	for i,v in ipairs(vendorList.vendors) do
 		local vendorType = v
 		local subVendorOption = {};
 		subVendorOption = vendorSubMenu:addOption(getText("ContextMenu_" .. vendorType), worldObj);
@@ -199,22 +207,17 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			local subSubMenu = ISContextMenu:getNew(subSubMenu);
 			local subContext = context:addSubMenu(subVendorOption, subSubMenu);
 			-- checking to make sure you have enough money to purchase the items in this menu
-			if vendMoney.total < 10 then
-				local vendMoneys = vendMoney.total;
-				local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_NSF") .. " - $" .. vendMoneys, worldobjects);
-			else
-				for i,v in pairs(vendorsFoods[1]) do
-					local food = v;
-					local foodName = v[1];
-					local foodItem = playerInv:AddItem(foodName);
-					if foodItem:isCookable() then foodItem:setCooked(true); end
-					local foodItemType = foodItem:getType();
-					local foodItemName = foodItem:getName();
-					playerInv:Remove(foodItem);
-					local foodPrice = v[2];
-					local foodValue = v[3];
-					local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
-				end
+			for i,v in pairs(vendorsFoods[1]) do
+				local food = v;
+				local foodName = v[1];
+				local foodItem = playerInv:AddItem(foodName);
+				if foodItem:isCookable() then foodItem:setCooked(true); end
+				local foodItemType = foodItem:getType();
+				local foodItemName = foodItem:getName();
+				playerInv:Remove(foodItem);
+				local foodPrice = v[2];
+				local foodValue = v[3];
+				local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
 			end
 		end
 		-- these are $40
@@ -222,22 +225,18 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			local subVendorOption = subSubMenu:addOption(getText("ContextMenu_Food_For_40_Dollars"), worldobjects)
 			local subSubMenu = ISContextMenu:getNew(subSubMenu);
 			local subContext = context:addSubMenu(subVendorOption, subSubMenu);
-			if vendMoney.total < 40 then
-				local carryAmount = vendMoney.total;
-				local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_NSF") .. " - $" .. carryAmount, worldobjects);
-			else
-				for i,v in pairs(vendorsFoods[2]) do
-					local food = v;
-					local foodName = v[1];
-					local foodItem = playerInv:AddItem(foodName);
-					if foodItem:isCookable() then foodItem:setCooked(true); end
-					local foodItemType = foodItem:getType();
-					local foodItemName = foodItem:getName();
-					playerInv:Remove(foodItem);
-					local vendorPrice = v[2];
-					local foodValue = v[3];
-					local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
-				end
+			for i,v in pairs(vendorsFoods[2]) do
+				local food = v;
+				local foodName = v[1];
+				local foodItem = playerInv:AddItem(foodName);
+				if foodItem:isCookable() then foodItem:setCooked(true); end
+				local foodItemType = foodItem:getType();
+				local foodItemName = foodItem:getName();
+				playerInv:Remove(foodItem);
+				local vendorPrice = v[2];
+				local foodValue = v[3];
+				local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
+			
 			end
 		end
 		-- these are $100, i think it's kind of easy to tell what this is and i don't want you to think that i think you're an idiot.  im just practicing my notes.  
@@ -245,25 +244,18 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			local subVendorOption = subSubMenu:addOption(getText("ContextMenu_Food_For_100_Dollars"), worldobjects)
 			local subSubMenu = ISContextMenu:getNew(subSubMenu);
 			local subContext = context:addSubMenu(subVendorOption, subSubMenu);
-			-- sufficient funds check - checking to make sure we have the moneys
-			if vendMoney.total < 100 then
-				local carryAmount = vendMoney.total;
-				local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_NSF") .. " - $" .. carryAmount, worldobjects);
-			else
-				-- we've got it, lets buy some steak!
-				for i,v in pairs(vendorsFoods[3]) do
-					local food = v;
-					local foodName = v[1];
-					local foodItem = playerInv:AddItem(foodName);
-					if foodItem:isCookable() then foodItem:setCooked(true); end
-					if foodItem:isCookable() then foodItem:setCooked(true); end
-					local foodItemType = foodItem:getType();
-					local foodItemName = foodItem:getName();
-					playerInv:Remove(foodItem);
-					local vendorPrice = v[2];
-					local foodValue = v[3];
-					local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
-				end
+			for i,v in pairs(vendorsFoods[3]) do
+				local food = v;
+				local foodName = v[1];
+				local foodItem = playerInv:AddItem(foodName);
+				if foodItem:isCookable() then foodItem:setCooked(true); end
+				if foodItem:isCookable() then foodItem:setCooked(true); end
+				local foodItemType = foodItem:getType();
+				local foodItemName = foodItem:getName();
+				playerInv:Remove(foodItem);
+				local vendorPrice = v[2];
+				local foodValue = v[3];
+				local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
 			end
 		end
 	end
@@ -291,17 +283,11 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 		local partItemName = partItem:getName();
 		playerInv:Remove(partItem);
 		local subSubVendorOption = subSubMenu:addOption(partItemName .. "($" .. getText("ContextMenu_Spare_Parts") .. ")", worldobjects, Buy_VendorsItem, player, part, false, partPrice, false, 30);
-		--local heavyOption = subSubMenu:addOption(getText("ContextMenu_Heavy-Duty_Type_Car_Parts"), worldobjects)
-		--local subSubMenu = ISContextMenu:getNew(subSubMenu);
-		--local subContext = context:addSubMenu(heavyOption, subSubMenu);
-		--local performanceOption = subSubMenu:addOption(getText("ContextMenu_Performance_Type_Car_Parts"), worldobjects)
-		--local subSubMenu = ISContextMenu:getNew(subSubMenu);
-		--local subContext = context:addSubMenu(performanceOption, subSubMenu);
 		for i,v in pairs(vehicles.parts) do
 			local subTable = v;
-			local standardOption = subSubMenu:addOption(getText("ContextMenu_" .. subTable[17] .. "_Type_Car_Parts"), worldobjects);
+			local vehicleOption = subSubMenu:addOption(getText("ContextMenu_" .. subTable[17] .. "_Type_Car_Parts"), worldobjects);
 			local subSubMenu = ISContextMenu:getNew(subSubMenu);
-			local subContext = context:addSubMenu(standardOption, subSubMenu);
+			local subContext = context:addSubMenu(vehicleOption, subSubMenu);
 			for h, w in pairs(subTable) do
 				if h < 17 then
 					local part = w;
@@ -313,15 +299,44 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 					local partItemName = partItem:getName();
 					playerInv:Remove(partItem);
 					local subSubVendorOption = subSubMenu:addOption(partItemName .. "($" .. partValue .. ")", worldobjects, Buy_VendorsItem, player, part, false, partPrice, false);
+					
 				end
 			end 
+		end
+	end
+	if vendorType == "Weapon Vendor" then
+		for i,v in pairs(weapons) do
+			local subTable = v;
+			local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. subTable[1]), worldobjects);
+			local subSubMenu = ISContextMenu:getNew(subSubMenu);
+			local subContext = context:addSubMenu(weaponOption, subSubMenu);
+			for h, w in pairs(subTable) do
+				if h > 1 then
+					local weapon = w;
+					local weaponName = w[1];
+					local weaponPrice = w[2];
+					local weaponValue = w[3];
+					local multipleBuy = w[4];
+					local weaponItem = playerInv:AddItem(weaponName);
+					local weaponItemType = weaponItem:getType();
+					local weaponItemName = weaponItem:getName();
+					playerInv:Remove(weaponItem);
+					local subSubVendorOption = subSubMenu:addOption(weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, quantity);				
+					if multipleBuy then
+						weapon[2] = weapon[5];
+						weaponValue = weaponValue*10;
+						local subSubVendorOption = subSubMenu:addOption("10 - " .. weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, 10);				
+					end
+				end
+			end
 		end
 	end
 end
 
 
+
 -- yeah, it says buy but we sell items here too.  I thought i was going to need a seperate function at first, turns out i could get it all with one!  woot!
--- item is a table containing the item we're buying or selling.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment, sell 100 for $10.
+-- item is a table containing the item we're buying or selling.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment(also for buying engine parts now), sell 100 for $10.
 function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity)
 	local playerObj = player;
 	local playerInv = playerObj:getInventory();
@@ -449,6 +464,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		playerObj:Say("SOLD!");
 		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long,  giving correct change now.
 	elseif not sell and not sellAll then
+		if quantity then moneyInteger = moneyInteger*quantity; end
 		if vendMoney.total >= moneyInteger then
 			if quantity then
 				for i=1,quantity-1 do
@@ -456,6 +472,10 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				end
 			end
 			local addedItem = playerInv:AddItem(item[1]);
+			if string.find(addedItem:getName(), "Drum") or string.find(addedItem:getName(), "Magazine") then
+				local maxAmmo = addedItem:getMaxAmmo();
+				addedItem:setCurrentAmmoCount(maxAmmo);
+			end
 			if addedItem:isCookable() then addedItem:setCooked(true); end
 			local vendCashToGive = vendMoney.total - moneyInteger;
 			local vendCash = {}

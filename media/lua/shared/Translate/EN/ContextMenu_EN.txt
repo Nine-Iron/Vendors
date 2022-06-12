@@ -17,6 +17,13 @@ ContextMenu_EN = {
 	ContextMenu_Heavy-Duty_Type_Car_Parts = "Heavy-Duty Car Parts",
 	ContextMenu_Sport_Type_Car_Parts = "Sport Car Parts",
 	ContextMenu_Spare_Parts = "20000 for 30 parts",
+	ContextMenu_Ammo Boxes = "Boxes of ammo",
+	ContextMenu_Magazines = "Magazines",
+	ContextMenu_Attachments = "Attachments",
+	ContextMenu_Pistols = "Pistols",
+	ContextMenu_SMGs = "SMGs",
+	ContextMenu_Rifles = "Rifles",
+	ContextMenu_LMGs = "LMGs"
 	ContextMenu_Cant_Buy = "I don't have enough for that right now",
 	
 }
