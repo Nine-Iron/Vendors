@@ -16,22 +16,23 @@ vehicles.parts[1] = {{"CarBattery1", {1,0,0,0}, 1000}, {"FrontCarDoor1", {1,0,0,
 vehicles.parts[2] = {{"CarBattery1", {5,0,0,0}, 5000}, {"FrontCarDoor1", {5,0,0,0}, 5000}, {"EngineDoor1", {5,0,0,0}, 5000}, {"ModernBrake1", {5,0,0,0}, 5000}, {"TrunkDoor1", {5,0,0,0}, 5000}, {"RearCarDoor1", {5,0,0,0}, 5000}, {"RearCarDoorDouble1", {5,0,0,0}, 5000}, {"BigGasTank1", {5,0,0,0}, 5000}, {"ModernCarMuffler1", {5,0,0,0}, 5000}, {"NormalCarSeat1", {5,0,0,0}, 5000}, {"ModernSuspension1", {5,0,0,0}, 5000}, {"ModernTire1", {5,0,0,0}, 5000}, {"Windshield1", {5,0,0,0}, 5000}, {"RearWindshield1", {5,0,0,0}, 5000}, {"FrontWindow1", {5,0,0,0}, 5000}, {"RearWindow1", {5,0,0,0}, 5000}, "Sport"};
 vehicles.parts[3] = {{"CarBattery1", {10,0,0,0}, 10000}, {"FrontCarDoor1", {10,0,0,0}, 10000}, {"EngineDoor1", {10,0,0,0}, 10000}, {"ModernBrake1", {10,0,0,0}, 10000}, {"TrunkDoor1", {10,0,0,0}, 10000}, {"RearCarDoor1", {10,0,0,0}, 10000}, {"RearCarDoorDouble1", {10,0,0,0}, 10000}, {"BigGasTank1", {10,0,0,0}, 10000}, {"ModernCarMuffler1", {10,0,0,0}, 10000}, {"NormalCarSeat1", {10,0,0,0}, 10000}, {"ModernSuspension1", {10,0,0,0}, 10000}, {"ModernTire1", {10,0,0,0}, 10000}, {"Windshield1", {10,0,0,0}, 10000}, {"RearWindshield1", {10,0,0,0}, 10000}, {"FrontWindow1", {10,0,0,0}, 10000}, {"RearWindow1", {10,0,0,0}, 10000}, "Heavy-Duty"};
 local weapons = {};
-weapons[1] = {"Ammo Boxes", {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}, {"ShotgunShellsBox", {0,1,5,0}, 0150, true, {1,5,0,0}}};
-weapons[2] = {"Magazines", {"308Clip", {0,3,0,0}, 0300, false, 308}, {"308Clip", {0,3,0,0}, 0300, false, 308}, {"44Clip", {0,2,5,0}, 0250, false, 44}, {"45Clip", {0,2,5,0}, 0250, false, 45}, {"556Clip", {0,3,5,0}, 0350, false, 556}, {"M14Clip", {0,3,0,0}, 0300, false, 308}};
-weapons[3] = {"Attachments"};
---weapons[4] = {"Ammo", "12ga", 308, 44, 45, 556, "9mm"}
-weapons[5] = {"Pistols", {"Pistol", {2,5,0,0}, 2500, false, "9mm"}, {"Pistol2", {3,0,0,0}, 3000, false, 45}, {"Pistol3", {5,0,0,0}, 5000, false, 44}, {"Revolver_Long", {4,0,0,0}, 4000, false, 44}};
-weapons[6] = {"Shotgun"}
-weapons[7] = {"Rifles"};
+weapons[1] = {"Box_Ammo", {"223Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"308Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"Bullets38Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}, {"ShotgunShellsBox", {0,1,5,0}, 0150, true, {1,5,0,0}}};
+weapons[2] = {"Magazines", {"223Clip", {0,3,0,0}, 0300, false, ".223"}, {"308Clip", {0,3,0,0}, 0300, false, ".308"}, {"44Clip", {0,2,5,0}, 0250, false, "44-MAG"}, {"45Clip", {0,2,5,0}, 0250, false, "45 Auto"}, {"556Clip", {0,3,5,0}, 0350, false, "5.56"}, {"M14Clip", {0,3,0,0}, 0300, false, ".308"}, {"9mmClip", {0,3,0,0}, 0300, false, "9mm"}};
+weapons[3] = {"Attachments", {"ChokeTubeImproved", {0,2,0,0}, 0200, false}, {"FiberglassStock", {0,1,5,0}, 0150, false}, {"IronSight", {0,1,0,0}, 0100, false}, {"Laser", {0,2,0,0}, 0200, false}, {"RecoilPad", {0,1,0,0}, 0100, false}, {"RedDot", {0,2,0,0}, 0200, false}, {"Sling", {0,1,5,0}, 0150, false}, {"x2Scope", {0,3,0,0}, 0300, false}, {"x4Scope", {0,3,5,0}, 0350, false}, {"x8Scope", {0,4,0,0}, 0400, false, ".223"}};
+weapons[4] = {"Caliber", ".223", ".308", "44-MAG", "45 Auto", "5.56", "9mm"}
+weapons[5] = {"Pistols", {"Pistol", {2,5,0,0}, 2500, false, "9mm"}, {"Pistol2", {3,0,0,0}, 3000, false, "45 Auto"}, {"Pistol3", {3,0,0,0}, 3000, false, "44-MAG"}, {"Revolver_Long", {2,0,0,0}, 2000, false, "44-MAG"}, {"Revolver", {2,0,0,0}, 2000, false, "45 Auto"}, {"Revolver_Short", {1,5,0,0}, 1500, false, "38-SPC"}};
+weapons[6] = {"Shotguns", {"DoubleBarrelShotgun", {0,7,5,0}, 750, false, "12ga"}, {"Shotgun", {2,5,0,0}, 2500, false, "12ga"}}
+weapons[7] = {"Rifles", {"AssaultRifle2", {7,5,0,0}, 7500, false, ".308"}, {"AssaultRifle", {10,0,0,0}, 10000, false, "5.56"}, {"VarmintRifle", {3,5,0,0}, 3500, false, ".223"}, {"HuntingRifle", {4,5,0,0}, 4500, false, ".308"}};
 local brita = {};
-brita.ammo = {};
-brita.calibers = {50, 762}
-brita.magazines = {{"556Drum", {3,0,0,0}, 3000, false, 556}, {"Bullest50Mag", {4,0,0,0}, 3000, false, 50}, {"Bullest50Mag", {3,0,0,0}, 3000, false, 50}, {"Bullest50Mag", {3,0,0,0}, 3000, false, 50}, }
-brita.attachments = {};
-brita.pistols = {};
-brita.smg = {};
-brita.rifle = {};
-brita.lmg = {};
+brita[1] = {"Box_Ammo"};
+brita[2] = {"Magazines", {"556Drum", {3,0,0,0}, 3000, false, 556}, {"Bullest50Mag", {4,0,0,0}, 3000, false, 50}, {"ShotgunShells", {1,0,0,0}, 1000, false, 50}, {"Bullest50Mag", {3,0,0,0}, 3000, false, 50}, {"Bullest50Mag", {3,0,0,0}, 3000, false, 50}, }
+brita[3] = {"Attachments"};
+brita[4] = {"Ammo", 50, 762};
+brita[5] = {"Pistols"};
+brita[6] = {"Shotguns"};
+brita[7] = {"Rifles"};
+brita[8] = {"LMGs"};
+brita[9] = {"SMGs"};
 jewelry[0] = {};
 jewelry[1] = {};
 jewelry.stones = {};
@@ -308,42 +309,63 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	end
 	if vendorType == "Weapon Vendor" then
 		for i,v in pairs(weapons) do
-			if i ~= 4 then
-				local subTable = v;
-				local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. subTable[1]), worldobjects);
+			local subTable = v;
+			if subTable[1] == "Caliber" then
+				local magazineOption = subSubMenu:addOption(getText("ContextMenu_Magazines"), worldobjects);
+				local subSubMenu = ISContextMenu:getNew(subSubMenu);
+				local subContext = context:addSubMenu(magazineOption, subSubMenu);
+				for h,w in pairs(subTable) do
+					local caliber = w;
+					if caliber ~= "Caliber" then
+						local caliberOption = subSubMenu:addOption(caliber, worldobjects);
+						local subSubMenu = ISContextMenu:getNew(subSubMenu);
+						local subContext = context:addSubMenu(caliberOption, subSubMenu);
+						for n,o in pairs(weapons[2]) do
+							local magazineCaliber = o[5];
+							if magazineCaliber == caliber then
+								local magazine = o;
+								local magazineName = magazine[1];
+								-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu and for comparing against the wallet
+								local magazinePrice = magazine[2];
+								local magazineValue = magazine[3];
+								local magazineItem = playerInv:AddItem(magazineName);
+								local magazineItemType = magazineItem:getType();
+								local magazineItemName = magazineItem:getName();
+								if magazineName == "M14Clip" then magazineItemName = ".308 Magazine(M14)"; end
+								playerInv:Remove(magazineItem);
+								local subSubVendorOption = subSubMenu:addOption(magazineItemName .. "($" .. magazineValue .. ")", worldobjects, Buy_VendorsItem, player, magazine, false, magazinePrice, false);
+							end
+						end
+					end
+				end
+			elseif subTable[1] ~= "Magazines" then
+				local weaponOptions = subTable[1];
+				local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. weaponOptions), worldobjects);
 				local subSubMenu = ISContextMenu:getNew(subSubMenu);
 				local subContext = context:addSubMenu(weaponOption, subSubMenu);
-				if v[1] == "Magazines" then
-					for j,k in pairs(v) do
-print(k, " -----k");
-						if k[5] ~= nil then
-							local weaponOption = subSubMenu:addOption("." .. k[5], worldobjects);
-							local subSubMenu = ISContextMenu:getNew(subSubMenu);
-							local subContext = context:addSubMenu(weaponOption, subSubMenu);
-							local subSubVendorOption = subSubMenu:addOption(k[1] .. "($" .. k[3] .. ")", worldobjects, Buy_VendorsItem, player, k, false, k[2], false, quantity);
+				for l,m in pairs(v) do
+					if l > 1 then
+						local weapon = m;
+						local weaponName = weapon[1];
+						-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu and for comparing against the wallet
+						local weaponPrice = weapon[2];
+						local weaponValue = weapon[3];
+						local multipleBuy = weapon[4];
+						local weaponItem = playerInv:AddItem(weaponName);
+						local weaponItemType = weaponItem:getType();
+						local weaponItemIsWeapon = weaponItem:IsWeapon();
+						local weaponItemName = weaponItem:getName();
+						playerInv:Remove(weaponItem);
+						if weaponItemIsWeapon then
+							local weaponItemAmmoType = weapon[5];
+							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - (" .. weaponItemAmmoType .. ") - ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false);
+						else
+							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false);
 						end
-						--local subSubVendorOption = subSubMenu:addOption(k[1] .. "($" .. k[3] .. ")", worldobjects, Buy_VendorsItem, player, k, false, k[2], false, quantity);
-					end
-				else
-					for h, w in pairs(subTable) do
-						if h > 1 then
-print(w, " ----w");
-							local weapon = w;
-							local weaponName = w[1];
-							local weaponPrice = w[2];
-							local weaponValue = w[3];
-							local multipleBuy = w[4];
-							local weaponItem = playerInv:AddItem(weaponName);
-							local weaponItemType = weaponItem:getType();
-							local weaponItemName = weaponItem:getName();
-print(weaponName, " ----name");
-							playerInv:Remove(weaponItem);
-							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, quantity);				
-							if multipleBuy == true then
-								weapon[2] = weapon[5];
-								weaponValue = weaponValue*10;
-								local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - 10 for - ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, 10);				
-							end
+						if multipleBuy == true then
+							weapon[2] = weapon[5];
+							weaponValue = weaponValue*10;
+							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - 10 for ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, 10);				
 						end
 					end
 				end
