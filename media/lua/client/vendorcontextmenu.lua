@@ -17,7 +17,7 @@ vehicles.parts[2] = {{"CarBattery1", {5,0,0,0}, 5000}, {"FrontCarDoor1", {5,0,0,
 vehicles.parts[3] = {{"CarBattery1", {10,0,0,0}, 10000}, {"FrontCarDoor1", {10,0,0,0}, 10000}, {"EngineDoor1", {10,0,0,0}, 10000}, {"ModernBrake1", {10,0,0,0}, 10000}, {"TrunkDoor1", {10,0,0,0}, 10000}, {"RearCarDoor1", {10,0,0,0}, 10000}, {"RearCarDoorDouble1", {10,0,0,0}, 10000}, {"BigGasTank1", {10,0,0,0}, 10000}, {"ModernCarMuffler1", {10,0,0,0}, 10000}, {"NormalCarSeat1", {10,0,0,0}, 10000}, {"ModernSuspension1", {10,0,0,0}, 10000}, {"ModernTire1", {10,0,0,0}, 10000}, {"Windshield1", {10,0,0,0}, 10000}, {"RearWindshield1", {10,0,0,0}, 10000}, {"FrontWindow1", {10,0,0,0}, 10000}, {"RearWindow1", {10,0,0,0}, 10000}, "Heavy-Duty"};
 local weapons = {};
 weapons.ammo = {"Ammo Boxes", {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}};
-weapons.magazines = {"Magazines", };
+weapons.magazines = {"Magazines", {{"308Clip", {0,3,0,0}, 0300, false, 308}, {"308Clip", {0,3,0,0}, 0300, false, 308}}, {{"44Clip", {0,2,5,0}, 0250, false, 44}}, {{"45Clip", {0,2,5,0}, 0250, false, 45}}, {{"556Clip", {0,3,5,0}, 0350, false, 556}}, {{"M14Clip", {0,3,0,0}, 0300, false, "M14"}}};
 weapons.attachments = {"Attachments"};
 weapons.pistols = {"Pistols"};
 weapons.smg = {"SMGs"};
@@ -25,7 +25,7 @@ weapons.rifle = {"Rifles"}
 weapons.lmg = {"LMGs"};
 local brita = {};
 brita.ammo = {};
-brita.magazines = {"Brita - Magazine", {"556Drum", {3,0,0,0}, 3000}}
+brita.magazines = {{"556Drum", {3,0,0,0}, 3000}}
 brita.attachments = {};
 brita.pistols = {};
 brita.smg = {};
@@ -59,7 +59,6 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 	local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
 	local vendorList = nil;
 	local dispType = nil;
-	britaMod = getActivatedMods():contains("Brita");
 
 
 	-- looking for vendors in area to determine if the context menu is needed
@@ -310,22 +309,35 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. subTable[1]), worldobjects);
 			local subSubMenu = ISContextMenu:getNew(subSubMenu);
 			local subContext = context:addSubMenu(weaponOption, subSubMenu);
-			for h, w in pairs(subTable) do
-				if h > 1 then
-					local weapon = w;
-					local weaponName = w[1];
-					local weaponPrice = w[2];
-					local weaponValue = w[3];
-					local multipleBuy = w[4];
-					local weaponItem = playerInv:AddItem(weaponName);
-					local weaponItemType = weaponItem:getType();
-					local weaponItemName = weaponItem:getName();
-					playerInv:Remove(weaponItem);
-					local subSubVendorOption = subSubMenu:addOption(weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, quantity);				
-					if multipleBuy then
-						weapon[2] = weapon[5];
-						weaponValue = weaponValue*10;
-						local subSubVendorOption = subSubMenu:addOption("10 - " .. weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, 10);				
+			if v[1] == "Magazines" then
+				for j,k in pairs(v) do
+					--print(k[j]);
+					if k[5] ~= nil then
+						local weaponOption = subSubMenu:addOption("." .. k[5], worldobjects);
+						local subSubMenu = ISContextMenu:getNew(subSubMenu);
+						local subContext = context:addSubMenu(weaponOption, subSubMenu);
+						local subSubVendorOption = subSubMenu:addOption(k[1] .. "($" .. k[3] .. ")", worldobjects, Buy_VendorsItem, player, k, false, k[2], false, quantity);
+					end
+					--local subSubVendorOption = subSubMenu:addOption(k[1] .. "($" .. k[3] .. ")", worldobjects, Buy_VendorsItem, player, k, false, k[2], false, quantity);
+				end
+			else
+				for h, w in pairs(subTable) do
+					if h > 1 then
+						local weapon = w;
+						local weaponName = w[1];
+						local weaponPrice = w[2];
+						local weaponValue = w[3];
+						local multipleBuy = w[4];
+						local weaponItem = playerInv:AddItem(weaponName);
+						local weaponItemType = weaponItem:getType();
+						local weaponItemName = weaponItem:getName();
+						playerInv:Remove(weaponItem);
+						local subSubVendorOption = subSubMenu:addOption(weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, quantity);				
+						if multipleBuy == true then
+							weapon[2] = weapon[5];
+							weaponValue = weaponValue*10;
+							local subSubVendorOption = subSubMenu:addOption("10 - " .. weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, 10);				
+						end
 					end
 				end
 			end
@@ -349,7 +361,6 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			for i,v in pairs(jewelry.tags) do
 				local jewelryItem = v[1]:getName();
 				local moneyQuantity = v[2];
-				-- yeah, probably could have used a nested loop and saved a few lines, i know better for next time...
 				for	i = 1, moneyQuantity[1] do
 					playerInv:AddItem("Vendors.ThousandDollar");
 				end
@@ -371,7 +382,6 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
 				for	i = 1, moneyQuantity[1] do
-				-- not this next time, i just now realized that i could have used a nested loop and these were already done.
 					playerInv:AddItem("Vendors.ThousandDollar");
 				end
 				for	i = 1, moneyQuantity[2] do
@@ -392,7 +402,6 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
 				for	i = 1, moneyQuantity[1] do
-				-- next mod i mean, even though im pretty sure i've already used one somewhere in here...
 					playerInv:AddItem("Vendors.ThousandDollar");
 				end
 				for	i = 1, moneyQuantity[2] do
@@ -414,7 +423,6 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				local moneyQuantity = v[2];
 				if v[4] then
 					local quantity = v[4];
-					-- HERE IT IS!  i told you i've already used one in here
 					for h=1, quantity do
 						playerInv:Remove(jewelryItem:getType());
 					end
@@ -479,7 +487,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			if addedItem:isCookable() then addedItem:setCooked(true); end
 			local vendCashToGive = vendMoney.total - moneyInteger;
 			local vendCash = {}
-			-- clean this up if you dont need floor  i do need floor  calculating the amount of each denomination needed
+			-- clean this up if you dont need floor  i do need floor
 			vendCash[1] = {math.floor((vendCashToGive)/1000), "Vendors.ThousandDollar", true};
 			vendCash[2] = {(math.floor((vendCashToGive)/100) - (math.floor(vendCashToGive/1000)*10)), "Vendors.HundredDollar"};
 			vendCash[3] = {(math.floor((vendCashToGive)/10) - (math.floor(vendCashToGive/100)*10)), "Vendors.TenDollar"};
