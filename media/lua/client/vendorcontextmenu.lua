@@ -16,16 +16,17 @@ vehicles.parts[1] = {{"CarBattery1", {1,0,0,0}, 1000}, {"FrontCarDoor1", {1,0,0,
 vehicles.parts[2] = {{"CarBattery1", {5,0,0,0}, 5000}, {"FrontCarDoor1", {5,0,0,0}, 5000}, {"EngineDoor1", {5,0,0,0}, 5000}, {"ModernBrake1", {5,0,0,0}, 5000}, {"TrunkDoor1", {5,0,0,0}, 5000}, {"RearCarDoor1", {5,0,0,0}, 5000}, {"RearCarDoorDouble1", {5,0,0,0}, 5000}, {"BigGasTank1", {5,0,0,0}, 5000}, {"ModernCarMuffler1", {5,0,0,0}, 5000}, {"NormalCarSeat1", {5,0,0,0}, 5000}, {"ModernSuspension1", {5,0,0,0}, 5000}, {"ModernTire1", {5,0,0,0}, 5000}, {"Windshield1", {5,0,0,0}, 5000}, {"RearWindshield1", {5,0,0,0}, 5000}, {"FrontWindow1", {5,0,0,0}, 5000}, {"RearWindow1", {5,0,0,0}, 5000}, "Sport"};
 vehicles.parts[3] = {{"CarBattery1", {10,0,0,0}, 10000}, {"FrontCarDoor1", {10,0,0,0}, 10000}, {"EngineDoor1", {10,0,0,0}, 10000}, {"ModernBrake1", {10,0,0,0}, 10000}, {"TrunkDoor1", {10,0,0,0}, 10000}, {"RearCarDoor1", {10,0,0,0}, 10000}, {"RearCarDoorDouble1", {10,0,0,0}, 10000}, {"BigGasTank1", {10,0,0,0}, 10000}, {"ModernCarMuffler1", {10,0,0,0}, 10000}, {"NormalCarSeat1", {10,0,0,0}, 10000}, {"ModernSuspension1", {10,0,0,0}, 10000}, {"ModernTire1", {10,0,0,0}, 10000}, {"Windshield1", {10,0,0,0}, 10000}, {"RearWindshield1", {10,0,0,0}, 10000}, {"FrontWindow1", {10,0,0,0}, 10000}, {"RearWindow1", {10,0,0,0}, 10000}, "Heavy-Duty"};
 local weapons = {};
-weapons.ammo = {"Ammo Boxes", {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}};
-weapons.magazines = {"Magazines", {{"308Clip", {0,3,0,0}, 0300, false, 308}, {"308Clip", {0,3,0,0}, 0300, false, 308}}, {{"44Clip", {0,2,5,0}, 0250, false, 44}}, {{"45Clip", {0,2,5,0}, 0250, false, 45}}, {{"556Clip", {0,3,5,0}, 0350, false, 556}}, {{"M14Clip", {0,3,0,0}, 0300, false, "M14"}}};
-weapons.attachments = {"Attachments"};
-weapons.pistols = {"Pistols"};
-weapons.smg = {"SMGs"};
-weapons.rifle = {"Rifles"}
-weapons.lmg = {"LMGs"};
+weapons[1] = {"Ammo Boxes", {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}, {"ShotgunShellsBox", {0,1,5,0}, 0150, true, {1,5,0,0}}};
+weapons[2] = {"Magazines", {"308Clip", {0,3,0,0}, 0300, false, 308}, {"308Clip", {0,3,0,0}, 0300, false, 308}, {"44Clip", {0,2,5,0}, 0250, false, 44}, {"45Clip", {0,2,5,0}, 0250, false, 45}, {"556Clip", {0,3,5,0}, 0350, false, 556}, {"M14Clip", {0,3,0,0}, 0300, false, 308}};
+weapons[3] = {"Attachments"};
+--weapons[4] = {"Ammo", "12ga", 308, 44, 45, 556, "9mm"}
+weapons[5] = {"Pistols", {"Pistol", {2,5,0,0}, 2500, false, "9mm"}, {"Pistol2", {3,0,0,0}, 3000, false, 45}, {"Pistol3", {5,0,0,0}, 5000, false, 44}, {"Revolver_Long", {4,0,0,0}, 4000, false, 44}};
+weapons[6] = {"Shotgun"}
+weapons[7] = {"Rifles"};
 local brita = {};
 brita.ammo = {};
-brita.magazines = {{"556Drum", {3,0,0,0}, 3000}}
+brita.calibers = {50, 762}
+brita.magazines = {{"556Drum", {3,0,0,0}, 3000, false, 556}, {"Bullest50Mag", {4,0,0,0}, 3000, false, 50}, {"Bullest50Mag", {3,0,0,0}, 3000, false, 50}, {"Bullest50Mag", {3,0,0,0}, 3000, false, 50}, }
 brita.attachments = {};
 brita.pistols = {};
 brita.smg = {};
@@ -66,7 +67,7 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 		local container = containers:get(i-1);
 		for j=1,container:getItems():size() do
 			local item = container:getItems():get(j-1);
-			-- don't want to sell the fancy shit you're wearing
+			-- don't want to sell the fancy stuff you're wearing, or have attached
 			if not playerObj:isEquipped(item)  and not playerObj:isAttachedItem(item) then
 				local dispCat = item:getDisplayCategory();
 				if item:getType() then
@@ -274,9 +275,11 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 		end
 	end
 	if vendorType == "Vehicle Vendor" then
+		-- creating a menu item for engine parts, to be listed in the first vehicle submenu above the other submenu options
 		local part = {"EngineParts", {20,0,0,0}, 20000};
 		local partName = "EngineParts";
 		local partPrice = {20,0,0,0};
+		-- im not sure how to get the item name in order to avoid adding translations for everything unless i add it to your inventory.  so everything on the list, everything(minus what you're selling), is added and then removed from your inventory...  sorry, if anyone has a method to get the actual item object without having it in your inventory, i could use your help...
 		local partItem = playerInv:AddItem(partName);
 		local partItemType = partItem:getType();
 		local partItemName = partItem:getName();
@@ -305,38 +308,42 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	end
 	if vendorType == "Weapon Vendor" then
 		for i,v in pairs(weapons) do
-			local subTable = v;
-			local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. subTable[1]), worldobjects);
-			local subSubMenu = ISContextMenu:getNew(subSubMenu);
-			local subContext = context:addSubMenu(weaponOption, subSubMenu);
-			if v[1] == "Magazines" then
-				for j,k in pairs(v) do
-					--print(k[j]);
-					if k[5] ~= nil then
-						local weaponOption = subSubMenu:addOption("." .. k[5], worldobjects);
-						local subSubMenu = ISContextMenu:getNew(subSubMenu);
-						local subContext = context:addSubMenu(weaponOption, subSubMenu);
-						local subSubVendorOption = subSubMenu:addOption(k[1] .. "($" .. k[3] .. ")", worldobjects, Buy_VendorsItem, player, k, false, k[2], false, quantity);
+			if i ~= 4 then
+				local subTable = v;
+				local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. subTable[1]), worldobjects);
+				local subSubMenu = ISContextMenu:getNew(subSubMenu);
+				local subContext = context:addSubMenu(weaponOption, subSubMenu);
+				if v[1] == "Magazines" then
+					for j,k in pairs(v) do
+print(k, " -----k");
+						if k[5] ~= nil then
+							local weaponOption = subSubMenu:addOption("." .. k[5], worldobjects);
+							local subSubMenu = ISContextMenu:getNew(subSubMenu);
+							local subContext = context:addSubMenu(weaponOption, subSubMenu);
+							local subSubVendorOption = subSubMenu:addOption(k[1] .. "($" .. k[3] .. ")", worldobjects, Buy_VendorsItem, player, k, false, k[2], false, quantity);
+						end
+						--local subSubVendorOption = subSubMenu:addOption(k[1] .. "($" .. k[3] .. ")", worldobjects, Buy_VendorsItem, player, k, false, k[2], false, quantity);
 					end
-					--local subSubVendorOption = subSubMenu:addOption(k[1] .. "($" .. k[3] .. ")", worldobjects, Buy_VendorsItem, player, k, false, k[2], false, quantity);
-				end
-			else
-				for h, w in pairs(subTable) do
-					if h > 1 then
-						local weapon = w;
-						local weaponName = w[1];
-						local weaponPrice = w[2];
-						local weaponValue = w[3];
-						local multipleBuy = w[4];
-						local weaponItem = playerInv:AddItem(weaponName);
-						local weaponItemType = weaponItem:getType();
-						local weaponItemName = weaponItem:getName();
-						playerInv:Remove(weaponItem);
-						local subSubVendorOption = subSubMenu:addOption(weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, quantity);				
-						if multipleBuy == true then
-							weapon[2] = weapon[5];
-							weaponValue = weaponValue*10;
-							local subSubVendorOption = subSubMenu:addOption("10 - " .. weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, 10);				
+				else
+					for h, w in pairs(subTable) do
+						if h > 1 then
+print(w, " ----w");
+							local weapon = w;
+							local weaponName = w[1];
+							local weaponPrice = w[2];
+							local weaponValue = w[3];
+							local multipleBuy = w[4];
+							local weaponItem = playerInv:AddItem(weaponName);
+							local weaponItemType = weaponItem:getType();
+							local weaponItemName = weaponItem:getName();
+print(weaponName, " ----name");
+							playerInv:Remove(weaponItem);
+							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. "($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, quantity);				
+							if multipleBuy == true then
+								weapon[2] = weapon[5];
+								weaponValue = weaponValue*10;
+								local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - 10 for - ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, 10);				
+							end
 						end
 					end
 				end

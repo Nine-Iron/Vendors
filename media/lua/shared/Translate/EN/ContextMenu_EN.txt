@@ -23,7 +23,8 @@ ContextMenu_EN = {
 	ContextMenu_Pistols = "Pistols",
 	ContextMenu_SMGs = "SMGs",
 	ContextMenu_Rifles = "Rifles",
-	ContextMenu_LMGs = "LMGs"
+	ContextMenu_LMGs = "LMGs",
+	ContextMenu_Shotguns = "Shotguns",
 	ContextMenu_Cant_Buy = "I don't have enough for that right now",
 	
 }
