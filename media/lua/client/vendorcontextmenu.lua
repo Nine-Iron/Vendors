@@ -137,10 +137,8 @@ Vendors_CheckMods();
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
 							elseif string.find(dispType, "Kg") then
-print("yes");
 								table.insert(jewelry.green.items, {item, {4,5,0,0}, 4500});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
-print("again");
 									jewelry.green[dispType] = {item, {item, {4,5,0,0}, 4500}};
 									jewelry.green[dispType].count = 1;
 								else 
