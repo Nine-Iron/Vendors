@@ -1,3 +1,11 @@
+-- added kief, hashish, setup options to sell all of one type or just one(to reduce menu clutter),
+
+
+
+
+
+
+
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
 	
 local britaMod = nil;
@@ -36,11 +44,15 @@ vendorsFoods[3] = {{"Ham", {0,1,0,0}, 100}, {"MeatPatty", {0,1,0,0}, 100}, {"Min
 local vendorWallet = {};
 
 function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, test)
+Vendors_CheckMods();
 	-- reset values for inventory search.
 	local fanleaf = 0;
 	jewelry.stones = {};
 	jewelry.regular = {};
 	jewelry.tags = {};
+	jewelry.regular.items = {};
+	jewelry.stones.items = {};
+	jewelry.tags.items = {};
 	jewelry.green = {};
 	vendMoney[1] = 0;
 	vendMoney[2] = 0;
@@ -91,27 +103,86 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 							table.insert(vendorWallet, item);
 						end
 						vendMoney.total = ((vendMoney[1]*1000)+(vendMoney[2]*100)+(vendMoney[3]*10)+(vendMoney[4]));
-					elseif string.find(dispType, "Diamond") or string.find(dispType, "Emerald") or string.find(dispType, "Amethyst") or string.find(dispType, "Ruby") or string.find(dispType, "Sapphire") then
-						table.insert(jewelry.stones, {item, {0,0,0,2}})
-					elseif not string.find(dispType, "Key") and (item:getDisplayCategory() == "Accessory" and ((string.find(dispType, "Ring") or string.find(dispType, "ring"))) or string.find(dispType, "necklace") or string.find(dispType, "Locket") or string.find(dispType, "Watch")) then
-						table.insert(jewelry.regular, {item, {0,0,0,1}});
 					elseif string.find(dispType, "DogTag") then
-							table.insert(jewelry.tags, {item, {0,0,5,0}});
+						table.insert(jewelry.tags.items, {item, {0,0,5,0}, 50});
+						if not jewelry.tags[dispType] then jewelry.tags[dispType] = {};
+							jewelry.tags[dispType] = {item, {0,0,5,0}, 50};
+							jewelry.tags[dispType].count = 1;
+							jewelry.tags[dispType].menuCreated = false;
+						else 
+							jewelry.tags[dispType].count = jewelry.tags[dispType].count + 1;
+						end
+					elseif string.find(dispType, "Diamond") or string.find(dispType, "Emerald") or string.find(dispType, "Amethyst") or string.find(dispType, "Ruby") or string.find(dispType, "Sapphire") then
+						table.insert(jewelry.stones.items, {item, {0,0,2,5}, 25})
+						if not jewelry.stones[dispType] then jewelry.stones[dispType] = {};
+							jewelry.stones[dispType] = {item, {0,0,2,5}, 25};
+							jewelry.stones[dispType].count = 1;
+						else 
+							jewelry.stones[dispType].count = jewelry.stones[dispType].count + 1;
+						end
+					elseif not string.find(dispType, "Key") and not string.find(dispType, "DogTag") and (item:getDisplayCategory() == "Accessory" and ((string.find(dispType, "Ring") or string.find(dispType, "ring"))) or string.find(dispType, "necklace") or string.find(dispType, "Necklace") or string.find(dispType, "Bangle") or string.find(dispType, "Locket") or string.find(dispType, "Watch") or (string.find(dispType, "Nose") and string.find(dispType, "Stud")) or string.find(dispType, "BellyButton")) then
+						table.insert(jewelry.regular, {item, {0,0,1,0}, 10});
+						if not jewelry.regular[dispType] then jewelry.regular[dispType] = {};
+							jewelry.regular[dispType] = {item, {0,0,1,0}, 10};
+							jewelry.regular[dispType].count = 1;
+						else 
+							jewelry.regular[dispType].count = jewelry.regular[dispType].count + 1;
+						end
 					-- looking for GreenFireMod products  TODO Add more gfm items, add brita weapons
 					elseif GreenFireMod then
 						if dispCat == "GreenFireItem" then
 							if string.find(dispType, "Oz") then
 								table.insert(jewelry.green, {item, {0,1,0,0}, 100});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {0,1,0,0}, 100}};
+									jewelry.green[dispType].count = 1;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
 							elseif string.find(dispType, "Kg") then
 								table.insert(jewelry.green, {item, {4,5,0,0}, 4500});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {4,5,0,0}, 4500}};
+									jewelry.green[dispType].count = 1;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
 							elseif string.find(dispType, "DryCannabisFanLeaf") then
 								fanleaf = fanleaf + 1;
 								if fanleaf == 100 then
 									fanleaf = 0;
 									table.insert(jewelry.green, {item, {0,0,1,0}, 10, 100});
+									if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+										jewelry.green[dispType] = {item, {item, {0,0,1,0}, 10, 100}};
+										jewelry.green[dispType].count = 1;
+									else 
+										jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+									end
+								end
+							elseif dispType == "Hashish" then
+								table.insert(jewelry.green, {item, {2,5,0,0}, 2500});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {2,5,0,0}, 2500}};
+									jewelry.green[dispType].count = 1;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+							elseif dispType == "Kief" then
+								table.insert(jewelry.green, {item, {0,0,3,0}, 0030});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {0,0,3,0}, 0030}};
+									jewelry.green[dispType].count = 1;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
 							elseif(string.find(dispType, "CannaCigar") and not string.find(dispType, "Half")) then
 								table.insert(jewelry.green, {item, {0,0,6,0}, 60});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {0,0,6,0}, 60}};
+									jewelry.green[dispType].count = 1;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
 							end
 						end
 					end
@@ -154,26 +225,29 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	-- searching for vendor type to display correct context menus
 	if vendorType == "ATM Machine" then
 		-- looking for jewelry items that were found during the inventory search in the initial function
-		if #jewelry.tags == 0 and #jewelry.stones == 0 and #jewelry.regular == 0 and #jewelry.green == 0 then
+		if #jewelry.tags.items == 0 and #jewelry.stones == 0 and #jewelry.regular == 0 and #jewelry.green == 0 then
 			local subSubVendorOption = subSubMenu:addOptionOnTop(getText("ContextMenu_Nothing_To_Sell"), worldobjects);
 		else
 			local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_Sell_All"), worldobjects, Buy_VendorsItem, player, jewelry, true, 0, true);
-			if #jewelry.tags > 0 then
-				local jewelryName = jewelry.tags[1]:getName();
-				local subSubVendorOption = subSubMenu:addOption(getText(jewelryName) .. "($50)", worldobjects, Buy_VendorsItem, player, jewelry.tags[1], true, {0,0,5,0});
+			if #jewelry.tags.items > 0 then
+				Vendors_DisplayJewelryOptions(subSubMenu, context, playerObj)
 			end
-			if #jewelry.stones > 0 then
-				for i,v in pairs(jewelry.stones) do
+			if #jewelry.stones.items > 0 then
+				for i,v in pairs(jewelry.stones.items) do
+					local jewelryTable = v;
 					local jewelryName = v[1]:getName();
-					local jewelryTable = v;					
-					local subSubVendorOption = subSubMenu:addOption(getText(jewelryName) .. "($2)", worldobjects, Buy_VendorsItem, player, jewelryTable, true, {0,0,0,2});
+					local jewelryPrice = v[2];
+					local jewelryValue = v[3];
+					local subSubVendorOption = subSubMenu:addOption(jewelryName .. "($" .. jewelryValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice);
 				end
 			end
 			if #jewelry.regular > 0 then
 				for i,v in pairs(jewelry.regular) do
 					local jewelryTable = v;
 					local jewelryName = v[1]:getName();
-					local subSubVendorOption = subSubMenu:addOption(getText(jewelryName) .. "($1)", worldobjects, Buy_VendorsItem, player, jewelryTable, true, {0,0,0,1});
+					local jewelryPrice = v[2];
+					local jewelryValue = v[3];
+					local subSubVendorOption = subSubMenu:addOption(jewelryName .. "($" .. jewelryValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice);
 				end
 			end
 			if #jewelry.green > 0 then
@@ -374,7 +448,7 @@ end
 
 -- yeah, it says buy but we sell items here too.  I thought i was going to need a seperate function at first, turns out i could get it all with one!  woot!
 -- item is a table containing the item we're buying or selling.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment(also for buying engine parts now), sell 100 for $10.
-function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity)
+function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity, sellAllOfItem)
 	local playerObj = player;
 	local playerInv = playerObj:getInventory();
 	local itemTable = item;
@@ -382,9 +456,9 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 	local moneyQuantity = itemTable[2];
 	-- if were selling all the loot, then were searching through all the tables.  the tables of items that we're going to sell, not the ones filled with stuff we might buy.
 	if sellAll then
-		if #jewelry.tags > 0 then
-			for i,v in pairs(jewelry.tags) do
-				local jewelryItem = v[1]:getName();
+		if #jewelry.tags.items > 0 then
+			for i,v in ipairs(jewelry.tags.items) do
+				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
 				for	i = 1, moneyQuantity[1] do
 					playerInv:AddItem("Vendors.ThousandDollar");
@@ -402,8 +476,8 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			end
 		end
 		-- another bag of loot to sift through
-		if #jewelry.stones > 0 then
-			for i,v in pairs(jewelry.stones) do
+		if #jewelry.stones.items > 0 then
+			for i,v in pairs(jewelry.stones.items) do
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
 				for	i = 1, moneyQuantity[1] do
@@ -532,6 +606,26 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 	end
 end
 
+function Vendors_DisplayJewelryOptions(subSubMenu, context, player)
+	for i,v in pairs(jewelry.tags.items) do
+		local jewelryTable = v;
+		local jewelryName = jewelryTable[1]:getName();
+		local jewelryPrice = jewelryTable[2];
+		local jewelryValue = jewelryTable[3];
+		local jewelryType = jewelryTable[1]:getType();
+		if jewelry.tags[jewelryType].count > 1 and not jewelry.tags[jewelryType].menuCreated then
+			local jewelryOption = subSubMenu:addOption(jewelryName .. " ($" .. jewelryValue .. ")", worldobjects);
+			local subMenu = ISContextMenu:getNew(subSubMenu);
+			local subContext = context:addSubMenu(jewelryOption, subMenu);
+			local subVendorOption = subMenu:addOption(jewelryName .. "($" .. jewelryValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice);
+			local subVendorOption = subMenu:addOption(jewelryName .. " - Sell all for ($" .. jewelryValue*jewelry.tags[jewelryType].count .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice, false, jewelry.tags[jewelryType].count, true);
+			jewelry.tags[jewelryType].menuCreated = true;
+		elseif jewelry.tags[jewelryType].count == 1 then
+			local subSubVendorOption = subSubMenu:addOption(jewelryName .. "($" .. jewelryValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice);
+		end
+	end
+end
+
 function Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, playerInv)
 	local slotOption = subSubMenu:addOptionOnTop(getText("ContextMenu_Attachments"), worldobjects);
 	local subSubMenu = ISContextMenu:getNew(subSubMenu);
@@ -568,14 +662,14 @@ function Vendors_CheckMods()
 	filibuster = getActivatedMods():contains("FRUsedCars");
 	if britaMod then
 		weapons[1] = {"Box_Ammo", {"ShotgunShellsBox", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"40HERound", {10,0,0,0}, 10000, true, {100,0,0,0}}, {"40INCRound", {12,0,0,0}, 12000, true, {120,0,0,0}}, {"Bullets22Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"223Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"3006Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"308Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"Bullets357Box", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"Bullets38Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"Bullets380Box", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"Bullets44Box", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"Bullets4570Box", {0,2,0,0}, 0200, true, {2,5,0,0}}, {"Bullets45Box", {0,3,0,0}, 0300, true, {3,0,0,0}}, {"Bullets45LCBox", {0,2,0,0}, 0200, true, {2,0,0,0}}, {"545x39Box", {0,4,0,0}, 0400, true, {4,0,0,0}}, {"556Box", {0,4,5,0}, 0450, true, {4,5,0,0}}, {"Bullets57Box", {0,2,0,0}, 0200, true, {2,0,0,0}}, {"Bullets50MAGBox", {0,5,0,0}, 0500, true, {5,0,0,0}}, {"50BMGBox", {0,5,5,0}, 0550, true, {5,5,0,0}}, {"762x39Box", {0,5,0,0}, 0500, true, {5,0,0,0}}, {"762x51Box", {0,5,0,0}, 0500, true, {5,0,0,0}}, {"762x54rBox", {0,5,0,0}, 0500, true, {5,0,0,0}}};
-		weapons[2] = {"Magazines", {"12gDrum", {1,7,5,0}, 1750, false, "12g"}, {"SPASClip", {0,3,0,0}, 0300, false, "12g"}, {"SIX12_Cylinder", {2,5,0,0}, 2500, false, "12g"}, {"22Drum", {1,7,5,0}, 1750, false, ".22-LR"}, {"22ExtClip", {0,3,0,0}, 0300, false, ".22-LR"}, {"22Clip", {0,3,0,0}, 0300, false, ".22-LR"}, {"223Clip", {0,3,0,0}, 0300, false, ".223-REM"}, {"223ExtClip", {0,3,0,0}, 0300, false, ".223"}, {"1903Clip", {0,3,0,0}, 0300, false, "30-06 SPRG"}, {"3006ExtClip", {0,3,0,0}, 0300, false, "30-06 SPRG"}, {"308Belt", {1,7,5,0}, 1750, false, ".308"}, {"308MiniCan", {0,3,0,0}, 0300, false, ".308"}, {"308StdClip", {0,3,0,0}, 0300, false, ".308"}, {"308ExtClip", {0,3,0,0}, 0300, false, ".308"}, {"357Speed", {0,3,0,0}, 0300, false, ".357-MAG"}, {"38Clip", {0,3,0,0}, 0300, false, ".38-SPC"}, {"38Speed", {0,3,0,0}, 0300, false, ".38-SPC"}, {"380ExtClip", {0,3,0,0}, 0300, false, ".380-ACP"}, {"380Clip", {0,3,0,0}, 0300, false, ".380-ACP"}, {"44Clip", {0,2,5,0}, 0250, false, ".44-MAG"}, {"44Speed", {0,3,0,0}, 0300, false, ".44-MAG"}, {"45Clip", {0,2,5,0}, 0250, false, ".45-ACP"}, {"45ExtClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45DSClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45DSExtClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45LCSpeed", {0,3,0,0}, 0300, false, ".45-LC"}, {"50MiniCan", {0,3,0,0}, 0300, false, ".50 BMG"}, {"M82Clip", {0,3,5,0}, 0350, false, ".50 BMG"}, {"545Drum", {1,7,5,0}, 1750, false, "5.45"}, {"545StdClip", {0,3,0,0}, 0300, false, "5.45"}, {"556Belt", {1,7,5,0}, 1750, false, "5.56"}, {"556Drum", {1,7,5,0}, 1750, false, "5.56"}, {"556Clip", {0,3,5,0}, 0350, false, "5.56"}, {"556MiniCan", {0,3,5,0}, 0350, false, "5.56"}, {"57Clip", {0,3,5,0}, 0350, false, "5.7x28"}, {"P90Clip", {0,3,5,0}, 0350, false, "5.7x28"}, {"M14Clip", {0,3,0,0}, 0300, false, ".308"}, {"762x39Belt", {1,7,5,0}, 1750, false, "7.62x39"}, {"762Drum", {1,7,5,0}, 1750, false, "7.62x39"}, {"AKClip", {0,3,5,0}, 0350, false, "7.62x39"}, {"SKSClip", {0,3,5,0}, 0350, false, "7.62x39"}, {"762x54rBelt", {1,7,5,0}, 1750, false, "7.62x54"}, {"SVDClip", {0,3,5,0}, 0350, false, "7.62x54"}, {"MosinClip", {0,3,5,0}, 0350, false, "7.62x54"}, {"9mmClip", {0,3,0,0}, 0300, false, "9mm"}, {"9mmExtClip", {0,3,0,0}, 0300, false, "9mm"}, {"9mmDrum", {1,7,5,0}, 1750, false, "9mm"}, {"ASHClip", {0,3,0,0}, 0300, false, ".50 MAG"}};
+		weapons[2] = {"Magazines", {"12gDrum", {1,7,5,0}, 1750, false, "12g"}, {"SPASClip", {0,3,0,0}, 0300, false, "12g"}, {"SIX12_Cylinder", {2,5,0,0}, 2500, false, "12g"}, {"22Drum", {1,7,5,0}, 1750, false, ".22-LR"}, {"22ExtClip", {0,3,0,0}, 0300, false, ".22-LR"}, {"22Clip", {0,3,0,0}, 0300, false, ".22-LR"}, {"223Clip", {0,3,0,0}, 0300, false, ".223-REM"}, {"223ExtClip", {0,3,0,0}, 0300, false, ".223"}, {"1903Clip", {0,3,0,0}, 0300, false, "30-06 SPRG"}, {"3006ExtClip", {0,3,0,0}, 0300, false, "30-06 SPRG"}, {"308Belt", {1,7,5,0}, 1750, false, ".308"}, {"308MiniCan", {0,3,0,0}, 0300, false, ".308"}, {"308StdClip", {0,3,0,0}, 0300, false, ".308"}, {"308ExtClip", {0,3,0,0}, 0300, false, ".308"}, {"357Speed", {0,3,0,0}, 0300, false, ".357-MAG"}, {"38Clip", {0,3,0,0}, 0300, false, ".38-SPC"}, {"38Speed", {0,3,0,0}, 0300, false, ".38-SPC"}, {"380ExtClip", {0,3,0,0}, 0300, false, ".380-ACP"}, {"380Clip", {0,3,0,0}, 0300, false, ".380-ACP"}, {"44Clip", {0,2,5,0}, 0250, false, ".44-MAG"}, {"44Speed", {0,3,0,0}, 0300, false, ".44-MAG"}, {"45Clip", {0,2,5,0}, 0250, false, ".45-ACP"}, {"45ExtClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45DSClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45DSExtClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45Drum", {1,7,5,0}, 1750, false, ".45-ACP"}, {"45LCSpeed", {0,3,0,0}, 0300, false, ".45-LC"}, {"50MiniCan", {0,3,0,0}, 0300, false, ".50 BMG"}, {"M82Clip", {0,3,5,0}, 0350, false, ".50 BMG"}, {"545Drum", {1,7,5,0}, 1750, false, "5.45"}, {"545StdClip", {0,3,0,0}, 0300, false, "5.45"}, {"556Belt", {1,7,5,0}, 1750, false, "5.56"}, {"556Drum", {1,7,5,0}, 1750, false, "5.56"}, {"556Clip", {0,3,5,0}, 0350, false, "5.56"}, {"556MiniCan", {0,3,5,0}, 0350, false, "5.56"}, {"57Clip", {0,3,5,0}, 0350, false, "5.7x28"}, {"P90Clip", {0,3,5,0}, 0350, false, "5.7x28"}, {"M14Clip", {0,3,0,0}, 0300, false, ".308"}, {"762x39Belt", {1,7,5,0}, 1750, false, "7.62x39"}, {"762Drum", {1,7,5,0}, 1750, false, "7.62x39"}, {"AKClip", {0,3,5,0}, 0350, false, "7.62x39"}, {"SKSClip", {0,3,5,0}, 0350, false, "7.62x39"}, {"762x54rBelt", {1,7,5,0}, 1750, false, "7.62x54"}, {"SVDClip", {0,3,5,0}, 0350, false, "7.62x54"}, {"MosinClip", {0,3,5,0}, 0350, false, "7.62x54"}, {"9mmClip", {0,3,0,0}, 0300, false, "9mm"}, {"9mmExtClip", {0,3,0,0}, 0300, false, "9mm"}, {"9mmDrum", {1,7,5,0}, 1750, false, "9mm"}, {"ASHClip", {0,3,0,0}, 0300, false, ".50 MAG"}};
 		weapons[3] = {"Attachments", {"Sight_3xEOTech", {0,3,5,0}, 0350, false, "Sight"}, {"Sight_4xACOG", {0,3,5,0}, 0350, false, "Sight"}, {"Sight_Aimpoint_Dot", {0,3,5,0}, 0350, false, "Sight"}, {"Sight_Thermal", {0,3,5,0}, 0350, false, "Sight"}, {"Laser_PEQ15", {0,3,5,0}, 0350, false, "Side"}, {"Choke_Full", {0,2,0,0}, 0200, false, "Barrel"}, {"ChokeTubeImproved", {0,2,0,0}, 0200, false, "Barrel"}, {"FiberglassStock", {0,1,5,0}, 0150, false, "Stock"}, {"Sight_Malcom", {0,4,5,0}, 0450, false, "Sight"}, {"IronSight", {0,1,0,0}, 0100, false, "Sight"}, {"Laser", {0,2,0,0}, 0200, false, "Side"}, {"Sight_VX3", {0,4,5,0}, 0450, false, "Sight"}, {"RecoilPad", {0,1,0,0}, 0100, false, "Stock"}, {"Pad", {0,1,0,0}, 0100, false, "Stock"}, {"RedDot", {0,2,0,0}, 0200, false, "Sight"}, {"Sight_G28_Scope", {0,4,5,0}, 0450, false, "Sight"}, {"Sling_1", {0,1,5,0}, 0150, false, "Bottom"}, {"Sling_2", {0,1,5,0}, 0150, false, "Bottom"}, {"Sling_3", {0,1,5,0}, 0150, false, "Bottom"}, {"Launcher", {1,2,5,0}, 1250, false, "Bottom"}, {"Suppressor_BMG", {0,5,0,0}, 0500, false, "Barrel"}, {"Suppressor_ROME_BMG", {0,5,5,0}, 0550, false, "Barrel"}, {"Suppressor_Pistol", {0,4,0,0}, 0400, false, "Barrel"}, {"Suppressor_SOCOM_Pistol", {0,4,5,0}, 0450, false, "Barrel"}, {"Suppressor_Shotgun", {0,4,5,0}, 0450, false, "Barrel"}, {"Suppressor_Rifle", {0,4,5,0}, 0450, false, "Barrel"}, {"Suppressor_PBS1_Rifle", {0,5,5,0}, 0550, false, "Barrel"}, {"x2Scope", {0,3,0,0}, 0300, false, "Sight"}, {"x4Scope", {0,3,5,0}, 0350, false, "Sight"}, {"x8Scope", {0,4,0,0}, 0400, false, "Sight"}};
 		weapons[4] = {"Caliber", "12g", ".22-LR", ".223-REM", "30-06 SPRG", ".308", ".357-MAG", ".38-SPC", ".380-ACP", ".44-MAG", ".45-ACP", ".45-LC", "5.45", "5.56", "5.7x28", ".50 MAG", ".50 BMG", "7.62x39", "7.62x54", "9mm"};
 		weapons[5] = {"Pistols", {"Automag", {3,5,0,0}, 3500, false, ".44-MAG"}, {"B93R", {3,0,0,0}, 3000, false, "9mm"}, {"M9", {3,0,0,0}, 3000, false, "9mm"}, {"M9A3", {3,0,0,0}, 3000, false, "9mm"}, {"CZ75", {3,0,0,0}, 3000, false, "9mm"}, {"G17", {3,0,0,0}, 3000, false, "9mm"}, {"G18", {3,0,0,0}, 3000, false, "9mm"}, {"G21", {3,0,0,0}, 3000, false, ".45-ACP"}, {"G42", {3,0,0,0}, 3000, false, ".380-ACP"}, {"Pistol3", {3,0,0,0}, 3000, false, ".44-MAG"}, {"Pistol2", {3,0,0,0}, 3000, false, ".45 Auto"}, {"Revolver_Long", {2,0,0,0}, 2000, false, ".44-MAG"}, {"Revolver", {2,0,0,0}, 2000, false, ".45 Auto"}, {"Revolver_Short", {1,5,0,0}, 1500, false, ".38-SPC"}, {"M4506", {3,0,0,0}, 3000, false, ".45-ACP"}, {"M5238", {3,0,0,0}, 3000, false, ".38-SPC"}, {"M5906", {3,0,0,0}, 3000, false, "9mm"}, {"Pistol", {2,5,0,0}, 2500, false, "9mm"}};
 		weapons[6] = {"Shotguns", {"DAO12", {2,5,0,0}, 2500, false, "12g"}, {"AA12", {4,5,0,0}, 4500, false, "12g"}, {"DT11", {2,5,0,0}, 2500, false, "12g"}, {"CAWS", {4,5,0,0}, 4500, false, "12g"}, {"DoubleBarrelShotgun", {0,7,5,0}, 750, false, "12g"}, {"Shotgun", {2,5,0,0}, 2500, false, "12g"}, {"SIX12SD", {6,5,0,0}, 6500, false, "12g"}};
 		weapons[7] = {"Rifles", {"AK103", {7,5,0,0}, 7500, false, "7.62x39"}, {"AK12_New", {7,5,0,0}, 7500, false, "5.45"}, {"AK47", {7,5,0,0}, 7500, false, "7.62x39"}, {"AK74", {7,5,0,0}, 7500, false, "5.45"}, {"AKM", {7,5,0,0}, 7500, false, "7.62x39"}, {"M4A1", {8,5,0,0}, 8500, false, "5.56"}, {"DR_200", {7,5,0,0}, 7500, false, "5.56"}, {"K2_1", {7,5,0,0}, 7500, false, "5.56"}, {"SVDK", {10,0,0,0}, 10000, false, "7.62x54"}, {"EDM96", {12,0,0,0}, 12000, false, ".50 BMG"}, {"Gepard_M6", {12,0,0,0}, 12000, false, ".50 BMG"}, {"G11K3", {7,5,0,0}, 7500, false, "5.7x28"}, {"G36KV", {7,5,0,0}, 7500, false, "5.56"}, {"HuntingRifle", {4,5,0,0}, 4500, false, ".308"}, {"AssaultRifle2", {7,5,0,0}, 7500, false, ".308"}, {"AssaultRifle", {10,0,0,0}, 10000, false, "5.56"}, {"M40A1", {7,5,0,0}, 7500, false, ".308"}, {"M40A3", {7,5,0,0}, 7500, false, ".308"}, {"VarmintRifle", {3,5,0,0}, 3500, false, ".223-REM"}};
 		weapons[9] = {"SMGs", {"CAR15SMG", {6,0,0,0}, 6000, false, "5.56"}, {"K1_1", {6,0,0,0}, 6000, false, "5.56"}, {"K7_Stock", {6,0,0,0}, 6000, false, "9mm"}};
-		weapons[10] = {"LMGs", {"K3LMG"{12,0,0,0}, 12000, false, "5.56"}, {"G21LMG", {12,0,0,0}, 12000, false, ".308"}, {"XM8LMG", {12,0,0,0}, 12000, false, "5.56"}, {"M249", {12,0,0,0}, 12000, false, "5.56"}, {"K12", {12,0,0,0}, 12000, false, ".308"}};
+		weapons[10] = {"LMGs", {"K3LMG", {12,0,0,0}, 12000, false, "5.56"}, {"G21LMG", {12,0,0,0}, 12000, false, ".308"}, {"XM8LMG", {12,0,0,0}, 12000, false, "5.56"}, {"M249", {12,0,0,0}, 12000, false, "5.56"}, {"K12", {12,0,0,0}, 12000, false, ".308"}};
 	end
 end
 
