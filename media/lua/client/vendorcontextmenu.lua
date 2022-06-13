@@ -16,23 +16,14 @@ vehicles.parts[1] = {{"CarBattery1", {1,0,0,0}, 1000}, {"FrontCarDoor1", {1,0,0,
 vehicles.parts[2] = {{"CarBattery1", {5,0,0,0}, 5000}, {"FrontCarDoor1", {5,0,0,0}, 5000}, {"EngineDoor1", {5,0,0,0}, 5000}, {"ModernBrake1", {5,0,0,0}, 5000}, {"TrunkDoor1", {5,0,0,0}, 5000}, {"RearCarDoor1", {5,0,0,0}, 5000}, {"RearCarDoorDouble1", {5,0,0,0}, 5000}, {"BigGasTank1", {5,0,0,0}, 5000}, {"ModernCarMuffler1", {5,0,0,0}, 5000}, {"NormalCarSeat1", {5,0,0,0}, 5000}, {"ModernSuspension1", {5,0,0,0}, 5000}, {"ModernTire1", {5,0,0,0}, 5000}, {"Windshield1", {5,0,0,0}, 5000}, {"RearWindshield1", {5,0,0,0}, 5000}, {"FrontWindow1", {5,0,0,0}, 5000}, {"RearWindow1", {5,0,0,0}, 5000}, "Sport"};
 vehicles.parts[3] = {{"CarBattery1", {10,0,0,0}, 10000}, {"FrontCarDoor1", {10,0,0,0}, 10000}, {"EngineDoor1", {10,0,0,0}, 10000}, {"ModernBrake1", {10,0,0,0}, 10000}, {"TrunkDoor1", {10,0,0,0}, 10000}, {"RearCarDoor1", {10,0,0,0}, 10000}, {"RearCarDoorDouble1", {10,0,0,0}, 10000}, {"BigGasTank1", {10,0,0,0}, 10000}, {"ModernCarMuffler1", {10,0,0,0}, 10000}, {"NormalCarSeat1", {10,0,0,0}, 10000}, {"ModernSuspension1", {10,0,0,0}, 10000}, {"ModernTire1", {10,0,0,0}, 10000}, {"Windshield1", {10,0,0,0}, 10000}, {"RearWindshield1", {10,0,0,0}, 10000}, {"FrontWindow1", {10,0,0,0}, 10000}, {"RearWindow1", {10,0,0,0}, 10000}, "Heavy-Duty"};
 local weapons = {};
-weapons[1] = {"Box_Ammo", {"223Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"308Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"Bullets38Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}, {"ShotgunShellsBox", {0,1,5,0}, 0150, true, {1,5,0,0}}};
-weapons[2] = {"Magazines", {"223Clip", {0,3,0,0}, 0300, false, ".223"}, {"308Clip", {0,3,0,0}, 0300, false, ".308"}, {"44Clip", {0,2,5,0}, 0250, false, "44-MAG"}, {"45Clip", {0,2,5,0}, 0250, false, "45 Auto"}, {"556Clip", {0,3,5,0}, 0350, false, "5.56"}, {"M14Clip", {0,3,0,0}, 0300, false, ".308"}, {"9mmClip", {0,3,0,0}, 0300, false, "9mm"}};
-weapons[3] = {"Attachments", {"ChokeTubeImproved", {0,2,0,0}, 0200, false}, {"FiberglassStock", {0,1,5,0}, 0150, false}, {"IronSight", {0,1,0,0}, 0100, false}, {"Laser", {0,2,0,0}, 0200, false}, {"RecoilPad", {0,1,0,0}, 0100, false}, {"RedDot", {0,2,0,0}, 0200, false}, {"Sling", {0,1,5,0}, 0150, false}, {"x2Scope", {0,3,0,0}, 0300, false}, {"x4Scope", {0,3,5,0}, 0350, false}, {"x8Scope", {0,4,0,0}, 0400, false, ".223"}};
-weapons[4] = {"Caliber", ".223", ".308", "44-MAG", "45 Auto", "5.56", "9mm"}
-weapons[5] = {"Pistols", {"Pistol", {2,5,0,0}, 2500, false, "9mm"}, {"Pistol2", {3,0,0,0}, 3000, false, "45 Auto"}, {"Pistol3", {3,0,0,0}, 3000, false, "44-MAG"}, {"Revolver_Long", {2,0,0,0}, 2000, false, "44-MAG"}, {"Revolver", {2,0,0,0}, 2000, false, "45 Auto"}, {"Revolver_Short", {1,5,0,0}, 1500, false, "38-SPC"}};
-weapons[6] = {"Shotguns", {"DoubleBarrelShotgun", {0,7,5,0}, 750, false, "12ga"}, {"Shotgun", {2,5,0,0}, 2500, false, "12ga"}}
-weapons[7] = {"Rifles", {"AssaultRifle2", {7,5,0,0}, 7500, false, ".308"}, {"AssaultRifle", {10,0,0,0}, 10000, false, "5.56"}, {"VarmintRifle", {3,5,0,0}, 3500, false, ".223"}, {"HuntingRifle", {4,5,0,0}, 4500, false, ".308"}};
-local brita = {};
-brita[1] = {"Box_Ammo"};
-brita[2] = {"Magazines", {"556Drum", {3,0,0,0}, 3000, false, 556}, {"Bullest50Mag", {4,0,0,0}, 3000, false, 50}, {"ShotgunShells", {1,0,0,0}, 1000, false, 50}, {"Bullest50Mag", {3,0,0,0}, 3000, false, 50}, {"Bullest50Mag", {3,0,0,0}, 3000, false, 50}, }
-brita[3] = {"Attachments"};
-brita[4] = {"Ammo", 50, 762};
-brita[5] = {"Pistols"};
-brita[6] = {"Shotguns"};
-brita[7] = {"Rifles"};
-brita[8] = {"LMGs"};
-brita[9] = {"SMGs"};
+weapons[1] = {"Box_Ammo", {"ShotgunShellsBox", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"223Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"308Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"Bullets38Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}};
+weapons[2] = {"Magazines", {"223Clip", {0,3,0,0}, 0300, false, ".223-REM"}, {"308Clip", {0,3,0,0}, 0300, false, ".308"}, {"44Clip", {0,2,5,0}, 0250, false, ".44-MAG"}, {"45Clip", {0,2,5,0}, 0250, false, ".45 Auto"}, {"556Clip", {0,3,5,0}, 0350, false, "5.56"}, {"M14Clip", {0,3,0,0}, 0300, false, ".308"}, {"9mmClip", {0,3,0,0}, 0300, false, "9mm"}};
+weapons[3] = {"Attachments", {"ChokeTubeImproved", {0,2,0,0}, 0200, false, "Barrel"}, {"FiberglassStock", {0,1,5,0}, 0150, false, "Stock"}, {"IronSight", {0,1,0,0}, 0100, false, "Sight"}, {"Laser", {0,2,0,0}, 0200, false, "Side"}, {"RecoilPad", {0,1,0,0}, 0100, false, "Stock"}, {"RedDot", {0,2,0,0}, 0200, false, "Sight"}, {"Sling", {0,1,5,0}, 0150, false, "Bottom"}, {"x2Scope", {0,3,0,0}, 0300, false, "Sight"}, {"x4Scope", {0,3,5,0}, 0350, false, "Sight"}, {"x8Scope", {0,4,0,0}, 0400, false, "Sight"}};
+weapons[4] = {"Caliber", "12g", ".223-REM", ".308", ".44-MAG", ".45 Auto", "5.56", "9mm"};
+weapons[5] = {"Pistols", {"Pistol", {2,5,0,0}, 2500, false, "9mm"}, {"Pistol2", {3,0,0,0}, 3000, false, ".45 Auto"}, {"Pistol3", {3,0,0,0}, 3000, false, ".44-MAG"}, {"Revolver_Long", {2,0,0,0}, 2000, false, ".44-MAG"}, {"Revolver", {2,0,0,0}, 2000, false, ".45 Auto"}, {"Revolver_Short", {1,5,0,0}, 1500, false, ".38-SPC"}};
+weapons[6] = {"Shotguns", {"DoubleBarrelShotgun", {0,7,5,0}, 750, false, "12g"}, {"Shotgun", {2,5,0,0}, 2500, false, "12g"}};
+weapons[7] = {"Rifles", {"AssaultRifle2", {7,5,0,0}, 7500, false, ".308"}, {"AssaultRifle", {10,0,0,0}, 10000, false, "5.56"}, {"VarmintRifle", {3,5,0,0}, 3500, false, ".223-REM"}, {"HuntingRifle", {4,5,0,0}, 4500, false, ".308"}};
+weapons[8] = {"Slots", "Barrel", "Bottom", "Side", "Sight", "Stock"};
 jewelry[0] = {};
 jewelry[1] = {};
 jewelry.stones = {};
@@ -42,9 +33,11 @@ local vendorsFoods = {};
 vendorsFoods[1] = {{"farming.BaconBits", {0,0,1,0}, 10}, {"farming.BaconRashers", {0,0,1,0}, 10}, {"Crisps", {0,0,1,0}, 10}, {"Chocolate", {0,0,1,0}, 10}, {"EggBoiled", {0,0,1,0}, 10}, {"EggPoached", {0,0,1,0}, 10}, {"FriedOnionRingsCraft", {0,0,1,0}, 10}, {"DehydratedMeatStick", {0,0,1,0}, 10}, {"NoodleSoup", {0,0,1,0}, 10}};
 vendorsFoods[2] = {{"BeanBowl", {0,0,4,0}, 40}, {"CerealBowl", {0,0,4,0}, 40}, {"PastaBowl", {0,0,4,0}, 40}, {"RiceBowl", {0,0,4,0}, 40}, {"SoupBowl", {0,0,4,0}, 40}, {"StewBowl", {0,0,4,0}, 40}, {"Oatmeal", {0,0,4,0}, 40}, {"SushiFish", {0,0,4,0}, 40}};
 vendorsFoods[3] = {{"Ham", {0,1,0,0}, 100}, {"MeatPatty", {0,1,0,0}, 100}, {"MincedMeat", {0,1,0,0}, 100}, {"Steak", {0,1,0,0}, 100}, {"Chicken", {0,1,0,0}, 100}, {"Baloney", {0,1,0,0}, 100}, {"MuttonChop", {0,1,0,0}, 100}, {"PorkChop", {0,1,0,0}, 100}, {"Lobster", {0,1,0,0}, 100}, {"Salmon", {0,1,0,0}, 100}, {"Squid", {0,1,0,0}, 100}, {"Watermelon", {0,1,0,0}, 100}};
-local vendorWallet = {}
+local vendorWallet = {};
 
 function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, test)
+Vendors_CheckMods();
+print(britaMod);
 	-- reset values for inventory search.
 	local fanleaf = 0;
 	jewelry.stones = {};
@@ -338,7 +331,9 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 						end
 					end
 				end
-			elseif subTable[1] ~= "Magazines" then
+			elseif subTable[1] == "Slots" then
+					Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, playerInv);
+			elseif subTable[1] ~= "Magazines"  and subTable[1] ~= "Attachments" then
 				local weaponOptions = subTable[1];
 				local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. weaponOptions), worldobjects);
 				local subSubMenu = ISContextMenu:getNew(subSubMenu);
@@ -359,13 +354,16 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 						if weaponItemIsWeapon then
 							local weaponItemAmmoType = weapon[5];
 							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - (" .. weaponItemAmmoType .. ") - ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false);
-						else
-							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false);
-						end
-						if multipleBuy == true then
+						elseif multipleBuy == true then
+							local ammoBoxOption = subSubMenu:addOption(weaponItemName, worldobjects);
+							local subSubMenu = ISContextMenu:getNew(subSubMenu);
+							local subContext = context:addSubMenu(ammoBoxOption, subSubMenu);
+							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - 1 for ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false);
 							weapon[2] = weapon[5];
 							weaponValue = weaponValue*10;
 							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - 10 for ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false, 10);				
+						else
+							local subSubVendorOption = subSubMenu:addOption(weaponItemName .. " - ($" .. weaponValue .. ")", worldobjects, Buy_VendorsItem, player, weapon, false, weaponPrice, false);
 						end
 					end
 				end
@@ -501,7 +499,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		playerObj:Say("SOLD!");
 		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long,  giving correct change now.
 	elseif not sell and not sellAll then
-		if quantity then moneyInteger = moneyInteger*quantity; end
+		if quantity and item[1] ~= "EngineParts" then moneyInteger = moneyInteger*quantity; end
 		if vendMoney.total >= moneyInteger then
 			if quantity then
 				for i=1,quantity-1 do
@@ -536,11 +534,49 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 	end
 end
 
+function Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, playerInv)
+	local slotOption = subSubMenu:addOptionOnTop(getText("ContextMenu_Attachments"), worldobjects);
+	local subSubMenu = ISContextMenu:getNew(subSubMenu);
+	local subContext = context:addSubMenu(slotOption, subSubMenu);
+	for h,w in pairs(subTable) do
+		local slotOptions = w;
+		if slotOptions ~= "Slots" then
+			local attachmentOption = subSubMenu:addOption(getText("ContextMenu_" .. slotOptions), worldobjects);
+			local subSubMenu = ISContextMenu:getNew(subSubMenu);
+			local subContext = context:addSubMenu(attachmentOption, subSubMenu);
+			for n,o in pairs(weapons[3]) do
+				local slot = o[5];
+				if slot == slotOptions then
+					local attachment = o;
+					local attachmentName = attachment[1];
+					-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu and for comparing against the wallet
+					local attachmentPrice = attachment[2];
+					local attachmentValue = attachment[3];
+					local attachmentItem = playerInv:AddItem(attachmentName);
+					local attachmentItemType = attachmentItem:getType();
+					local attachmentItemName = attachmentItem:getName();
+					playerInv:Remove(attachmentItem);
+					local subSubVendorOption = subSubMenu:addOption(attachmentItemName .. "($" .. attachmentValue .. ")", worldobjects, Buy_VendorsItem, player, attachment, false, attachmentPrice, false);
+				end
+			end
+		end
+	end
+end
+
 function Vendors_CheckMods()
 	britaMod = getActivatedMods():contains("Brita");
 	brita_2Mod = getActivatedMods():contains("Brita_2");
 	GreenFireMod = getActivatedMods():contains("jiggasGreenfireMod");
 	filibuster = getActivatedMods():contains("FRUsedCars");
+	if britaMod then
+		weapons[1] = {"Box_Ammo", {"ShotgunShellsBox", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"Bullets22Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"223Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"3006Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"308Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"Bullets357Box", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"Bullets38Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"Bullets380Box", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"Bullets44Box", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"Bullets4570Box", {0,2,0,0}, 0200, true, {2,5,0,0}}, {"Bullets45Box", {0,3,0,0}, 0300, true, {3,0,0,0}}, {"Bullets45LCBox", {0,2,0,0}, 0200, true, {2,0,0,0}}, {"545x39Box", {0,4,0,0}, 0400, true, {4,0,0,0}}, {"556Box", {0,4,5,0}, 0450, true, {4,5,0,0}}, {"Bullets57Box", {0,2,0,0}, 0200, true, {2,0,0,0}}, {"Bullets50MAGBox", {0,5,0,0}, 0500, true, {5,0,0,0}}, {"50BMGBox", {0,5,5,0}, 0550, true, {5,5,0,0}}, {"762x39Box", {0,5,0,0}, 0500, true, {5,0,0,0}}, {"762x51Box", {0,5,0,0}, 0500, true, {5,0,0,0}}, {"762x54rBox", {0,5,0,0}, 0500, true, {5,0,0,0}}};
+		weapons[2] = {"Magazines", {"12gDrum", {1,7,5,0}, 1750, false, "12g"}, {"SPASClip", {0,3,0,0}, 0300, false, "12g"}, {"22Drum", {1,7,5,0}, 1750, false, ".22-LR"}, {"22ExtClip", {0,3,0,0}, 0300, false, ".22-LR"}, {"22Clip", {0,3,0,0}, 0300, false, ".22-LR"}, {"223Clip", {0,3,0,0}, 0300, false, ".223-REM"}, {"223ExtClip", {0,3,0,0}, 0300, false, ".223"}, {"1903Clip", {0,3,0,0}, 0300, false, "30-06 SPRG"}, {"3006ExtClip", {0,3,0,0}, 0300, false, "30-06 SPRG"}, {"308Belt", {1,7,5,0}, 1750, false, ".308"}, {"308MiniCan", {0,3,0,0}, 0300, false, ".308"}, {"308StdClip", {0,3,0,0}, 0300, false, ".308"}, {"308ExtClip", {0,3,0,0}, 0300, false, ".308"}, {"357Speed", {0,3,0,0}, 0300, false, ".357-MAG"}, {"38Clip", {0,3,0,0}, 0300, false, ".38-SPC"}, {"38Speed", {0,3,0,0}, 0300, false, ".38-SPC"}, {"380ExtClip", {0,3,0,0}, 0300, false, ".380"}, {"380Clip", {0,3,0,0}, 0300, false, ".380"}, {"44Clip", {0,2,5,0}, 0250, false, ".44-MAG"}, {"44Speed", {0,3,0,0}, 0300, false, ".44-MAG"}, {"45Clip", {0,2,5,0}, 0250, false, ".45-ACP"}, {"45ExtClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45DSClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45DSExtClip", {0,3,0,0}, 0300, false, ".45-ACP"}, {"45LCSpeed", {0,3,0,0}, 0300, false, ".45-LC"}, {"50MiniCan", {0,3,0,0}, 0300, false, ".50 BMG"}, {"M82Clip", {0,3,5,0}, 0350, false, ".50 BMG"}, {"545Drum", {1,7,5,0}, 1750, false, "5.45"}, {"545StdClip", {0,3,0,0}, 0300, false, "5.45"}, {"556Belt", {1,7,5,0}, 1750, false, "5.56"}, {"556Drum", {1,7,5,0}, 1750, false, "5.56"}, {"556Clip", {0,3,5,0}, 0350, false, "5.56"}, {"556MiniCan", {0,3,5,0}, 0350, false, "5.56"}, {"57Clip", {0,3,5,0}, 0350, false, "5.7x28"}, {"P90Clip", {0,3,5,0}, 0350, false, "5.7x28"}, {"M14Clip", {0,3,0,0}, 0300, false, ".308"}, {"762x39Belt", {1,7,5,0}, 1750, false, "7.62x39"}, {"762Drum", {1,7,5,0}, 1750, false, "7.62x39"}, {"AKClip", {0,3,5,0}, 0350, false, "7.62x39"}, {"SKSClip", {0,3,5,0}, 0350, false, "7.62x39"}, {"762x54rBelt", {1,7,5,0}, 1750, false, "7.62x54"}, {"SVDClip", {0,3,5,0}, 0350, false, "7.62x54"}, {"MosinClip", {0,3,5,0}, 0350, false, "7.62x54"}, {"9mmClip", {0,3,0,0}, 0300, false, "9mm"}, {"9mmExtClip", {0,3,0,0}, 0300, false, "9mm"}, {"9mmDrum", {1,7,5,0}, 1750, false, "9mm"}, {"ASHClip", {0,3,0,0}, 0300, false, ".50 MAG"}};
+		weapons[3] = {"Attachments", {"Sight_3xEOTech", {0,3,5,0}, 0350, false, "Sight"}, {"Sight_4xACOG", {0,3,5,0}, 0350, false, "Sight"}, {"Sight_Aimpoint_Dot", {0,3,5,0}, 0350, false, "Sight"}, {"Sight_Thermal", {0,3,5,0}, 0350, false, "Sight"}, {"Laser_PEQ15", {0,3,5,0}, 0350, false, "Side"}, {"Choke_Full", {0,2,0,0}, 0200, false, "Barrel"}, {"ChokeTubeImproved", {0,2,0,0}, 0200, false, "Barrel"}, {"FiberglassStock", {0,1,5,0}, 0150, false, "Stock"}, {"Sight_Malcom", {0,4,5,0}, 0450, false, "Sight"}, {"IronSight", {0,1,0,0}, 0100, false, "Sight"}, {"Laser", {0,2,0,0}, 0200, false, "Side"}, {"Sight_VX3", {0,4,5,0}, 0450, false, "Sight"}, {"RecoilPad", {0,1,0,0}, 0100, false, "Stock"}, {"Pad", {0,1,0,0}, 0100, false, "Stock"}, {"RedDot", {0,2,0,0}, 0200, false, "Sight"}, {"Sight_G28_Scope", {0,4,5,0}, 0450, false, "Sight"}, {"Sling_1", {0,1,5,0}, 0150, false, "Bottom"}, {"Sling_2", {0,1,5,0}, 0150, false, "Bottom"}, {"Sling_3", {0,1,5,0}, 0150, false, "Bottom"}, {"Suppressor_BMG", {0,5,0,0}, 0500, false, "Barrel"}, {"Suppressor_ROME_BMG", {0,5,5,0}, 0550, false, "Barrel"}, {"Suppressor_Pistol", {0,4,0,0}, 0400, false, "Barrel"}, {"Suppressor_SOCOM_Pistol", {0,4,5,0}, 0450, false, "Barrel"}, {"Suppressor_Shotgun", {0,4,5,0}, 0450, false, "Barrel"}, {"Suppressor_Rifle", {0,4,5,0}, 0450, false, "Barrel"}, {"Suppressor_PBS1_Rifle", {0,5,5,0}, 0550, false, "Barrel"}, {"x2Scope", {0,3,0,0}, 0300, false, "Sight"}, {"x4Scope", {0,3,5,0}, 0350, false, "Sight"}, {"x8Scope", {0,4,0,0}, 0400, false, "Sight"}};
+		weapons[4] = {"Caliber", "12g", ".22-LR", ".223-REM", "30-06 SPRG", ".308", ".357-MAG", ".38-SPC", ".380", ".44-MAG", ".45-ACP", ".45-LC", "5.45", "5.56", "5.7x28", ".50 MAG", ".50 BMG", "7.62x39", "7.62x54", "9mm"};
+		--weapons[5] = {"Pistols", {"Pistol", {2,5,0,0}, 2500, false, "9mm"}, {"Pistol2", {3,0,0,0}, 3000, false, ".45 Auto"}, {"Pistol3", {3,0,0,0}, 3000, false, ".44-MAG"}, {"Revolver_Long", {2,0,0,0}, 2000, false, ".44-MAG"}, {"Revolver", {2,0,0,0}, 2000, false, ".45 Auto"}, {"Revolver_Short", {1,5,0,0}, 1500, false, ".38-SPC"}};
+		--weapons[6] = {"Shotguns", {"DoubleBarrelShotgun", {0,7,5,0}, 750, false, "12g"}, {"Shotgun", {2,5,0,0}, 2500, false, "12g"}};
+		--weapons[7] = {"Rifles", {"AssaultRifle2", {7,5,0,0}, 7500, false, ".308"}, {"AssaultRifle", {10,0,0,0}, 10000, false, "5.56"}, {"VarmintRifle", {3,5,0,0}, 3500, false, ".223-REM"}, {"HuntingRifle", {4,5,0,0}, 4500, false, ".308"}};
+	end
 end
 
 Events.OnFillWorldObjectContextMenu.Add(VendISWorldObjectContextMenu.createMenu);
