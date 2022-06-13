@@ -48,6 +48,7 @@ Vendors_CheckMods();
 	jewelry.stones.items = {};
 	jewelry.tags.items = {};
 	jewelry.green = {};
+	jewelry.green.items = {};
 	vendMoney[1] = 0;
 	vendMoney[2] = 0;
 	vendMoney[3] = 0;
