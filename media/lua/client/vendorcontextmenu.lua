@@ -48,6 +48,7 @@ Vendors_CheckMods();
 	jewelry.stones.items = {};
 	jewelry.tags.items = {};
 	jewelry.green = {};
+	jewelry.green.items = {};
 	vendMoney[1] = 0;
 	vendMoney[2] = 0;
 	vendMoney[3] = 0;
@@ -136,8 +137,10 @@ Vendors_CheckMods();
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
 							elseif string.find(dispType, "Kg") then
+print("yes");
 								table.insert(jewelry.green.items, {item, {4,5,0,0}, 4500});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+print("again");
 									jewelry.green[dispType] = {item, {item, {4,5,0,0}, 4500}};
 									jewelry.green[dispType].count = 1;
 								else 
@@ -234,7 +237,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			if #jewelry.regular.items > 0 then
 				Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelry.regular)
 			end
-			if #jewelry.green > 0 then
+			if #jewelry.green.items > 0 then
 				Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelry.green)
 			end
 		end
