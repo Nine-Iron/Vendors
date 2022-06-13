@@ -25,6 +25,11 @@ ContextMenu_EN = {
 	ContextMenu_Rifles = "Rifles",
 	ContextMenu_LMGs = "LMGs",
 	ContextMenu_Shotguns = "Shotguns",
+	ContextMenu_Barrel = "Barrel attachments",
+	ContextMenu_Bottom = "Bottom rail attachments",
+	ContextMenu_Side = "Side rail attachments",
+	ContextMenu_Sight = "Scopes/Sights",
+	ContextMenu_Stock = "Stock attachments",
 	ContextMenu_Cant_Buy = "I don't have enough for that right now",
 	
 }
