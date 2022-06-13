@@ -1,10 +1,4 @@
--- added kief, hashish, setup options to sell all of one type or just one(to reduce menu clutter),
-
-
-
-
-
-
+-- added kief, hashish, setup options to sell all of one type or just one(to reduce menu clutter)
 
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
 	
@@ -117,22 +111,24 @@ Vendors_CheckMods();
 						if not jewelry.stones[dispType] then jewelry.stones[dispType] = {};
 							jewelry.stones[dispType] = {item, {0,0,2,5}, 25};
 							jewelry.stones[dispType].count = 1;
+							jewelry.stones[dispType].menuCreated = false;
 						else 
 							jewelry.stones[dispType].count = jewelry.stones[dispType].count + 1;
 						end
-					elseif not string.find(dispType, "Key") and not string.find(dispType, "DogTag") and (item:getDisplayCategory() == "Accessory" and ((string.find(dispType, "Ring") or string.find(dispType, "ring"))) or string.find(dispType, "necklace") or string.find(dispType, "Necklace") or string.find(dispType, "Bangle") or string.find(dispType, "Locket") or string.find(dispType, "Watch") or (string.find(dispType, "Nose") and string.find(dispType, "Stud")) or string.find(dispType, "BellyButton")) then
-						table.insert(jewelry.regular, {item, {0,0,1,0}, 10});
+					elseif not string.find(dispType, "Flame") and not string.find(dispType, "Key") and not string.find(dispType, "DogTag") and (item:getDisplayCategory() == "Accessory" and ((string.find(dispType, "Ring") or string.find(dispType, "ring"))) or string.find(dispType, "necklace") or string.find(dispType, "Necklace") or string.find(dispType, "Bangle") or string.find(dispType, "Locket") or string.find(dispType, "Watch") or (string.find(dispType, "Nose") and string.find(dispType, "Stud")) or string.find(dispType, "BellyButton")) then
+						table.insert(jewelry.regular.items, {item, {0,0,1,0}, 10});
 						if not jewelry.regular[dispType] then jewelry.regular[dispType] = {};
 							jewelry.regular[dispType] = {item, {0,0,1,0}, 10};
 							jewelry.regular[dispType].count = 1;
-						else 
+							jewelry.regular[dispType].menuCreated = false;
+						else
 							jewelry.regular[dispType].count = jewelry.regular[dispType].count + 1;
 						end
 					-- looking for GreenFireMod products  TODO Add more gfm items, add brita weapons
 					elseif GreenFireMod then
 						if dispCat == "GreenFireItem" then
 							if string.find(dispType, "Oz") then
-								table.insert(jewelry.green, {item, {0,1,0,0}, 100});
+								table.insert(jewelry.green.items, {item, {0,1,0,0}, 100});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {0,1,0,0}, 100}};
 									jewelry.green[dispType].count = 1;
@@ -140,7 +136,7 @@ Vendors_CheckMods();
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
 							elseif string.find(dispType, "Kg") then
-								table.insert(jewelry.green, {item, {4,5,0,0}, 4500});
+								table.insert(jewelry.green.items, {item, {4,5,0,0}, 4500});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {4,5,0,0}, 4500}};
 									jewelry.green[dispType].count = 1;
@@ -151,7 +147,7 @@ Vendors_CheckMods();
 								fanleaf = fanleaf + 1;
 								if fanleaf == 100 then
 									fanleaf = 0;
-									table.insert(jewelry.green, {item, {0,0,1,0}, 10, 100});
+									table.insert(jewelry.green.items, {item, {0,0,1,0}, 10, 100});
 									if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 										jewelry.green[dispType] = {item, {item, {0,0,1,0}, 10, 100}};
 										jewelry.green[dispType].count = 1;
@@ -160,7 +156,7 @@ Vendors_CheckMods();
 									end
 								end
 							elseif dispType == "Hashish" then
-								table.insert(jewelry.green, {item, {2,5,0,0}, 2500});
+								table.insert(jewelry.green.items, {item, {2,5,0,0}, 2500});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {2,5,0,0}, 2500}};
 									jewelry.green[dispType].count = 1;
@@ -168,7 +164,7 @@ Vendors_CheckMods();
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
 							elseif dispType == "Kief" then
-								table.insert(jewelry.green, {item, {0,0,3,0}, 0030});
+								table.insert(jewelry.green.items, {item, {0,0,3,0}, 0030});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {0,0,3,0}, 0030}};
 									jewelry.green[dispType].count = 1;
@@ -176,7 +172,7 @@ Vendors_CheckMods();
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
 							elseif(string.find(dispType, "CannaCigar") and not string.find(dispType, "Half")) then
-								table.insert(jewelry.green, {item, {0,0,6,0}, 60});
+								table.insert(jewelry.green.items, {item, {0,0,6,0}, 60});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {0,0,6,0}, 60}};
 									jewelry.green[dispType].count = 1;
@@ -225,43 +221,21 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	-- searching for vendor type to display correct context menus
 	if vendorType == "ATM Machine" then
 		-- looking for jewelry items that were found during the inventory search in the initial function
-		if #jewelry.tags.items == 0 and #jewelry.stones == 0 and #jewelry.regular == 0 and #jewelry.green == 0 then
+		if #jewelry.tags.items == 0 and #jewelry.stones.items == 0 and #jewelry.regular.items == 0 and #jewelry.green == 0 then
 			local subSubVendorOption = subSubMenu:addOptionOnTop(getText("ContextMenu_Nothing_To_Sell"), worldobjects);
 		else
 			local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_Sell_All"), worldobjects, Buy_VendorsItem, player, jewelry, true, 0, true);
 			if #jewelry.tags.items > 0 then
-				Vendors_DisplayJewelryOptions(subSubMenu, context, playerObj)
+				Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelry.tags)
 			end
 			if #jewelry.stones.items > 0 then
-				for i,v in pairs(jewelry.stones.items) do
-					local jewelryTable = v;
-					local jewelryName = v[1]:getName();
-					local jewelryPrice = v[2];
-					local jewelryValue = v[3];
-					local subSubVendorOption = subSubMenu:addOption(jewelryName .. "($" .. jewelryValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice);
-				end
+				Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelry.stones)
 			end
-			if #jewelry.regular > 0 then
-				for i,v in pairs(jewelry.regular) do
-					local jewelryTable = v;
-					local jewelryName = v[1]:getName();
-					local jewelryPrice = v[2];
-					local jewelryValue = v[3];
-					local subSubVendorOption = subSubMenu:addOption(jewelryName .. "($" .. jewelryValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice);
-				end
+			if #jewelry.regular.items > 0 then
+				Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelry.regular)
 			end
 			if #jewelry.green > 0 then
-				for i,v in pairs(jewelry.green) do
-					local jewelryTable = v;
-					local jewelryName = v[1]:getName();
-					local vendorValue = v[2];
-					local vendorPrice = v[3];
-					if v[4] then 
-						quantity = v[4]; 
-						vendorPrice = vendorPrice .. " per " .. quantity;
-					end
-					local subSubVendorOption = subSubMenu:addOption(getText(jewelryName) .. "($" .. vendorPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, vendorValue, false, quantity);
-				end
+				Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelry.green)
 			end
 		end
 	end
@@ -404,7 +378,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 					end
 				end
 			elseif subTable[1] == "Slots" then
-					Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, playerInv);
+					Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, player);
 			elseif subTable[1] ~= "Magazines"  and subTable[1] ~= "Attachments" then
 				local weaponOptions = subTable[1];
 				local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. weaponOptions), worldobjects);
@@ -444,8 +418,6 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	end
 end
 
-
-
 -- yeah, it says buy but we sell items here too.  I thought i was going to need a seperate function at first, turns out i could get it all with one!  woot!
 -- item is a table containing the item we're buying or selling.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment(also for buying engine parts now), sell 100 for $10.
 function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity, sellAllOfItem)
@@ -454,94 +426,52 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 	local itemTable = item;
 	local moneyInteger = itemTable[3];
 	local moneyQuantity = itemTable[2];
+	local sellAllTotal = 0;
 	-- if were selling all the loot, then were searching through all the tables.  the tables of items that we're going to sell, not the ones filled with stuff we might buy.
 	if sellAll then
 		if #jewelry.tags.items > 0 then
 			for i,v in ipairs(jewelry.tags.items) do
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
-				for	i = 1, moneyQuantity[1] do
-					playerInv:AddItem("Vendors.ThousandDollar");
-				end
-				for	i = 1, moneyQuantity[2] do
-					playerInv:AddItem("Vendors.HundredDollar");
-				end
-				for	i = 1, moneyQuantity[3] do
-					playerInv:AddItem("Vendors.TenDollar");
-				end
-				for	i = 1, moneyQuantity[4] do
-					playerInv:AddItem("Vendors.OneDollar");
-				end
 				playerInv:Remove(jewelryItem);
+				sellAllTotal = sellAllTotal + v[3];
 			end
 		end
 		-- another bag of loot to sift through
 		if #jewelry.stones.items > 0 then
 			for i,v in pairs(jewelry.stones.items) do
 				local jewelryItem = v[1];
-				local moneyQuantity = v[2];
-				for	i = 1, moneyQuantity[1] do
-					playerInv:AddItem("Vendors.ThousandDollar");
-				end
-				for	i = 1, moneyQuantity[2] do
-					playerInv:AddItem("Vendors.HundredDollar");
-				end
-				for	i = 1, moneyQuantity[3] do
-					playerInv:AddItem("Vendors.TenDollar");
-				end
-				for	i = 1, moneyQuantity[4] do
-					playerInv:AddItem("Vendors.OneDollar");
-				end
 				playerInv:Remove(jewelryItem);
+				sellAllTotal = sellAllTotal + v[3];
 			end
 		end
 		-- and another one gone, and another one gone
-		if #jewelry.regular > 0 then
-			for i,v in pairs(jewelry.regular) do
+		if #jewelry.regular.items > 0 then
+			for i,v in pairs(jewelry.regular.items) do
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
-				for	i = 1, moneyQuantity[1] do
-					playerInv:AddItem("Vendors.ThousandDollar");
-				end
-				for	i = 1, moneyQuantity[2] do
-					playerInv:AddItem("Vendors.HundredDollar");
-				end
-				for	i = 1, moneyQuantity[3] do
-					playerInv:AddItem("Vendors.TenDollar");
-				end
-				for	i = 1, moneyQuantity[4] do
-					playerInv:AddItem("Vendors.OneDollar");
-				end
 				playerInv:Remove(jewelryItem);
+				sellAllTotal = sellAllTotal + v[3];
 			end
 		end
 		-- last one for sell all!
 		if #jewelry.green > 0 then
-			for i,v in pairs(jewelry.green) do
+			for i,v in pairs(jewelry.green.items) do
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
 				if v[4] then
 					local quantity = v[4];
+					sellAllTotal = sellAllTotal + v[3];
 					for h=1, quantity do
 						playerInv:Remove(jewelryItem:getType());
 					end
 				else
 					playerInv:Remove(jewelryItem);
-				end
-				for	i = 1, moneyQuantity[1] do
-					playerInv:AddItem("Vendors.ThousandDollar");
-				end
-				for	i = 1, moneyQuantity[2] do
-					playerInv:AddItem("Vendors.HundredDollar");
-				end
-				for	i = 1, moneyQuantity[3] do
-					playerInv:AddItem("Vendors.TenDollar");
-				end
-				for	i = 1, moneyQuantity[4] do
-					playerInv:AddItem("Vendors.OneDollar");
+					sellAllTotal = sellAllTotal + v[3];
 				end
 			end
 		end
+		Vendors_CalculateChange(sellAllTotal*-1, playerInv);
 	-- now to sell individual items
 	elseif sell and not sellAll then
 		local jewelryItem = item[1];
@@ -555,19 +485,11 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		else
 			playerInv:Remove(jewelryItem);
 		end
+		if sellAllOfItem then 
+			moneyInteger = moneyInteger*quantity;
+		end
 		-- give me that money!
-		for	i = 1, moneyQuantity[1] do
-			playerInv:AddItem("Vendors.ThousandDollar");
-		end
-		for	i = 1, moneyQuantity[2] do
-			playerInv:AddItem("Vendors.HundredDollar");
-		end
-		for	i = 1, moneyQuantity[3] do
-			playerInv:AddItem("Vendors.TenDollar");
-		end
-		for	i = 1, moneyQuantity[4] do
-			playerInv:AddItem("Vendors.OneDollar");
-		end
+		Vendors_CalculateChange(moneyInteger*-1, playerInv);
 		playerObj:Say("SOLD!");
 		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long,  giving correct change now.
 	elseif not sell and not sellAll then
@@ -584,49 +506,59 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				addedItem:setCurrentAmmoCount(maxAmmo);
 			end
 			if addedItem:isCookable() then addedItem:setCooked(true); end
-			local vendCashToGive = vendMoney.total - moneyInteger;
-			local vendCash = {}
-			-- clean this up if you dont need floor  i do need floor
-			vendCash[1] = {math.floor((vendCashToGive)/1000), "Vendors.ThousandDollar", true};
-			vendCash[2] = {(math.floor((vendCashToGive)/100) - (math.floor(vendCashToGive/1000)*10)), "Vendors.HundredDollar"};
-			vendCash[3] = {(math.floor((vendCashToGive)/10) - (math.floor(vendCashToGive/100)*10)), "Vendors.TenDollar"};
-			vendCash[4] = {(math.floor((vendCashToGive)) - (math.floor(vendCashToGive/10)*10)), "Vendors.OneDollar"};
-			for i,v in pairs(vendorWallet) do
-				playerInv:Remove(v);
-			end
-			for i,v in pairs(vendCash) do
-				for j=1, v[1] do
-					playerInv:AddItem(v[2]);
-
-				end
-			end
+			Vendors_CalculateChange(moneyInteger, playerInv);
 		else
 			playerObj:Say(getText("ContextMenu_Cant_Buy"));
 		end
 	end
 end
 
-function Vendors_DisplayJewelryOptions(subSubMenu, context, player)
-	for i,v in pairs(jewelry.tags.items) do
-		local jewelryTable = v;
-		local jewelryName = jewelryTable[1]:getName();
-		local jewelryPrice = jewelryTable[2];
-		local jewelryValue = jewelryTable[3];
-		local jewelryType = jewelryTable[1]:getType();
-		if jewelry.tags[jewelryType].count > 1 and not jewelry.tags[jewelryType].menuCreated then
-			local jewelryOption = subSubMenu:addOption(jewelryName .. " ($" .. jewelryValue .. ")", worldobjects);
-			local subMenu = ISContextMenu:getNew(subSubMenu);
-			local subContext = context:addSubMenu(jewelryOption, subMenu);
-			local subVendorOption = subMenu:addOption(jewelryName .. "($" .. jewelryValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice);
-			local subVendorOption = subMenu:addOption(jewelryName .. " - Sell all for ($" .. jewelryValue*jewelry.tags[jewelryType].count .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice, false, jewelry.tags[jewelryType].count, true);
-			jewelry.tags[jewelryType].menuCreated = true;
-		elseif jewelry.tags[jewelryType].count == 1 then
-			local subSubVendorOption = subSubMenu:addOption(jewelryName .. "($" .. jewelryValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryTable, true, jewelryPrice);
+function Vendors_CalculateChange(moneyInteger, playerInv)
+	local vendCashToGive = vendMoney.total - moneyInteger;
+	local vendCash = {}
+	-- clean this up if you dont need floor  i do need floor
+	vendCash[1] = {math.floor((vendCashToGive)/1000), "Vendors.ThousandDollar", true};
+	vendCash[2] = {(math.floor((vendCashToGive)/100) - (math.floor(vendCashToGive/1000)*10)), "Vendors.HundredDollar"};
+	vendCash[3] = {(math.floor((vendCashToGive)/10) - (math.floor(vendCashToGive/100)*10)), "Vendors.TenDollar"};
+	vendCash[4] = {(math.floor((vendCashToGive)) - (math.floor(vendCashToGive/10)*10)), "Vendors.OneDollar"};
+	for i,v in pairs(vendorWallet) do
+		playerInv:Remove(v);
+	end
+	for i,v in pairs(vendCash) do
+		for j=1, v[1] do
+			playerInv:AddItem(v[2]);
 		end
 	end
 end
 
-function Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, playerInv)
+function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)
+	local jewelryTable = jewelryList.items;
+	local jewelryTableList = jewelryList;
+	for i,v in pairs(jewelryTable) do
+		local jewelryItemTable = v;
+		local jewelryItemName = jewelryItemTable[1]:getName();
+		local jewelryItemPrice = jewelryItemTable[2];
+		local jewelryItemValue = jewelryItemTable[3];
+		local jewelryItemType = jewelryItemTable[1]:getType();
+		if v[4] then 
+			quantity = v[4]; 
+			jewelryItemPrice = jewelryItemPrice .. " per " .. quantity;
+		end
+		if jewelryTableList[jewelryItemType].count > 1 and not jewelryTableList[jewelryItemType].menuCreated then
+			local jewelryItemOption = subSubMenu:addOption(jewelryItemName .. " ($" .. jewelryItemValue .. ")", worldobjects);
+			local subMenu = ISContextMenu:getNew(subSubMenu);
+			local subContext = context:addSubMenu(jewelryItemOption, subMenu);
+			local subVendorOption = subMenu:addOption(jewelryItemName .. "($" .. jewelryItemValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice);
+			local subVendorOption = subMenu:addOption(jewelryItemName .. " - Sell all for ($" .. jewelryItemValue*jewelryTableList[jewelryItemType].count .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryTableList[jewelryItemType].count, true);
+			jewelryTableList[jewelryItemType].menuCreated = true;
+		elseif jewelryTableList[jewelryItemType].count == 1 then
+			local subSubVendorOption = subSubMenu:addOption(jewelryItemName .. "($" .. jewelryItemValue .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice);
+		end
+	end
+end
+
+function Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, player)
+	local playerInv = player:getInventory();
 	local slotOption = subSubMenu:addOptionOnTop(getText("ContextMenu_Attachments"), worldobjects);
 	local subSubMenu = ISContextMenu:getNew(subSubMenu);
 	local subContext = context:addSubMenu(slotOption, subSubMenu);
