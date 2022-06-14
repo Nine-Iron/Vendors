@@ -11,7 +11,16 @@ local filibuster = nil;
 local vendMoney = {};
 vendMoney.total = 0;
 local jewelry = {};
-local venderTools = {{"Axe", {2,5,0,0}, 2500}, {"CarBatteryCharger", {1,0,0,0}, 1000}, {"GardenSaw", {0,5,0,0}, 500}, {"Hammer", {1,5,0,0}, 1500}, {"Jack", {0,5,0,0}, 500}, {"LugWrench", {0,5,0,0}, 500}, {"Needle", {0,2,5,0}, 250}, {"BlowTorch", {2,5,0,0}, 2500}, {"Screwdriver", {2,5,0,0}, 2500}, {"TirePump", {0,5,0,0}, 500}, {"WeldingMask", {2,5,0,0}, 2500}};
+local vendorsTools = {}
+vendorsTools[1] = {"Camping", {"SharpedStone", {2,5,0,0}, 2500}, {"Lighter", {2,5,0,0}, 2500}, {"PercedWood", {0,5,0,0}, 500}, {"WoodenStick", {1,5,0,0}, 1500}};
+vendorsTools[2] = {"Construction", {"Axe", {0,5,0,0}, 500}, {"BucketEmpty", {0,2,5,0}, 250}, {"Crowbar", {2,5,0,0}, 2500}, {"Hammer", {2,5,0,0}, 2500}, {"Needle", {0,5,0,0}, 500}, {"Paintbrush", {2,5,0,0}, 2500}, {"PropaneTank", {0,5,0,0}, 500}, {"BlowTorch", {0,2,5,0}, 250}, {"Saw", {2,5,0,0}, 2500}, {"Screwdriver", {0,5,0,0}, 500}, {"AxeStone", {2,5,0,0}, 2500}, {"HammerStone", {2,5,0,0}, 2500}, {"WeldingMask", {2,5,0,0}, 2500}};
+vendorsTools[3] = {"Cooking", {"BakingPan", {0,5,0,0}, 500}, {"Bowl", {0,2,5,0}, 250}, {"BoxOfJars", {0,5,0,0}, 500}, {"JarLid", {2,5,0,0}, 2500, 6}, {"TinOpener", {2,5,0,0}, 2500}, {"Pot", {2,5,0,0}, 2500}, {"Pan", {0,5,0,0}, 500}, {"KitchenKnife", {0,2,5,0}, 250}, {"Kettle", {2,5,0,0}, 2500}, {"RollingPin", {0,5,0,0}, 500}, {"BakingPan", {2,5,0,0}, 2500}, {"Saucepan", {2,5,0,0}, 2500}};
+vendorsTools[4] = {"Farming", {"farming.GardeningSprayEmpty", {2,5,0,0}, 2500}, {"farming.WateredCan", {1,5,0,0}, 1500}, {"Fertilizer", {2,5,0,0}, 2500}, {"EmptySandbag", {0,5,0,0}, 500}, {"farming.Shovel", {1,5,0,0}, 1500}, {"farming.HandShovel", {1,5,0,0}, 1500}};
+vendorsTools[5] = {"Fishing", {"FishingNet", {2,5,0,0}, 2500}, {"FishingRod", {1,5,0,0}, 1500}, {"FishingTackle", {2,5,0,0}, 2500}};
+vendorsTools[6] = {"Light", {"Torch", {2,5,0,0}, 2500}, {"Matches", {2,5,0,0}, 2500}}
+vendorsTools[7] = {"Mechanics", {"PetrolCan", {2,5,0,0}, 2500}, {"Jack", {2,5,0,0}, 2500}, {"LugWrench", {2,5,0,0}, 2500}, {"TirePump", {2,5,0,0}, 2500}, {"Wrench", {2,5,0,0}, 2500}};
+vendorsTools[8] = {"Stationary", {"Notebook", {2,5,0,0}, 2500}, {"Eraser", {2,5,0,0}, 2500}, {"Journal", {2,5,0,0}, 2500}, {"Pen", {2,5,0,0}, 2500}, {"Pencil", {2,5,0,0}, 2500}, {"SheetPaper2", {2,5,0,0}, 2500}};
+vendorsTools[9] = {"Trapping", {"TrapCage", {2,5,0,0}, 2500}, {"TrapMouse", {2,5,0,0}, 2500}, {"TrapSnare", {2,5,0,0}, 2500}, {"TrapStick", {2,5,0,0}, 2500}, {"TrapBox", {2,5,0,0}, 2500}, {"TrapCrate", {2,5,0,0}, 2500}};
 local vehicles = {};
 vehicles.parts = {};
 vehicles.parts[1] = {{"CarBattery1", {1,0,0,0}, 1000}, {"FrontCarDoor1", {1,0,0,0}, 1000}, {"EngineDoor1", {1,0,0,0}, 1000}, {"ModernBrake1", {1,0,0,0}, 1000}, {"TrunkDoor1", {1,0,0,0}, 1000}, {"RearCarDoor1", {1,0,0,0}, 1000}, {"RearCarDoorDouble1", {1,0,0,0}, 1000}, {"BigGasTank1", {1,0,0,0}, 1000}, {"ModernCarMuffler1", {1,0,0,0}, 1000}, {"NormalCarSeat1", {1,0,0,0}, 1000}, {"ModernSuspension1", {1,0,0,0}, 1000}, {"ModernTire1", {1,0,0,0}, 1000}, {"Windshield1", {1,0,0,0}, 1000}, {"RearWindshield1", {1,0,0,0}, 1000}, {"FrontWindow1", {1,0,0,0}, 1000}, {"RearWindow1", {1,0,0,0}, 1000}, "Standard"};
@@ -138,6 +147,7 @@ Vendors_CheckMods();
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {0,1,0,0}, 100}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
@@ -146,6 +156,7 @@ Vendors_CheckMods();
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {4,5,0,0}, 4500}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
@@ -157,6 +168,7 @@ Vendors_CheckMods();
 									if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 										jewelry.green[dispType] = {item, {item, {0,0,1,0}, 10, 100}};
 										jewelry.green[dispType].count = 1;
+										jewelry.green[dispType].menuCreated = false;
 									else 
 										jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 									end
@@ -166,6 +178,7 @@ Vendors_CheckMods();
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {2,5,0,0}, 2500}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
@@ -174,6 +187,7 @@ Vendors_CheckMods();
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {0,0,3,0}, 0030}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
@@ -182,6 +196,7 @@ Vendors_CheckMods();
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {0,0,6,0}, 60}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
@@ -227,7 +242,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	-- searching for vendor type to display correct context menus
 	if vendorType == "ATM Machine" then
 		-- looking for jewelry items that were found during the inventory search in the initial function
-		if #jewelry.tags.items == 0 and #jewelry.stones.items == 0 and #jewelry.regular.items == 0 and #jewelry.green == 0 then
+		if #jewelry.tags.items == 0 and #jewelry.stones.items == 0 and #jewelry.regular.items == 0 and #jewelry.green.items == 0 then
 			local subSubVendorOption = subSubMenu:addOptionOnTop(getText("ContextMenu_Nothing_To_Sell"), worldobjects);
 		else
 			local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_Sell_All"), worldobjects, Buy_VendorsItem, player, jewelry, true, 0, true);
@@ -247,25 +262,11 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	end
 	-- food, were building menus to buy food
 	if vendorType == "Food Vendor" then
-		-- these are $10
-		Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods)
-		-- these are $40
-		
+		Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods);		
 	end
 	-- tools.  for to buy
 	if vendorType == "Tool Vendor" then
-		for i,v in pairs(venderTools) do
-			local tool = v;
-			local toolName = v[1];
-			-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu and for comparing against the wallet
-			local toolPrice = v[2];
-			local toolValue = v[3];
-			local toolItem = playerInv:AddItem(toolName);
-			local toolItemType = toolItem:getType();
-			local toolItemName = toolItem:getName();
-			playerInv:Remove(toolItem);
-			local subSubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolValue .. ")", worldobjects, Buy_VendorsItem, player, tool, false, toolPrice, false);
-		end
+		Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsTools)
 	end
 	if vendorType == "Vehicle Vendor" then
 		-- creating a menu item for engine parts, to be listed in the first vehicle submenu above the other submenu options
@@ -408,7 +409,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			end
 		end
 		-- last one for sell all!
-		if #jewelry.green > 0 then
+		if #jewelry.green.items > 0 then
 			for i,v in pairs(jewelry.green.items) do
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
@@ -443,7 +444,6 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		end
 		-- give me that money!
 		Vendors_CalculateChange(moneyInteger*-1, playerInv);
-		playerObj:Say("SOLD!");
 		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long,  giving correct change now.
 	elseif not sell and not sellAll then
 		if quantity and item[1] ~= "EngineParts" then moneyInteger = moneyInteger*quantity; end
@@ -484,9 +484,9 @@ function Vendors_CalculateChange(moneyInteger, playerInv)
 	end
 end
 
-function Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods)
+function Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsList)
 	local playerInv = player:getInventory();
-	for i,v in pairs(vendorsFoods) do
+	for i,v in pairs(vendorsList) do
 		local foodTable = v;
 		local foodOption = subSubMenu:addOption(getText("ContextMenu_" .. foodTable[1]), worldobjects)
 		local subSubMenu = ISContextMenu:getNew(subSubMenu);
@@ -505,9 +505,30 @@ function Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods)
 			end
 		end
 	end
-	--local subVendorOption = subSubMenu:addOption(getText("ContextMenu_Food_For_10_Dollars"), worldobjects)
-	--local subSubMenu = ISContextMenu:getNew(subSubMenu);
-	--local subContext = context:addSubMenu(subVendorOption, subSubMenu);
+end
+
+function Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsList)
+	local playerInv = player:getInventory();
+	for i,v in pairs(vendorsList) do
+		local toolTable = v;
+		local toolOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
+		local subSubMenu = ISContextMenu:getNew(subSubMenu);
+		local subContext = context:addSubMenu(toolOption, subSubMenu);
+		for j,k in pairs(toolTable) do
+			local toolItemTable = k;
+			if j ~= 1 then
+				local toolItemType = toolItemTable[1];
+				local toolItemPrice = toolItemTable[2];
+				local toolItemValue = toolItemTable[3];
+				local toolItemQuantity = toolItemTable[4];
+				local toolItem = playerInv:AddItem(toolItemType);
+				toolItemName = toolItem:getName();
+				playerInv:Remove(toolItem);
+				if toolItemQuantity then toolItemValue = toolItemValue*toolItemQuantity .. ") for (" .. toolItemQuantity; end
+				local SubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolItemValue .. ")", worldobjects, Buy_VendorsItem, player, toolItemTable, false, toolItemPrice);
+			end
+		end
+	end
 end
 
 function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)

@@ -38,6 +38,16 @@ ContextMenu_EN = {
 	ContextMenu_Fish = "Fish",
 	ContextMenu_Game = "Game",
 	ContextMenu_Medical = "Medical",
+	ContextMenu_Farming = "Farming",
+	ContextMenu_Trapping = "Trapping",
+	ContextMenu_Misc = "Misc",
+	ContextMenu_Mechanics = "Mechanics",
+	ContextMenu_Lights = "Lights",
+	ContextMenu_Camping = "Camping",
+	ContextMenu_Construction = "Construction",
+	ContextMenu_Cooking = "Cooking",
+	ContextMenu_Fishing = "Fishing",
+	ContextMenu_Stationary = "Stationary",
 	ContextMenu_Cant_Buy = "I don't have enough for that right now",
 	
 }
