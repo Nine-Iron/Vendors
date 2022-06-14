@@ -32,9 +32,14 @@ jewelry.stones = {};
 jewelry.regular = {};
 jewelry.tags = {};
 local vendorsFoods = {};
-vendorsFoods[1] = {{"farming.BaconBits", {0,0,1,0}, 10}, {"farming.BaconRashers", {0,0,1,0}, 10}, {"Crisps", {0,0,1,0}, 10}, {"Chocolate", {0,0,1,0}, 10}, {"EggBoiled", {0,0,1,0}, 10}, {"EggPoached", {0,0,1,0}, 10}, {"FriedOnionRingsCraft", {0,0,1,0}, 10}, {"DehydratedMeatStick", {0,0,1,0}, 10}, {"NoodleSoup", {0,0,1,0}, 10}};
-vendorsFoods[2] = {{"BeanBowl", {0,0,4,0}, 40}, {"CerealBowl", {0,0,4,0}, 40}, {"PastaBowl", {0,0,4,0}, 40}, {"RiceBowl", {0,0,4,0}, 40}, {"SoupBowl", {0,0,4,0}, 40}, {"StewBowl", {0,0,4,0}, 40}, {"Oatmeal", {0,0,4,0}, 40}, {"SushiFish", {0,0,4,0}, 40}};
-vendorsFoods[3] = {{"Ham", {0,1,0,0}, 100}, {"MeatPatty", {0,1,0,0}, 100}, {"MincedMeat", {0,1,0,0}, 100}, {"Steak", {0,1,0,0}, 100}, {"Chicken", {0,1,0,0}, 100}, {"Baloney", {0,1,0,0}, 100}, {"MuttonChop", {0,1,0,0}, 100}, {"PorkChop", {0,1,0,0}, 100}, {"Lobster", {0,1,0,0}, 100}, {"Salmon", {0,1,0,0}, 100}, {"Squid", {0,1,0,0}, 100}, {"Watermelon", {0,1,0,0}, 100}};
+vendorsFoods[1] = {"Canned_Goods", {"TinnedBeans", {0,0,1,0}, 10}, {"CannedChili", {0,0,1,0}, 10}, {"CannedCorn", {0,0,1,0}, 10}, {"CannedCornedBeef", {0,0,1,0}, 10}, {"CannedFruitCocktail", {0,0,1,0}, 10}, {"CannedMushroomSoup", {0,0,1,0}, 10}, {"CannedPeaches", {0,0,1,0}, 10}, {"CannedPeas", {0,0,1,0}, 10}, {"CannedPineapple", {0,0,1,0}, 10}, {"CannedPotato2", {0,0,1,0}, 10}, {"CannedSardines", {0,0,1,0}, 10}, {"TinnedSoup", {0,0,1,0}, 10}, {"CannedBolognese", {0,0,1,0}, 10}, {"CannedTomato2", {0,0,1,0}, 10}, {"TunaTin", {0,0,1,0}, 10}};
+vendorsFoods[2] = {"Condiments", {"SugarBrown", {0,1,0,0}, 100}, {"Hotsauce", {0,1,0,0}, 100}, {"Ketchup", {0,1,0,0}, 100}, {"MapleSyrup", {0,1,0,0}, 100}, {"Marinara", {0,1,0,0}, 100}, {"farming.MayonnaiseFull", {0,1,0,0}, 100}, {"Mustard", {0,1,0,0}, 100}, {"OilOlive", {0,1,0,0}, 100}, {"Pepper", {0,1,0,0}, 100}, {"RiceVinegar", {0,1,0,0}, 100}, {"Salt", {0,1,0,0}, 100}, {"Soysauce", {0,1,0,0}, 100}, {"Sugar", {0,1,0,0}, 100}, {"OilVegetable", {0,1,0,0}, 100}, {"Wasabi", {0,1,0,0}, 100}};
+vendorsFoods[3] = {"Drinks", {"BeerBottle", {0,1,0,0}, 100}, {"BeerCan", {0,1,0,0}, 100}, {"Bleach", {0,1,0,0}, 100}, {"WhiskeyFull", {0,1,0,0}, 100}, {"ColdDrinkSpiffo", {0,1,0,0}, 100}, {"Mugfull", {0,1,0,0}, 100}, {"HotDrinkTea", {0,1,0,0}, 100}, {"OilOlive", {0,1,0,0}, 100}, {"Pepper", {0,1,0,0}, 100}, {"JuiceBox", {0,1,0,0}, 100}, {"Milk", {0,1,0,0}, 100}, {"PopBottle", {0,1,0,0}, 100}, {"Wine2", {0,1,0,0}, 100}, {"Wine", {0,1,0,0}, 100}};
+vendorsFoods[4] = {"Fish", {"Bass", {0,0,4,0}, 40}, {"Catfish", {0,0,4,0}, 40}, {"Crappie", {0,0,4,0}, 40}, {"Crayfish", {0,0,4,0}, 40}, {"FishFillet", {0,0,4,0}, 40}, {"FishRoe", {0,0,4,0}, 40}, {"BaitFish", {0,0,4,0}, 40}, {"Lobster", {0,0,4,0}, 40}, {"Oysters", {0,0,4,0}, 40}, {"Perch", {0,0,4,0}, 40}, {"Pike", {0,0,4,0}, 40}, {"Salmon", {0,0,4,0}, 40}, {"Shrimp", {0,0,4,0}, 40}, {"Squid", {0,0,4,0}, 40}, {"SquidCalamari", {0,0,4,0}, 40}, {"Panfish", {0,0,4,0}, 40}, {"Trout", {0,0,4,0}, 40}};
+vendorsFoods[5] = {"Game", {"DeadBird", {0,0,4,0}, 40}, {"DeadMouse", {0,0,4,0}, 40}, {"DeadRabbit", {0,0,4,0}, 40}, {"DeadRat", {0,0,4,0}, 40}, {"DeadSquirrel", {0,0,4,0}, 40}, {"Rabbitmeat", {0,0,4,0}, 40}, {"Smallanimalmeat", {0,0,4,0}, 40}, {"Smallbirdmeat", {0,0,4,0}, 40}};
+vendorsFoods[6] = {"Pickled_Food", {"CannedBellPepper", {0,0,4,0}, 40}, {"CannedBroccoli", {0,0,4,0}, 40}, {"CannedCabbage", {0,0,4,0}, 40}, {"CannedCarrots", {0,0,4,0}, 40}, {"CannedEggplant", {0,0,4,0}, 40}, {"CannedLeek", {0,0,4,0}, 40}, {"CannedPotato", {0,0,4,0}, 40}, {"CannedRedRadish", {0,0,4,0}, 40}, {"CannedTomato", {0,0,4,0}, 40}};
+vendorsFoods[7] = {"Proteins", {"farming.Bacon", {0,1,0,0}, 100}, {"BeefJerky", {0,1,0,0}, 100}, {"Chicken", {0,1,0,0}, 100}, {"EggCarton", {0,1,0,0}, 100}, {"FrogMeat", {0,1,0,0}, 100}, {"Ham", {0,1,0,0}, 100}, {"MeatPatty", {0,1,0,0}, 100}, {"MincedMeat", {0,1,0,0}, 100}, {"MuttonChop", {0,1,0,0}, 100}, {"Pepperoni", {0,1,0,0}, 100}, {"PorkChop", {0,1,0,0}, 100}, {"Salami", {0,1,0,0}, 100}, {"Sausage", {0,1,0,0}, 100}, {"Steak", {0,1,0,0}, 100}, {"Tofu", {0,1,0,0}, 100}};
+vendorsFoods[8] = {"Medical", {"AlcoholWipes", {0,0,4,0}, 40}, {"Antibiotics", {0,0,4,0}, 40}, {"PillsAntiDep", {0,0,4,0}, 40}, {"Bandage", {0,0,4,0}, 40}, {"PillsBeta", {0,0,4,0}, 40}, {"Disinfectant", {0,0,4,0}, 40}, {"Cigarettes", {0,0,4,0}, 40}, {"FirstAidKit", {0,0,4,0}, 40}, {"Pills", {0,0,4,0}, 40}, {"AlcoholBandage", {0,0,4,0}, 40}, {"PillsVitamins", {0,0,4,0}, 40}, {"Splint", {0,0,4,0}, 40}, {"SutureNeedle", {0,0,4,0}, 40}, {"SutureNeedleHolder", {0,0,4,0}, 40}, {"Tweezers", {0,0,4,0}, 40}};
 local vendorWallet = {};
 
 function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, test)
@@ -137,10 +142,8 @@ Vendors_CheckMods();
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
 							elseif string.find(dispType, "Kg") then
-print("yes");
 								table.insert(jewelry.green.items, {item, {4,5,0,0}, 4500});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
-print("again");
 									jewelry.green[dispType] = {item, {item, {4,5,0,0}, 4500}};
 									jewelry.green[dispType].count = 1;
 								else 
@@ -245,62 +248,9 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	-- food, were building menus to buy food
 	if vendorType == "Food Vendor" then
 		-- these are $10
-		if #vendorsFoods[1] > 0 then
-			local subVendorOption = subSubMenu:addOption(getText("ContextMenu_Food_For_10_Dollars"), worldobjects)
-			local subSubMenu = ISContextMenu:getNew(subSubMenu);
-			local subContext = context:addSubMenu(subVendorOption, subSubMenu);
-			-- checking to make sure you have enough money to purchase the items in this menu
-			for i,v in pairs(vendorsFoods[1]) do
-				local food = v;
-				local foodName = v[1];
-				local foodItem = playerInv:AddItem(foodName);
-				if foodItem:isCookable() then foodItem:setCooked(true); end
-				local foodItemType = foodItem:getType();
-				local foodItemName = foodItem:getName();
-				playerInv:Remove(foodItem);
-				local foodPrice = v[2];
-				local foodValue = v[3];
-				local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
-			end
-		end
+		Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods)
 		-- these are $40
-		if #vendorsFoods[2] > 0 then
-			local subVendorOption = subSubMenu:addOption(getText("ContextMenu_Food_For_40_Dollars"), worldobjects)
-			local subSubMenu = ISContextMenu:getNew(subSubMenu);
-			local subContext = context:addSubMenu(subVendorOption, subSubMenu);
-			for i,v in pairs(vendorsFoods[2]) do
-				local food = v;
-				local foodName = v[1];
-				local foodItem = playerInv:AddItem(foodName);
-				if foodItem:isCookable() then foodItem:setCooked(true); end
-				local foodItemType = foodItem:getType();
-				local foodItemName = foodItem:getName();
-				playerInv:Remove(foodItem);
-				local vendorPrice = v[2];
-				local foodValue = v[3];
-				local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
-			
-			end
-		end
-		-- these are $100, i think it's kind of easy to tell what this is and i don't want you to think that i think you're an idiot.  im just practicing my notes.  
-		if #vendorsFoods[3] > 0 then
-			local subVendorOption = subSubMenu:addOption(getText("ContextMenu_Food_For_100_Dollars"), worldobjects)
-			local subSubMenu = ISContextMenu:getNew(subSubMenu);
-			local subContext = context:addSubMenu(subVendorOption, subSubMenu);
-			for i,v in pairs(vendorsFoods[3]) do
-				local food = v;
-				local foodName = v[1];
-				local foodItem = playerInv:AddItem(foodName);
-				if foodItem:isCookable() then foodItem:setCooked(true); end
-				if foodItem:isCookable() then foodItem:setCooked(true); end
-				local foodItemType = foodItem:getType();
-				local foodItemName = foodItem:getName();
-				playerInv:Remove(foodItem);
-				local vendorPrice = v[2];
-				local foodValue = v[3];
-				local subSubVendorOption = subSubMenu:addOption(foodItemName, worldobjects, Buy_VendorsItem, player, food, false, vendorPrice, false);
-			end
-		end
+		
 	end
 	-- tools.  for to buy
 	if vendorType == "Tool Vendor" then
@@ -508,7 +458,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				local maxAmmo = addedItem:getMaxAmmo();
 				addedItem:setCurrentAmmoCount(maxAmmo);
 			end
-			if addedItem:isCookable() then addedItem:setCooked(true); end
+			if addedItem:isCookable() and not string.find(addedItem:getType(), "Dead") then addedItem:setCooked(true); end
 			Vendors_CalculateChange(moneyInteger, playerInv);
 		else
 			playerObj:Say(getText("ContextMenu_Cant_Buy"));
@@ -532,6 +482,32 @@ function Vendors_CalculateChange(moneyInteger, playerInv)
 			playerInv:AddItem(v[2]);
 		end
 	end
+end
+
+function Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods)
+	local playerInv = player:getInventory();
+	for i,v in pairs(vendorsFoods) do
+		local foodTable = v;
+		local foodOption = subSubMenu:addOption(getText("ContextMenu_" .. foodTable[1]), worldobjects)
+		local subSubMenu = ISContextMenu:getNew(subSubMenu);
+		local subContext = context:addSubMenu(foodOption, subSubMenu);
+		for j,k in pairs(foodTable) do
+			local foodItemTable = k;
+			if j ~= 1 then
+				local foodItemType = foodItemTable[1];
+				local foodItemPrice = foodItemTable[2];
+				local foodItemValue = foodItemTable[3];
+				local foodItem = playerInv:AddItem(foodItemType);
+				if foodItem:isCookable() and not string.find(foodItemType, "Dead") then foodItem:setCooked(true); end
+				foodItemName = foodItem:getName();
+				playerInv:Remove(foodItem);
+				local SubVendorOption = subSubMenu:addOption(foodItemName .. "($" .. foodItemValue .. ")", worldobjects, Buy_VendorsItem, player, foodItemTable, false, foodItemPrice);
+			end
+		end
+	end
+	--local subVendorOption = subSubMenu:addOption(getText("ContextMenu_Food_For_10_Dollars"), worldobjects)
+	--local subSubMenu = ISContextMenu:getNew(subSubMenu);
+	--local subContext = context:addSubMenu(subVendorOption, subSubMenu);
 end
 
 function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)

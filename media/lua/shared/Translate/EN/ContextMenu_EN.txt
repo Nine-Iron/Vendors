@@ -30,6 +30,14 @@ ContextMenu_EN = {
 	ContextMenu_Side = "Side rail attachments",
 	ContextMenu_Sight = "Scopes/Sights",
 	ContextMenu_Stock = "Stock attachments",
+	ContextMenu_Canned_Goods = "Canned goods",
+	ContextMenu_Condiments = "Condiments",
+	ContextMenu_Drinks = "Drinks",
+	ContextMenu_Pickled_Food = "Pickled foods",
+	ContextMenu_Proteins = "Proteins",
+	ContextMenu_Fish = "Fish",
+	ContextMenu_Game = "Game",
+	ContextMenu_Medical = "Medical",
 	ContextMenu_Cant_Buy = "I don't have enough for that right now",
 	
 }
