@@ -127,7 +127,7 @@ Vendors_CheckMods();
 						else 
 							jewelry.tags[dispType].count = jewelry.tags[dispType].count + 1;
 						end
-						saleTotal = saleTotal + jewelry.tags[dispType][2][3];
+						saleTotal = saleTotal + jewelry.tags[dispType][3];
 					elseif string.find(dispType, "Diamond") or string.find(dispType, "Emerald") or string.find(dispType, "Amethyst") or string.find(dispType, "Ruby") or string.find(dispType, "Sapphire") then
 															-- price for selling jewelry with stones
 						table.insert(jewelry.stones.items, {item, {0,0,2,5}, 25})
@@ -138,7 +138,7 @@ Vendors_CheckMods();
 						else 
 							jewelry.stones[dispType].count = jewelry.stones[dispType].count + 1;
 						end
-						saleTotal = saleTotal + jewelry.stones[dispType][2][3];
+						saleTotal = saleTotal + jewelry.stones[dispType][3];
 					elseif not string.find(dispType, "Flame") and not string.find(dispType, "Key") and not string.find(dispType, "DogTag") and (item:getDisplayCategory() == "Accessory" and ((string.find(dispType, "Ring") or string.find(dispType, "ring"))) or string.find(dispType, "necklace") or string.find(dispType, "Necklace") or string.find(dispType, "Bangle") or string.find(dispType, "Locket") or string.find(dispType, "Watch") or (string.find(dispType, "Nose") and string.find(dispType, "Stud")) or string.find(dispType, "BellyButton")) then
 															-- price for selling regular jewelry
 						table.insert(jewelry.regular.items, {item, {0,0,1,0}, 10});
@@ -149,7 +149,7 @@ Vendors_CheckMods();
 						else
 							jewelry.regular[dispType].count = jewelry.regular[dispType].count + 1;
 						end
-						saleTotal = saleTotal + jewelry.regular[dispType][2][3];
+						saleTotal = saleTotal + jewelry.regular[dispType][3];
 					-- looking for GreenFireMod products  TODO Add more gfm items, add brita weapons
 					elseif GreenFireMod then
 						if dispCat == "GreenFireItem" then
