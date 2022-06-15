@@ -1,5 +1,3 @@
--- added kief, hashish, setup options to sell all of one type or just one(to reduce menu clutter)
-
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
 	
 local britaMod = nil;
@@ -11,13 +9,28 @@ local filibuster = nil;
 local vendMoney = {};
 vendMoney.total = 0;
 local jewelry = {};
-local venderTools = {{"Axe", {2,5,0,0}, 2500}, {"CarBatteryCharger", {1,0,0,0}, 1000}, {"GardenSaw", {0,5,0,0}, 500}, {"Hammer", {1,5,0,0}, 1500}, {"Jack", {0,5,0,0}, 500}, {"LugWrench", {0,5,0,0}, 500}, {"Needle", {0,2,5,0}, 250}, {"BlowTorch", {2,5,0,0}, 2500}, {"Screwdriver", {2,5,0,0}, 2500}, {"TirePump", {0,5,0,0}, 500}, {"WeldingMask", {2,5,0,0}, 2500}};
+local vendorsTools = {}
+local saleTotal = 0;
+
+-- to change prices for items, find the item, change {x,x,x,x}, xxxx to the values you would like.  if you want to buy a lighter for $24 you would change it to {0,0,2,5}, 0025}
+-- tool prices are listed here
+vendorsTools[1] = {"Camping", {"SharpedStone", {2,5,0,0}, 2500}, {"Lighter", {2,5,0,0}, 2500}, {"PercedWood", {0,5,0,0}, 500}, {"WoodenStick", {1,5,0,0}, 1500}};
+vendorsTools[2] = {"Construction", {"Axe", {0,5,0,0}, 500}, {"BucketEmpty", {0,2,5,0}, 250}, {"Crowbar", {2,5,0,0}, 2500}, {"Hammer", {2,5,0,0}, 2500}, {"Needle", {0,5,0,0}, 500}, {"Paintbrush", {2,5,0,0}, 2500}, {"PropaneTank", {0,5,0,0}, 500}, {"BlowTorch", {0,2,5,0}, 250}, {"Saw", {2,5,0,0}, 2500}, {"Screwdriver", {0,5,0,0}, 500}, {"AxeStone", {2,5,0,0}, 2500}, {"HammerStone", {2,5,0,0}, 2500}, {"WeldingMask", {2,5,0,0}, 2500}};
+vendorsTools[3] = {"Cooking", {"BakingPan", {0,5,0,0}, 500}, {"Bowl", {0,2,5,0}, 250}, {"BoxOfJars", {0,5,0,0}, 500}, {"JarLid", {2,5,0,0}, 2500, 6}, {"TinOpener", {2,5,0,0}, 2500}, {"Pot", {2,5,0,0}, 2500}, {"Pan", {0,5,0,0}, 500}, {"KitchenKnife", {0,2,5,0}, 250}, {"Kettle", {2,5,0,0}, 2500}, {"RollingPin", {0,5,0,0}, 500}, {"BakingPan", {2,5,0,0}, 2500}, {"Saucepan", {2,5,0,0}, 2500}};
+vendorsTools[4] = {"Farming", {"farming.GardeningSprayEmpty", {2,5,0,0}, 2500}, {"farming.WateredCan", {1,5,0,0}, 1500}, {"Fertilizer", {2,5,0,0}, 2500}, {"EmptySandbag", {0,5,0,0}, 500}, {"farming.Shovel", {1,5,0,0}, 1500}, {"farming.HandShovel", {1,5,0,0}, 1500}};
+vendorsTools[5] = {"Fishing", {"FishingNet", {2,5,0,0}, 2500}, {"FishingRod", {1,5,0,0}, 1500}, {"FishingTackle", {2,5,0,0}, 2500}};
+vendorsTools[6] = {"Light", {"Torch", {2,5,0,0}, 2500}, {"Matches", {2,5,0,0}, 2500}}
+vendorsTools[7] = {"Mechanics", {"PetrolCan", {2,5,0,0}, 2500}, {"Jack", {2,5,0,0}, 2500}, {"LugWrench", {2,5,0,0}, 2500}, {"TirePump", {2,5,0,0}, 2500}, {"Wrench", {2,5,0,0}, 2500}};
+vendorsTools[8] = {"Stationary", {"Notebook", {2,5,0,0}, 2500}, {"Eraser", {2,5,0,0}, 2500}, {"Journal", {2,5,0,0}, 2500}, {"Pen", {2,5,0,0}, 2500}, {"Pencil", {2,5,0,0}, 2500}, {"SheetPaper2", {2,5,0,0}, 2500}};
+vendorsTools[9] = {"Trapping", {"TrapCage", {2,5,0,0}, 2500}, {"TrapMouse", {2,5,0,0}, 2500}, {"TrapSnare", {2,5,0,0}, 2500}, {"TrapStick", {2,5,0,0}, 2500}, {"TrapBox", {2,5,0,0}, 2500}, {"TrapCrate", {2,5,0,0}, 2500}};
 local vehicles = {};
 vehicles.parts = {};
+-- vehicle part prices are listed here
 vehicles.parts[1] = {{"CarBattery1", {1,0,0,0}, 1000}, {"FrontCarDoor1", {1,0,0,0}, 1000}, {"EngineDoor1", {1,0,0,0}, 1000}, {"ModernBrake1", {1,0,0,0}, 1000}, {"TrunkDoor1", {1,0,0,0}, 1000}, {"RearCarDoor1", {1,0,0,0}, 1000}, {"RearCarDoorDouble1", {1,0,0,0}, 1000}, {"BigGasTank1", {1,0,0,0}, 1000}, {"ModernCarMuffler1", {1,0,0,0}, 1000}, {"NormalCarSeat1", {1,0,0,0}, 1000}, {"ModernSuspension1", {1,0,0,0}, 1000}, {"ModernTire1", {1,0,0,0}, 1000}, {"Windshield1", {1,0,0,0}, 1000}, {"RearWindshield1", {1,0,0,0}, 1000}, {"FrontWindow1", {1,0,0,0}, 1000}, {"RearWindow1", {1,0,0,0}, 1000}, "Standard"};
 vehicles.parts[2] = {{"CarBattery1", {5,0,0,0}, 5000}, {"FrontCarDoor1", {5,0,0,0}, 5000}, {"EngineDoor1", {5,0,0,0}, 5000}, {"ModernBrake1", {5,0,0,0}, 5000}, {"TrunkDoor1", {5,0,0,0}, 5000}, {"RearCarDoor1", {5,0,0,0}, 5000}, {"RearCarDoorDouble1", {5,0,0,0}, 5000}, {"BigGasTank1", {5,0,0,0}, 5000}, {"ModernCarMuffler1", {5,0,0,0}, 5000}, {"NormalCarSeat1", {5,0,0,0}, 5000}, {"ModernSuspension1", {5,0,0,0}, 5000}, {"ModernTire1", {5,0,0,0}, 5000}, {"Windshield1", {5,0,0,0}, 5000}, {"RearWindshield1", {5,0,0,0}, 5000}, {"FrontWindow1", {5,0,0,0}, 5000}, {"RearWindow1", {5,0,0,0}, 5000}, "Sport"};
 vehicles.parts[3] = {{"CarBattery1", {10,0,0,0}, 10000}, {"FrontCarDoor1", {10,0,0,0}, 10000}, {"EngineDoor1", {10,0,0,0}, 10000}, {"ModernBrake1", {10,0,0,0}, 10000}, {"TrunkDoor1", {10,0,0,0}, 10000}, {"RearCarDoor1", {10,0,0,0}, 10000}, {"RearCarDoorDouble1", {10,0,0,0}, 10000}, {"BigGasTank1", {10,0,0,0}, 10000}, {"ModernCarMuffler1", {10,0,0,0}, 10000}, {"NormalCarSeat1", {10,0,0,0}, 10000}, {"ModernSuspension1", {10,0,0,0}, 10000}, {"ModernTire1", {10,0,0,0}, 10000}, {"Windshield1", {10,0,0,0}, 10000}, {"RearWindshield1", {10,0,0,0}, 10000}, {"FrontWindow1", {10,0,0,0}, 10000}, {"RearWindow1", {10,0,0,0}, 10000}, "Heavy-Duty"};
 local weapons = {};
+-- weapon prices are listed here
 weapons[1] = {"Box_Ammo", {"ShotgunShellsBox", {0,1,5,0}, 0150, true, {1,5,0,0}}, {"223Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"308Box", {0,2,5,0}, 0250, true, {2,5,0,0}}, {"Bullets38Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"Bullets45Box", {0,1,0,0}, 0100, true, {1,0,0,0}}, {"556Box", {0,2,0,0}, 0200, true, {2,0,0,0}}};
 weapons[2] = {"Magazines", {"223Clip", {0,3,0,0}, 0300, false, ".223-REM"}, {"308Clip", {0,3,0,0}, 0300, false, ".308"}, {"44Clip", {0,2,5,0}, 0250, false, ".44-MAG"}, {"45Clip", {0,2,5,0}, 0250, false, ".45 Auto"}, {"556Clip", {0,3,5,0}, 0350, false, "5.56"}, {"M14Clip", {0,3,0,0}, 0300, false, ".308"}, {"9mmClip", {0,3,0,0}, 0300, false, "9mm"}};
 weapons[3] = {"Attachments", {"ChokeTubeImproved", {0,2,0,0}, 0200, false, "Barrel"}, {"FiberglassStock", {0,1,5,0}, 0150, false, "Stock"}, {"IronSight", {0,1,0,0}, 0100, false, "Sight"}, {"Laser", {0,2,0,0}, 0200, false, "Side"}, {"RecoilPad", {0,1,0,0}, 0100, false, "Stock"}, {"RedDot", {0,2,0,0}, 0200, false, "Sight"}, {"Sling", {0,1,5,0}, 0150, false, "Bottom"}, {"x2Scope", {0,3,0,0}, 0300, false, "Sight"}, {"x4Scope", {0,3,5,0}, 0350, false, "Sight"}, {"x8Scope", {0,4,0,0}, 0400, false, "Sight"}};
@@ -32,6 +45,7 @@ jewelry.stones = {};
 jewelry.regular = {};
 jewelry.tags = {};
 local vendorsFoods = {};
+-- food prices are listed here
 vendorsFoods[1] = {"Canned_Goods", {"TinnedBeans", {0,0,1,0}, 10}, {"CannedChili", {0,0,1,0}, 10}, {"CannedCorn", {0,0,1,0}, 10}, {"CannedCornedBeef", {0,0,1,0}, 10}, {"CannedFruitCocktail", {0,0,1,0}, 10}, {"CannedMushroomSoup", {0,0,1,0}, 10}, {"CannedPeaches", {0,0,1,0}, 10}, {"CannedPeas", {0,0,1,0}, 10}, {"CannedPineapple", {0,0,1,0}, 10}, {"CannedPotato2", {0,0,1,0}, 10}, {"CannedSardines", {0,0,1,0}, 10}, {"TinnedSoup", {0,0,1,0}, 10}, {"CannedBolognese", {0,0,1,0}, 10}, {"CannedTomato2", {0,0,1,0}, 10}, {"TunaTin", {0,0,1,0}, 10}};
 vendorsFoods[2] = {"Condiments", {"SugarBrown", {0,1,0,0}, 100}, {"Hotsauce", {0,1,0,0}, 100}, {"Ketchup", {0,1,0,0}, 100}, {"MapleSyrup", {0,1,0,0}, 100}, {"Marinara", {0,1,0,0}, 100}, {"farming.MayonnaiseFull", {0,1,0,0}, 100}, {"Mustard", {0,1,0,0}, 100}, {"OilOlive", {0,1,0,0}, 100}, {"Pepper", {0,1,0,0}, 100}, {"RiceVinegar", {0,1,0,0}, 100}, {"Salt", {0,1,0,0}, 100}, {"Soysauce", {0,1,0,0}, 100}, {"Sugar", {0,1,0,0}, 100}, {"OilVegetable", {0,1,0,0}, 100}, {"Wasabi", {0,1,0,0}, 100}};
 vendorsFoods[3] = {"Drinks", {"BeerBottle", {0,1,0,0}, 100}, {"BeerCan", {0,1,0,0}, 100}, {"Bleach", {0,1,0,0}, 100}, {"WhiskeyFull", {0,1,0,0}, 100}, {"ColdDrinkSpiffo", {0,1,0,0}, 100}, {"Mugfull", {0,1,0,0}, 100}, {"HotDrinkTea", {0,1,0,0}, 100}, {"OilOlive", {0,1,0,0}, 100}, {"Pepper", {0,1,0,0}, 100}, {"JuiceBox", {0,1,0,0}, 100}, {"Milk", {0,1,0,0}, 100}, {"PopBottle", {0,1,0,0}, 100}, {"Wine2", {0,1,0,0}, 100}, {"Wine", {0,1,0,0}, 100}};
@@ -54,12 +68,12 @@ Vendors_CheckMods();
 	jewelry.tags.items = {};
 	jewelry.green = {};
 	jewelry.green.items = {};
+	saleTotal = 0;
 	vendMoney[1] = 0;
 	vendMoney[2] = 0;
 	vendMoney[3] = 0;
 	vendMoney[4] = 0;
 	local playerObj = getSpecificPlayer(player);
-	if playerObj:getVehicle() then return; end
 	local worldObj = worldobjects;
 	local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
 	local vendorList = nil;
@@ -104,6 +118,7 @@ Vendors_CheckMods();
 						end
 						vendMoney.total = ((vendMoney[1]*1000)+(vendMoney[2]*100)+(vendMoney[3]*10)+(vendMoney[4]));
 					elseif string.find(dispType, "DogTag") then
+															-- price for selling dog tags
 						table.insert(jewelry.tags.items, {item, {0,0,5,0}, 50});
 						if not jewelry.tags[dispType] then jewelry.tags[dispType] = {};
 							jewelry.tags[dispType] = {item, {0,0,5,0}, 50};
@@ -112,7 +127,9 @@ Vendors_CheckMods();
 						else 
 							jewelry.tags[dispType].count = jewelry.tags[dispType].count + 1;
 						end
+						saleTotal = saleTotal + jewelry.tags[dispType][2][3];
 					elseif string.find(dispType, "Diamond") or string.find(dispType, "Emerald") or string.find(dispType, "Amethyst") or string.find(dispType, "Ruby") or string.find(dispType, "Sapphire") then
+															-- price for selling jewelry with stones
 						table.insert(jewelry.stones.items, {item, {0,0,2,5}, 25})
 						if not jewelry.stones[dispType] then jewelry.stones[dispType] = {};
 							jewelry.stones[dispType] = {item, {0,0,2,5}, 25};
@@ -121,7 +138,9 @@ Vendors_CheckMods();
 						else 
 							jewelry.stones[dispType].count = jewelry.stones[dispType].count + 1;
 						end
+						saleTotal = saleTotal + jewelry.stones[dispType][2][3];
 					elseif not string.find(dispType, "Flame") and not string.find(dispType, "Key") and not string.find(dispType, "DogTag") and (item:getDisplayCategory() == "Accessory" and ((string.find(dispType, "Ring") or string.find(dispType, "ring"))) or string.find(dispType, "necklace") or string.find(dispType, "Necklace") or string.find(dispType, "Bangle") or string.find(dispType, "Locket") or string.find(dispType, "Watch") or (string.find(dispType, "Nose") and string.find(dispType, "Stud")) or string.find(dispType, "BellyButton")) then
+															-- price for selling regular jewelry
 						table.insert(jewelry.regular.items, {item, {0,0,1,0}, 10});
 						if not jewelry.regular[dispType] then jewelry.regular[dispType] = {};
 							jewelry.regular[dispType] = {item, {0,0,1,0}, 10};
@@ -130,61 +149,168 @@ Vendors_CheckMods();
 						else
 							jewelry.regular[dispType].count = jewelry.regular[dispType].count + 1;
 						end
+						saleTotal = saleTotal + jewelry.regular[dispType][2][3];
 					-- looking for GreenFireMod products  TODO Add more gfm items, add brita weapons
 					elseif GreenFireMod then
 						if dispCat == "GreenFireItem" then
-							if string.find(dispType, "Oz") then
-								table.insert(jewelry.green.items, {item, {0,1,0,0}, 100});
-								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
-									jewelry.green[dispType] = {item, {item, {0,1,0,0}, 100}};
-									jewelry.green[dispType].count = 1;
-								else 
-									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
-								end
-							elseif string.find(dispType, "Kg") then
+							if string.find(dispType, "Kg") then
+																		-- price for selling kilo of cannabis -----------------------------------------------------------------------------------
 								table.insert(jewelry.green.items, {item, {4,5,0,0}, 4500});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {4,5,0,0}, 4500}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif string.find(dispType, "Oz") then
+																		-- price for selling bag of cannabis -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {0,1,0,0}, 100});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {0,1,0,0}, 100}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
 							elseif string.find(dispType, "DryCannabisFanLeaf") then
 								fanleaf = fanleaf + 1;
 								if fanleaf == 100 then
 									fanleaf = 0;
+																			-- price for selling dry fan leaf, 100 is the quantity.  so you get $10 per 100 fan leaves -----------------------------------------------------------------------------------
 									table.insert(jewelry.green.items, {item, {0,0,1,0}, 10, 100});
 									if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 										jewelry.green[dispType] = {item, {item, {0,0,1,0}, 10, 100}};
 										jewelry.green[dispType].count = 1;
+										jewelry.green[dispType].menuCreated = false;
 									else 
 										jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 									end
 								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
 							elseif dispType == "Hashish" then
+																			-- price for selling hashish -----------------------------------------------------------------------------------
 								table.insert(jewelry.green.items, {item, {2,5,0,0}, 2500});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {2,5,0,0}, 2500}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
 							elseif dispType == "Kief" then
+																			-- price for selling kief -----------------------------------------------------------------------------------
 								table.insert(jewelry.green.items, {item, {0,0,3,0}, 0030});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
 									jewelry.green[dispType] = {item, {item, {0,0,3,0}, 0030}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
-							elseif(string.find(dispType, "CannaCigar") and not string.find(dispType, "Half")) then
-								table.insert(jewelry.green.items, {item, {0,0,6,0}, 60});
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "Blunt" then
+																			-- price for selling blunt -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {0,0,1,0}, 0010});
 								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
-									jewelry.green[dispType] = {item, {item, {0,0,6,0}, 60}};
+									jewelry.green[dispType] = {item, {item, {0,0,1,0}, 0010}};
 									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
 								else 
 									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
 								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "MixedBlunt" then
+																			-- price for selling mixed blunt -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {0,0,0,5}, 0005});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {0,0,0,5}, 0005}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "KiefBlunt" then
+																			-- price for selling kief blunt -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {0,0,4,0}, 40});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {0,0,4,0},40}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "HashishBlunt" then
+																			-- price for selling hashish blunt -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {2,5,2,5}, 2525});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {2,5,2,5}, 2525}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "SpaceBlunt" then
+																			-- price for selling space blunt -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {2,5,6,0}, 2560});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {2,5,6,0}, 2560}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "CannaCigar" then
+																			-- price for selling cannabis cigar -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {2,5,6,0}, 2560});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {2,5,6,0}, 2560}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "PreCannaCigar" then
+																			-- price for selling premium cannabis cigar -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {0,0,6,0}, 0060});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {0,0,6,0}, 0060}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "DelCannaCigar" then
+																			-- price for selling deluxe cannabis cigar -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {0,0,6,0}, 0060});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {0,0,6,0}, 0060}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
+							elseif dispType == "ResCannaCigar" then
+																			-- price for selling reserve cannabis cigar -----------------------------------------------------------------------------------
+								table.insert(jewelry.green.items, {item, {2,6,0,0}, 2600});
+								if not jewelry.green[dispType] then jewelry.green[dispType] = {};
+									jewelry.green[dispType] = {item, {item, {2,6,0,0}, 2600}};
+									jewelry.green[dispType].count = 1;
+									jewelry.green[dispType].menuCreated = false;
+								else 
+									jewelry.green[dispType].count = jewelry.green[dispType].count + 1;
+								end
+								saleTotal = saleTotal + jewelry.green[dispType][2][3];
 							end
 						end
 					end
@@ -223,14 +349,14 @@ end
 	-- display subsub and subsubsub context menus
 function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, context, player, vendorType, worldobjects)
 	local playerObj = getSpecificPlayer(0);
-	local playerInv = playerObj:getInventory()
+	local playerInv = playerObj:getInventory();
 	-- searching for vendor type to display correct context menus
 	if vendorType == "ATM Machine" then
 		-- looking for jewelry items that were found during the inventory search in the initial function
-		if #jewelry.tags.items == 0 and #jewelry.stones.items == 0 and #jewelry.regular.items == 0 and #jewelry.green == 0 then
+		if #jewelry.tags.items == 0 and #jewelry.stones.items == 0 and #jewelry.regular.items == 0 and #jewelry.green.items == 0 then
 			local subSubVendorOption = subSubMenu:addOptionOnTop(getText("ContextMenu_Nothing_To_Sell"), worldobjects);
 		else
-			local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_Sell_All"), worldobjects, Buy_VendorsItem, player, jewelry, true, 0, true);
+			local subSubVendorOption = subSubMenu:addOption(getText("ContextMenu_Sell_All") .. "($" .. saleTotal .. ")", worldobjects, Buy_VendorsItem, player, jewelry, true, 0, true);
 			if #jewelry.tags.items > 0 then
 				Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelry.tags)
 			end
@@ -247,25 +373,11 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	end
 	-- food, were building menus to buy food
 	if vendorType == "Food Vendor" then
-		-- these are $10
-		Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods)
-		-- these are $40
-		
+		Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods);		
 	end
 	-- tools.  for to buy
 	if vendorType == "Tool Vendor" then
-		for i,v in pairs(venderTools) do
-			local tool = v;
-			local toolName = v[1];
-			-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu and for comparing against the wallet
-			local toolPrice = v[2];
-			local toolValue = v[3];
-			local toolItem = playerInv:AddItem(toolName);
-			local toolItemType = toolItem:getType();
-			local toolItemName = toolItem:getName();
-			playerInv:Remove(toolItem);
-			local subSubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolValue .. ")", worldobjects, Buy_VendorsItem, player, tool, false, toolPrice, false);
-		end
+		Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsTools)
 	end
 	if vendorType == "Vehicle Vendor" then
 		-- creating a menu item for engine parts, to be listed in the first vehicle submenu above the other submenu options
@@ -277,6 +389,10 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 		local partItemType = partItem:getType();
 		local partItemName = partItem:getName();
 		playerInv:Remove(partItem);
+		local vehicle = player:getNearVehicle();
+		if vehicle then
+			local subSubVendorOption = subSubMenu:addOption(getText("IGUI_VehicleName" .. vehicle:getScript():getName()) .. " key - $5000", playerObj, Buy_VendorsVehicleKey, vehicle);
+		end
 		local subSubVendorOption = subSubMenu:addOption(partItemName .. "($" .. getText("ContextMenu_Spare_Parts") .. ")", worldobjects, Buy_VendorsItem, player, part, false, partPrice, false, 30);
 		for i,v in pairs(vehicles.parts) do
 			local subTable = v;
@@ -293,8 +409,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 					local partItemType = partItem:getType();
 					local partItemName = partItem:getName();
 					playerInv:Remove(partItem);
-					local subSubVendorOption = subSubMenu:addOption(partItemName .. "($" .. partValue .. ")", worldobjects, Buy_VendorsItem, player, part, false, partPrice, false);
-					
+					local subSubVendorOption = subSubMenu:addOption(partItemName .. "($" .. partValue .. ")", worldobjects, Buy_VendorsItem, player, part, false, partPrice, false);					
 				end
 			end 
 		end
@@ -331,7 +446,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 					end
 				end
 			elseif subTable[1] == "Slots" then
-					Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, player);
+				Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, player);
 			elseif subTable[1] ~= "Magazines"  and subTable[1] ~= "Attachments" then
 				local weaponOptions = subTable[1];
 				local weaponOption = subSubMenu:addOption(getText("ContextMenu_" .. weaponOptions), worldobjects);
@@ -408,7 +523,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			end
 		end
 		-- last one for sell all!
-		if #jewelry.green > 0 then
+		if #jewelry.green.items > 0 then
 			for i,v in pairs(jewelry.green.items) do
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
@@ -443,7 +558,6 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		end
 		-- give me that money!
 		Vendors_CalculateChange(moneyInteger*-1, playerInv);
-		playerObj:Say("SOLD!");
 		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long,  giving correct change now.
 	elseif not sell and not sellAll then
 		if quantity and item[1] ~= "EngineParts" then moneyInteger = moneyInteger*quantity; end
@@ -466,6 +580,15 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 	end
 end
 
+function Buy_VendorsVehicleKey(player, vehicle)
+	if vendMoney.total >= 5000 then
+		Vendors_CalculateChange(-5000, playerInv);
+		sendClientCommand(player, "vehicle", "getKey", { vehicle = vehicle:getId() });
+	else
+		player:Say(getText("ContextMenu_Cant_Buy"));
+	end
+end
+
 function Vendors_CalculateChange(moneyInteger, playerInv)
 	local vendCashToGive = vendMoney.total - moneyInteger;
 	local vendCash = {}
@@ -484,9 +607,9 @@ function Vendors_CalculateChange(moneyInteger, playerInv)
 	end
 end
 
-function Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods)
+function Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsList)
 	local playerInv = player:getInventory();
-	for i,v in pairs(vendorsFoods) do
+	for i,v in pairs(vendorsList) do
 		local foodTable = v;
 		local foodOption = subSubMenu:addOption(getText("ContextMenu_" .. foodTable[1]), worldobjects)
 		local subSubMenu = ISContextMenu:getNew(subSubMenu);
@@ -505,9 +628,30 @@ function Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods)
 			end
 		end
 	end
-	--local subVendorOption = subSubMenu:addOption(getText("ContextMenu_Food_For_10_Dollars"), worldobjects)
-	--local subSubMenu = ISContextMenu:getNew(subSubMenu);
-	--local subContext = context:addSubMenu(subVendorOption, subSubMenu);
+end
+
+function Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsList)
+	local playerInv = player:getInventory();
+	for i,v in pairs(vendorsList) do
+		local toolTable = v;
+		local toolOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
+		local subSubMenu = ISContextMenu:getNew(subSubMenu);
+		local subContext = context:addSubMenu(toolOption, subSubMenu);
+		for j,k in pairs(toolTable) do
+			local toolItemTable = k;
+			if j ~= 1 then
+				local toolItemType = toolItemTable[1];
+				local toolItemPrice = toolItemTable[2];
+				local toolItemValue = toolItemTable[3];
+				local toolItemQuantity = toolItemTable[4];
+				local toolItem = playerInv:AddItem(toolItemType);
+				toolItemName = toolItem:getName();
+				playerInv:Remove(toolItem);
+				if toolItemQuantity then toolItemValue = toolItemValue*toolItemQuantity .. ") for (" .. toolItemQuantity; end
+				local SubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolItemValue .. ")", worldobjects, Buy_VendorsItem, player, toolItemTable, false, toolItemPrice);
+			end
+		end
+	end
 end
 
 function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)
