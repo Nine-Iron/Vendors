@@ -1,6 +1,8 @@
---local item = ScriptManager.instance:getItem("Base.Money")
+--function Vendors_ItemCategories()
+	--local item = ScriptManager.instance:getItem("Base.Money")
 --if item then 
     --item:DoParam("DisplayCategory = Money")
+--end
 --end
 
 
