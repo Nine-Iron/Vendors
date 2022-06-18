@@ -572,9 +572,11 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				end
 			end
 			local addedItem = Vendors_AddItem(item[1], playerInv);
-			if string.find(addedItem:getName(), "Drum") or string.find(addedItem:getName(), "Magazine") then
+			local addedItem = playerInv:AddItem(item[1]);
+			if string.find(addedItem:getType(), "Drum") or string.find(addedItem:getType(), "Magazine") then
 				local maxAmmo = addedItem:getMaxAmmo();
 				addedItem:setCurrentAmmoCount(maxAmmo);
+				playerInv:Remove(addedItem);
 			end
 			if addedItem:isCookable() and not string.find(addedItem:getType(), "Dead") then addedItem:setCooked(true); end
 			Vendors_CalculateChange(moneyInteger, playerInv);
