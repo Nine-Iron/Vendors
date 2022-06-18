@@ -1,5 +1,3 @@
--- edited condiment, game and fish prices, 
-
 --TODO ADD LIGHT ATTACHMENTS
 
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
@@ -572,13 +570,6 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				end
 			end
 			local addedItem = Vendors_AddItem(item[1], playerInv);
-			local addedItem = playerInv:AddItem(item[1]);
-			if string.find(addedItem:getType(), "Drum") or string.find(addedItem:getType(), "Magazine") then
-				local maxAmmo = addedItem:getMaxAmmo();
-				addedItem:setCurrentAmmoCount(maxAmmo);
-				playerInv:Remove(addedItem);
-			end
-			if addedItem:isCookable() and not string.find(addedItem:getType(), "Dead") then addedItem:setCooked(true); end
 			Vendors_CalculateChange(moneyInteger, playerInv);
 		else
 			playerObj:Say(getText("ContextMenu_Cant_Buy"));
@@ -604,7 +595,8 @@ function Vendors_CalculateChange(moneyInteger, playerInv)
 	vendCash[3] = {(math.floor((vendCashToGive)/10) - (math.floor(vendCashToGive/100)*10)), "Vendors.TenDollar"};
 	vendCash[4] = {(math.floor((vendCashToGive)) - (math.floor(vendCashToGive/10)*10)), "Vendors.OneDollar"};
 	for i,v in pairs(vendorWallet) do
-		Vendors_RemoveItem(v, playerInv);
+	
+		Vendors_RemoveItem(v, playerInv)
 	end
 	for i,v in pairs(vendCash) do
 		for j=1, v[1] do
