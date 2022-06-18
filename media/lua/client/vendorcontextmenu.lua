@@ -505,7 +505,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			for i,v in ipairs(jewelry.tags.items) do
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
-				playerInv:Remove(jewelryItem);
+				Vendors_RemoveItem(jewelryItem, playerInv);
 				sellAllTotal = sellAllTotal + v[3];
 			end
 		end
@@ -513,7 +513,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		if #jewelry.stones.items > 0 then
 			for i,v in pairs(jewelry.stones.items) do
 				local jewelryItem = v[1];
-				playerInv:Remove(jewelryItem);
+				Vendors_RemoveItem(jewelryItem, playerInv)
 				sellAllTotal = sellAllTotal + v[3];
 			end
 		end
@@ -522,7 +522,7 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			for i,v in pairs(jewelry.regular.items) do
 				local jewelryItem = v[1];
 				local moneyQuantity = v[2];
-				playerInv:Remove(jewelryItem);
+				Vendors_RemoveItem(jewelryItem, playerInv);
 				sellAllTotal = sellAllTotal + v[3];
 			end
 		end
@@ -535,10 +535,10 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 					local quantity = v[4];
 					sellAllTotal = sellAllTotal + v[3];
 					for h=1, quantity do
-						playerInv:Remove(jewelryItem:getType());
+						Vendors_RemoveItem(jewelryItem, playerInv);
 					end
 				else
-					playerInv:Remove(jewelryItem);
+					Vendors_RemoveItem(jewelryItem, playerInv);
 					sellAllTotal = sellAllTotal + v[3];
 				end
 			end
@@ -551,11 +551,11 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 			if quantity > 0 then
 				jewelryItem = jewelryItem:getType();
 				for j=1, quantity do
-					playerInv:Remove(jewelryItem);
+					Vendors_RemoveItem(jewelryItem, playerInv);
 				end
 			end
 		else
-			playerInv:Remove(jewelryItem);
+			Vendors_RemoveItem(jewelryItem, playerInv);
 		end
 		if sellAllOfItem then 
 			moneyInteger = moneyInteger*quantity;
@@ -568,10 +568,10 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		if vendMoney.total >= moneyInteger then
 			if quantity then
 				for i=1,quantity-1 do
-					local addedItem = playerInv:AddItem(item[1]);
+					local addedItem = Vendors_AddItem(item[1], playerInv);
 				end
 			end
-			local addedItem = playerInv:AddItem(item[1]);
+			local addedItem = Vendors_AddItem(item[1], playerInv);
 			if string.find(addedItem:getName(), "Drum") or string.find(addedItem:getName(), "Magazine") then
 				local maxAmmo = addedItem:getMaxAmmo();
 				addedItem:setCurrentAmmoCount(maxAmmo);
@@ -602,11 +602,11 @@ function Vendors_CalculateChange(moneyInteger, playerInv)
 	vendCash[3] = {(math.floor((vendCashToGive)/10) - (math.floor(vendCashToGive/100)*10)), "Vendors.TenDollar"};
 	vendCash[4] = {(math.floor((vendCashToGive)) - (math.floor(vendCashToGive/10)*10)), "Vendors.OneDollar"};
 	for i,v in pairs(vendorWallet) do
-		playerInv:Remove(v);
+		Vendors_RemoveItem(v, playerInv);
 	end
 	for i,v in pairs(vendCash) do
 		for j=1, v[1] do
-			playerInv:AddItem(v[2]);
+		Vendors_AddItem(v[2], playerInv);
 		end
 	end
 end
