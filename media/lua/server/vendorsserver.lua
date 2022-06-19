@@ -4,7 +4,7 @@
     --item:DoParam("DisplayCategory = Money")
 --end
 --end
-function Vendors_RemoveItem(item, inventory)
+function Vendors_RemoveServerItem(item, inventory)
 	local container = inventory;
 	container:DoRemoveItem(item);
 	container:Remove(item);
