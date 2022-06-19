@@ -4,18 +4,20 @@
     --item:DoParam("DisplayCategory = Money")
 --end
 --end
-function Vendors_RemoveItem(item, inventory)
+function Vendors_RemoveServerItem(item, inventory)
 	local container = inventory;
 	container:DoRemoveItem(item);
-	container:removeItemOnServer(item);
+	container:Remove(item);
 end
 
 function Vendors_AddItem(item, inventory)
+	local maxAmmo = nil;
 	local container = inventory;
-	container:AddItem(item);
+	local addedItem = container:AddItem(item);
+	maxAmmo = addedItem:getMaxAmmo();
+	if maxAmmo > 0 then
+		addedItem:setCurrentAmmoCount(maxAmmo);
+	elseif addedItem:isCookable() and not string.find(addedItem:getType(), "Dead") then 
+		addedItem:setCooked(true); 
+	end
 end
-
-
---IGUI_EN = {
-  --  IGUI_ItemCat_Money = "Money",
---}
