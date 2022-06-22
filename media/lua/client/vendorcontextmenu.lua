@@ -12,6 +12,56 @@ local vendorsSaleTotal = 0;
 
 local vendorWallet = {};
 
+vendorsJewelry = {};
+vendorsJewelry.prices = {};
+vendorsJewelry.prices.tags = 50;
+vendorsJewelry.prices.stones = 25;
+vendorsJewelry.prices.regular = 10;
+vendorsJewelry.stones = {};
+vendorsJewelry.regular = {};
+vendorsJewelry.tags = {};
+vendorsTools = {};
+vendorsVehicles = {};
+vendorsWeapons = {};
+vendorsJewelry.green = {};
+
+vendorsTools[1] = {"Camping", {"SharpedStone", 25}, {"Lighter", 45}, {"PercedWood", 50}, {"WoodenStick", 50}};
+vendorsTools[2] = {"Construction", {"Axe", 100}, {"BucketEmpty", 250}, {"Crowbar", 75}, {"Hammer", 45}, {"Needle", 25}, {"Paintbrush", 25}, {"PropaneTank", 125}, {"BlowTorch", 250}, {"Saw", 75}, {"Screwdriver", 50}, {"AxeStone", 75}, {"HammerStone", 50}, {"WeldingMask", 50}};
+vendorsTools[3] = {"Cooking", {"BakingPan", 45}, {"Bowl", 250}, {"BoxOfJars", 50}, {"JarLid", 50, 6}, {"TinOpener", 50}, {"Pot", 50}, {"Pan", 45}, {"KitchenKnife", 250}, {"Kettle", 50}, {"RollingPin", 25}, {"BakingPan", 50}, {"Saucepan", 50}};
+vendorsTools[4] = {"Farming", {"farming.GardeningSprayEmpty", 75}, {"farming.WateredCan", 100}, {"Fertilizer", 75}, {"EmptySandbag", 25}, {"farming.Shovel", 100}, {"farming.HandShovel", 100}};
+vendorsTools[5] = {"Fishing", {"FishingNet", 75}, {"FishingRod", 100}, {"FishingTackle", 45}};
+vendorsTools[6] = {"Light", {"Torch", 75}, {"Matches", 50}}
+vendorsTools[7] = {"Mechanics", {"PetrolCan", 100}, {"Jack", 75}, {"LugWrench", 75}, {"TirePump", 75}, {"Wrench", 75}};
+vendorsTools[8] = {"Stationary", {"Notebook", 50}, {"Eraser", 50}, {"Journal", 50}, {"Pen", 50}, {"Pencil", 50}, {"SheetPaper2", 50}};
+vendorsTools[9] = {"Trapping", {"TrapCage", 75}, {"TrapMouse", 25}, {"TrapSnare", 60}, {"TrapStick", 50}, {"TrapBox", 60}, {"TrapCrate", 60}};
+
+vendorsVehicles = {};
+vendorsVehicles.parts = {};
+vendorsVehicles.parts[1] = {{"CarBattery1", 500}, {"FrontCarDoor1", 500}, {"EngineDoor1", 500}, {"ModernBrake1", 500}, {"TrunkDoor1", 500}, {"RearCarDoor1", 500}, {"RearCarDoorDouble1", 500}, {"BigGasTank1", 500}, {"ModernCarMuffler1", 500}, {"NormalCarSeat1", 500}, {"ModernSuspension1", 500}, {"ModernTire1", 500}, {"Windshield1", 500}, {"RearWindshield1", 500}, {"FrontWindow1", 500}, {"RearWindow1", 500}, "Standard"};
+vendorsVehicles.parts[2] = {{"CarBattery1", 1000}, {"FrontCarDoor1", 1000}, {"EngineDoor1", 1000}, {"ModernBrake1", 1000}, {"TrunkDoor1", 1000}, {"RearCarDoor1", 1000}, {"RearCarDoorDouble1", 1000}, {"BigGasTank1", 1000}, {"ModernCarMuffler1", 1000}, {"NormalCarSeat1", 1000}, {"ModernSuspension1", 1000}, {"ModernTire1", 1000}, {"Windshield1", 1000}, {"RearWindshield1", 1000}, {"FrontWindow1", 1000}, {"RearWindow1", 1000}, "Sport"};
+vendorsVehicles.parts[3] = {{"CarBattery1", 2000}, {"FrontCarDoor1", 2000}, {"EngineDoor1", 2000}, {"ModernBrake1", 2000}, {"TrunkDoor1", 2000}, {"RearCarDoor1", 2000}, {"RearCarDoorDouble1", 2000}, {"BigGasTank1", 2000}, {"ModernCarMuffler1", 2000}, {"NormalCarSeat1", 2000}, {"ModernSuspension1", 2000}, {"ModernTire1", 2000}, {"Windshield1", 2000}, {"RearWindshield1", 2000}, {"FrontWindow1", 2000}, {"RearWindow1", 2000}, "Heavy-Duty"};
+vendorsVehicles.engineParts = {20000, 30};
+
+vendorsWeapons = {};
+vendorsWeapons[1] = {"Box_Ammo", {"ShotgunShellsBox", 150, true}, {"223Box", 250, true}, {"308Box", 250, true}, {"Bullets38Box", 100, true}, {"Bullets45Box", 100, true}, {"556Box", 200, true}};
+vendorsWeapons[2] = {"Magazines", {"223Clip", 300, false, ".223-REM"}, {"308Clip", 300, false, ".308"}, {"44Clip", 250, false, ".44-MAG"}, {"45Clip", 250, false, ".45 Auto"}, {"556Clip", 350, false, "5.56"}, {"M14Clip", 300, false, ".308"}, {"9mmClip", 300, false, "9mm"}};
+vendorsWeapons[3] = {"Attachments", {"ChokeTubeImproved", 200, false, "Barrel"}, {"FiberglassStock", 150, false, "Stock"}, {"IronSight", 100, false, "Sight"}, {"Laser", 200, false, "Side"}, {"RecoilPad", 100, false, "Stock"}, {"RedDot", 200, false, "Sight"}, {"Sling", 150, false, "Bottom"}, {"x2Scope", 300, false, "Sight"}, {"x4Scope", 350, false, "Sight"}, {"x8Scope", 400, false, "Sight"}};
+vendorsWeapons[4] = {"Caliber", ".223-REM", ".308", ".44-MAG", ".45 Auto", "5.56", "9mm"};
+vendorsWeapons[5] = {"Pistols", {"Pistol", 2500, false, "9mm"}, {"Pistol2", 3000, false, ".45 Auto"}, {"Pistol3", 3000, false, ".44-MAG"}, {"Revolver_Long", 2000, false, ".44-MAG"}, {"Revolver", 2000, false, ".45 Auto"}, {"Revolver_Short", 1500, false, ".38-SPC"}};
+vendorsWeapons[6] = {"Shotguns", {"DoubleBarrelShotgun", 750, false, "12g"}, {"Shotgun", 2500, false, "12g"}};
+vendorsWeapons[7] = {"Rifles", {"AssaultRifle2", 7500, false, ".308"}, {"AssaultRifle",  10000, false, "5.56"}, {"VarmintRifle", 3500, false, ".223-REM"}, {"HuntingRifle", 4500, false, ".308"}};
+vendorsWeapons[8] = {"Slots", "Barrel", "Bottom", "Side", "Sight", "Stock"};
+
+vendorsFoods = {};
+vendorsFoods[1] = {"Canned_Goods", {"TinnedBeans", 50}, {"CannedChili", 50}, {"CannedCorn", 50}, {"CannedCornedBeef", 50}, {"CannedFruitCocktail", 50}, {"CannedMushroomSoup", 50}, {"CannedPeaches", 50}, {"CannedPeas", 50}, {"CannedPineapple", 50}, {"CannedPotato2", 50}, {"CannedSardines", 50}, {"TinnedSoup", 50}, {"CannedBolognese", 50}, {"CannedTomato2", 50}, {"TunaTin", 50}};
+vendorsFoods[2] = {"Condiments", {"SugarBrown", 10}, {"Hotsauce", 10}, {"Ketchup", 10}, {"MapleSyrup", 10}, {"Marinara", 10}, {"farming.MayonnaiseFull", 10}, {"Mustard", 10}, {"OilOlive", 10}, {"Pepper", 10}, {"RiceVinegar", 10}, {"Salt", 10}, {"Soysauce", 10}, {"Sugar", 10}, {"OilVegetable", 10}, {"Wasabi", 10}};
+vendorsFoods[3] = {"Drinks", {"BeerBottle", 60}, {"BeerCan", 60}, {"Bleach", 60}, {"WhiskeyFull", 60}, {"ColdDrinkSpiffo", 60}, {"Mugfull", 60}, {"HotDrinkTea", 60}, {"OilOlive", 60}, {"JuiceBox", 60}, {"Milk", 60}, {"PopBottle", 60}, {"Wine2", 60}, {"Wine", 60}};
+vendorsFoods[4] = {"Fish", {"Bass", 75}, {"Catfish", 75}, {"Crappie", 75}, {"Crayfish", 75}, {"FishFillet", 75}, {"FishRoe", 75}, {"BaitFish", 75}, {"Lobster", 75}, {"Oysters", 75}, {"Perch", 75}, {"Pike", 75}, {"Salmon", 75}, {"Shrimp", 75}, {"Squid", 75}, {"SquidCalamari", 75}, {"Panfish", 75}, {"Trout", 75}};
+vendorsFoods[5] = {"Game", {"DeadBird", 40}, {"DeadMouse", 40}, {"DeadRabbit", 40}, {"DeadRat", 40}, {"DeadSquirrel", 40}, {"Rabbitmeat", 40}, {"Smallanimalmeat", 40}, {"Smallbirdmeat", 40}};
+vendorsFoods[6] = {"Pickled_Food", {"CannedBellPepper", 40}, {"CannedBroccoli", 40}, {"CannedCabbage", 40}, {"CannedCarrots", 40}, {"CannedEggplant", 40}, {"CannedLeek", 40}, {"CannedPotato", 40}, {"CannedRedRadish", 40}, {"CannedTomato", 40}};
+vendorsFoods[7] = {"Proteins", {"farming.Bacon", 100}, {"BeefJerky", 100}, {"Chicken", 100}, {"EggCarton", 100}, {"FrogMeat", 100}, {"Ham", 100}, {"MeatPatty", 100}, {"MincedMeat", 100}, {"MuttonChop", 100}, {"Pepperoni", 100}, {"PorkChop", 100}, {"Salami", 100}, {"Sausage", 100}, {"Steak", 100}, {"Tofu", 100}};
+vendorsFoods[8] = {"Medical", {"AlcoholWipes", 40}, {"Antibiotics", 75}, {"PillsAntiDep", 75}, {"Bandage", 40}, {"PillsBeta", 40}, {"Disinfectant", 75}, {"Cigarettes", 40}, {"FirstAidKit", 100}, {"Pills", 75}, {"AlcoholBandage", 60}, {"PillsVitamins", 75}, {"Splint", 80}, {"SutureNeedle", 40}, {"SutureNeedleHolder", 40}, {"Tweezers", 40}};
+
 function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, test)
 	Vendors_CheckMods();
 	-- reset values for inventory search.
@@ -467,7 +517,7 @@ function Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsList)
 			if j ~= 1 then
 				local toolItemType = toolItemTable[1];
 				local toolItemPrice = toolItemTable[2];
-				local toolItemQuantity = toolItemTable[4];
+				local toolItemQuantity = toolItemTable[3];
 				local toolItem = playerInv:AddItem(toolItemType);
 				toolItemName = toolItem:getName();
 				playerInv:Remove(toolItem);
@@ -486,8 +536,8 @@ function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)
 		local jewelryItemName = jewelryItemTable[1]:getName();
 		local jewelryItemPrice = jewelryItemTable[2];
 		local jewelryItemType = jewelryItemTable[1]:getType();
-		if v[5] then 
-			quantity = v[5]; 
+		if v[4] then 
+			quantity = v[4]; 
 			jewelryItemPrice = jewelryItemPrice .. " per " .. quantity;
 		end
 		if jewelryTableList[jewelryItemType].count > 1 and not jewelryTableList[jewelryItemType].menuCreated then
@@ -530,6 +580,185 @@ function Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, player)
 			end
 		end
 	end
+end
+
+function Vendors_CheckMods()
+	britaMod = getActivatedMods():contains("Brita");
+	brita_2Mod = getActivatedMods():contains("Brita_2");
+	GreenFireMod = getActivatedMods():contains("jiggasGreenfireMod");
+	filibuster = getActivatedMods():contains("FRUsedCars");
+	if britaMod then
+		-- Brita weapons ------------------------------------
+		vendorsWeapons[1] = {"Box_Ammo", {"ShotgunShellsBox", 150, true}, {"40HERound", 10000, true}, {"40INCRound",  12000, true}, {"Bullets22Box", 100, true}, {"223Box", 250, true}, {"3006Box", 250, true}, {"308Box", 250, true}, {"Bullets357Box", 150, true}, {"Bullets38Box", 100, true}, {"Bullets380Box", 150, true}, {"Bullets44Box", 150, true}, {"Bullets4570Box", 200, true}, {"Bullets45Box", 300, true}, {"Bullets45LCBox", 200, true}, {"545x39Box", 400, true}, {"556Box", 450, true}, {"Bullets57Box", 200, true}, {"Bullets50MAGBox", 500, true}, {"50BMGBox", 550, true}, {"762x39Box", 500, true}, {"762x51Box", 500, true}, {"762x54rBox", 500, true}};
+		vendorsWeapons[2] = {"Magazines", {"12gDrum", 1750, false, "12g"}, {"SPASClip", 300, false, "12g"}, {"SIX12_Cylinder", 2500, false, "12g"}, {"22Drum", 1750, false, ".22-LR"}, {"22ExtClip", 300, false, ".22-LR"}, {"22Clip", 300, false, ".22-LR"}, {"223Clip", 300, false, ".223-REM"}, {"223ExtClip", 300, false, ".223"}, {"1903Clip", 300, false, "30-06 SPRG"}, {"3006ExtClip", 300, false, "30-06 SPRG"}, {"308Belt", 1750, false, ".308"}, {"308MiniCan", 300, false, ".308"}, {"308StdClip", 300, false, ".308"}, {"308ExtClip", 300, false, ".308"}, {"357Speed", 300, false, ".357-MAG"}, {"38Clip", 300, false, ".38-SPC"}, {"38Speed", 300, false, ".38-SPC"}, {"380ExtClip", 300, false, ".380-ACP"}, {"380Clip", 300, false, ".380-ACP"}, {"44Clip", 250, false, ".44-MAG"}, {"44Speed", 300, false, ".44-MAG"}, {"45Clip", 250, false, ".45-ACP"}, {"45ExtClip", 300, false, ".45-ACP"}, {"45DSClip", 300, false, ".45-ACP"}, {"45DSExtClip", 300, false, ".45-ACP"}, {"45Drum", 1750, false, ".45-ACP"}, {"45LCSpeed", 300, false, ".45-LC"}, {"50MiniCan", 300, false, ".50 BMG"}, {"M82Clip", 350, false, ".50 BMG"}, {"545Drum", 1750, false, "5.45"}, {"545StdClip", 300, false, "5.45"}, {"556Belt", 1750, false, "5.56"}, {"556Drum", 1750, false, "5.56"}, {"556Clip", 350, false, "5.56"}, {"556MiniCan", 350, false, "5.56"}, {"57Clip", 350, false, "5.7x28"}, {"P90Clip", 350, false, "5.7x28"}, {"M14Clip", 300, false, ".308"}, {"762x39Belt", 1750, false, "7.62x39"}, {"762Drum", 1750, false, "7.62x39"}, {"AKClip", 350, false, "7.62x39"}, {"SKSClip", 350, false, "7.62x39"}, {"762x54rBelt", 1750, false, "7.62x54"}, {"SVDClip", 350, false, "7.62x54"}, {"MosinClip", 350, false, "7.62x54"}, {"9mmClip", 300, false, "9mm"}, {"9mmExtClip", 300, false, "9mm"}, {"9mmDrum", 1750, false, "9mm"}, {"ASHClip", 300, false, ".50 MAG"}};
+		vendorsWeapons[3] = {"Attachments", {"Sight_3xEOTech", 350, false, "Sight"}, {"Sight_4xACOG", 350, false, "Sight"}, {"Sight_Aimpoint_Dot", 350, false, "Sight"}, {"Sight_Thermal", 350, false, "Sight"}, {"Laser_PEQ15", 350, false, "Side"}, {"Choke_Full", 200, false, "Barrel"}, {"ChokeTubeImproved", 200, false, "Barrel"}, {"FiberglassStock", 150, false, "Stock"}, {"Sight_Malcom", 450, false, "Sight"}, {"IronSight", 100, false, "Sight"}, {"Laser", 200, false, "Side"}, {"Light_Large", 200, false, "Side"}, {"Light_Small", 100, false, "Side"}, {"Sight_VX3", 450, false, "Sight"}, {"RecoilPad", 100, false, "Stock"}, {"Pad", 100, false, "Stock"}, {"RedDot", 200, false, "Sight"}, {"Sight_G28_Scope", 450, false, "Sight"}, {"Sling_1", 150, false, "Bottom"}, {"Sling_2", 150, false, "Bottom"}, {"Sling_3", 150, false, "Bottom"}, {"Launcher", 1250, false, "Bottom"}, {"Suppressor_BMG", 500, false, "Barrel"}, {"Suppressor_ROME_BMG", 550, false, "Barrel"}, {"Suppressor_Pistol", 400, false, "Barrel"}, {"Suppressor_SOCOM_Pistol", 450, false, "Barrel"}, {"Suppressor_Shotgun", 450, false, "Barrel"}, {"Suppressor_Rifle", 450, false, "Barrel"}, {"Suppressor_PBS1_Rifle", 550, false, "Barrel"}, {"x2Scope", 300, false, "Sight"}, {"x4Scope", 350, false, "Sight"}, {"x8Scope", 400, false, "Sight"}};
+		vendorsWeapons[4] = {"Caliber", "12g", ".22-LR", ".223-REM", "30-06 SPRG", ".308", ".357-MAG", ".38-SPC", ".380-ACP", ".44-MAG", ".45-ACP", ".45-LC", "5.45", "5.56", "5.7x28", ".50 MAG", ".50 BMG", "7.62x39", "7.62x54", "9mm"};
+		vendorsWeapons[5] = {"Pistols", {"Automag", 3500, false, ".44-MAG"}, {"B93R", 3000, false, "9mm"}, {"M9", 3000, false, "9mm"}, {"M9A3", 3000, false, "9mm"}, {"CZ75", 3000, false, "9mm"}, {"G17", 3000, false, "9mm"}, {"G18", 3000, false, "9mm"}, {"G21", 3000, false, ".45-ACP"}, {"G42", 3000, false, ".380-ACP"}, {"HK_USP", 3500, false, ".44-MAG"}, {"Pistol3", 3000, false, ".44-MAG"}, {"Pistol2", 3000, false, ".45 Auto"}, {"Revolver_Long", 2000, false, ".44-MAG"}, {"Revolver", 2000, false, ".45 Auto"}, {"Revolver_Short", 1500, false, ".38-SPC"}, {"M4506", 3000, false, ".45-ACP"}, {"M5238", 3000, false, ".38-SPC"}, {"M5906", 3000, false, "9mm"}, {"Pistol", 2500, false, "9mm"}};
+		vendorsWeapons[6] = {"Shotguns", {"DAO12", 2500, false, "12g"}, {"AA12", 4500, false, "12g"}, {"DT11", 2500, false, "12g"}, {"CAWS", 4500, false, "12g"}, {"DoubleBarrelShotgun", 750, false, "12g"}, {"Shotgun", 2500, false, "12g"}, {"SIX12SD", 6500, false, "12g"}};
+		vendorsWeapons[7] = {"Rifles", {"AK103", 7500, false, "7.62x39"}, {"AK12_New", 7500, false, "5.45"}, {"AK47", 7500, false, "7.62x39"}, {"AK74", 7500, false, "5.45"}, {"AKM", 7500, false, "7.62x39"}, {"M4A1", 8500, false, "5.56"}, {"DR_200", 7500, false, "5.56"}, {"K2_1", 7500, false, "5.56"}, {"SVDK",  10000, false, "7.62x54"}, {"EDM96",  12000, false, ".50 BMG"}, {"Gepard_M6",  12000, false, ".50 BMG"}, {"G11K3", 7500, false, "5.7x28"}, {"G36KV", 7500, false, "5.56"}, {"HuntingRifle", 4500, false, ".308"}, {"AssaultRifle2", 7500, false, ".308"}, {"AssaultRifle",  10000, false, "5.56"}, {"M40A1", 7500, false, ".308"}, {"M40A3", 7500, false, ".308"}, {"VarmintRifle", 3500, false, ".223-REM"}};
+		vendorsWeapons[9] = {"SMGs", {"CAR15SMG", 6000, false, "5.56"}, {"K1_1", 6000, false, "5.56"}, {"K7_Stock", 6000, false, "9mm"}};
+		vendorsWeapons[10] = {"LMGs", {"K3LMG",  12000, false, "5.56"}, {"G21LMG",  12000, false, ".308"}, {"XM8LMG",  12000, false, "5.56"}, {"M249",  12000, false, "5.56"}, {"K12",  12000, false, ".308"}};
+	end
+	if GreenFireMod then
+		-- Green Fire items --------------------------------
+		vendorsGreenFire = {{"Kilo of Cannabis", 4500, false}, {"Bag of Cannabis", 100, false}, {"Dry Cannabis Leaf", 10, false, 100}, {"Hashish", 2500, false}, {"Kief", 30, false}, {"Blunt", 10, false}, {"Mixed Blunt", 5, false}, {"Kief Blunt", 40, false}, {"Hashish Blunt", 2525, false}, {"Space Blunt", 2560, false}, {"Cannabis Cigar", 45, false}, {"Premium Cannabis Cigar", 75, false}, {"Deluxe Cannabis Cigar", 45, false}, {"Reserve Cannabis Cigar", 45, false}};
+	end
+end
+
+function Vendors_GreenFireCheck(item, container)
+	salesTotal = 0;
+	if GreenFireMod then
+	local dispType = item:getType();
+	local dispCat = item:getDisplayCategory();
+		if dispCat == "GreenFireItem" then
+			if string.find(dispType, "Kg") then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[1][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[1][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif string.find(dispType, "Oz") then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[2][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[2][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif string.find(dispType, "DryCannabisFanLeaf") then
+				fanleaf = fanleaf + 1;
+				if fanleaf == 100 then
+					fanleaf = 0;
+					table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[3][2], vendorsGreenFire[3][4], container});
+					if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+						vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[3][2], container, 100};
+						vendorsJewelry.green[dispType].count = 1;
+						vendorsJewelry.green[dispType].menuCreated = false;
+					else 
+						vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+					end
+					salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+				end
+			elseif dispType == "Hashish" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[4][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[4][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "Kief" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[5][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType] = {item, vendorsGreenFire[5][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType][2];
+			elseif dispType == "Blunt" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[6][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[6][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "MixedBlunt" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[7][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[7][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "KiefBlunt" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[8][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[8][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "HashishBlunt" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[9][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[9][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "SpaceBlunt" then
+					table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[10][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[10][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "CannaCigar" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[11][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[11][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "PreCannaCigar" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[12][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[12][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "DelCannaCigar" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[13][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[13][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			elseif dispType == "ResCannaCigar" then
+				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[14][2], container});
+				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
+					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[14][2], container};
+					vendorsJewelry.green[dispType].count = 1;
+					vendorsJewelry.green[dispType].menuCreated = false;
+				else 
+					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+				end
+				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
+			end
+		end
+	end
+	return salesTotal;
 end
 
 Events.OnFillWorldObjectContextMenu.Add(VendISWorldObjectContextMenu.createMenu);
