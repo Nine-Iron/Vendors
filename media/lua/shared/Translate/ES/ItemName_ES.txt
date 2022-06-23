@@ -1,7 +1,0 @@
-ItemName_ES = {
-	ItemName_Vendors.ATM Machine = "ATM - Dispensador de Dinero"
-	ItemName_Vendors.VehicleVendor = "Dispensador Mecanico"
-	ItemName_Vendors.ToolVendor = "Dispensador de Herramientas"
-	ItemName_Vendors.FoodVendor = "Dispensador de Comida"
-	ItemName_Vendors.WeaponVendor = "Dispensador de Armas"
-	}
