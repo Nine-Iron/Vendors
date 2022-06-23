@@ -97,14 +97,13 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 				local dispCat = item:getDisplayCategory();
 				if item:getType() then
 					dispType = item:getType();
-					dispName = item:getName();
 				end
 				if dispCat == "Vendors" then
 					if not vendorList then vendorList = {}; vendorList.vendors = {}; end
 					if vendorList[dispType] then 
 					else
 						vendorList[dispType] = item;
-						table.insert(vendorList.vendors, dispName);
+						table.insert(vendorList.vendors, dispType);
 					end
 				end
 				if item:isInPlayerInventory() then
@@ -202,7 +201,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	local playerObj = getSpecificPlayer(0);
 	local playerInv = playerObj:getInventory();
 	-- searching for vendor type to display correct context menus
-	if vendorType == "ATM Machine" then
+	if vendorType == "ATMMachine" then
 		-- looking for jewelry items that were found during the inventory search in the initial function
 		if #vendorsJewelry.tags.items == 0 and #vendorsJewelry.stones.items == 0 and #vendorsJewelry.regular.items == 0 and #vendorsJewelry.green.items == 0 then
 			local subSubVendorOption = subSubMenu:addOptionOnTop(getText("ContextMenu_Nothing_To_Sell"), worldobjects);
@@ -223,14 +222,14 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 		end
 	end
 	-- food, were building menus to buy food
-	if vendorType == "Food Vendor" then
+	if vendorType == "FoodVendor" then
 		Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsFoods);		
 	end
 	-- tools.  for to buy
-	if vendorType == "Tool Vendor" then
+	if vendorType == "ToolVendor" then
 		Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsTools)
 	end
-	if vendorType == "Vehicle Vendor" then
+	if vendorType == "VehicleVendor" then
 		-- creating a menu item for engine parts, to be listed in the first vehicle submenu above the other submenu options
 		local part = {"EngineParts", vendorsVehicles.engineParts[1]};
 		local partName = "EngineParts";
@@ -265,7 +264,7 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 			end 
 		end
 	end
-	if vendorType == "Weapon Vendor" then
+	if vendorType == "WeaponVendor" then
 		for i,v in pairs(vendorsWeapons) do
 			local subTable = v;
 			if subTable[1] == "Caliber" then
@@ -434,7 +433,6 @@ end
 function Vendors_RemoveItem(item, container)
 	container:DoRemoveItem(item);
 	container:Remove(item);
-	container:removeItemOnServer(item);
 end
 
 function Buy_VendorsVehicleKey(player, vehicle)
@@ -469,7 +467,6 @@ function Vendors_CalculateChange(moneyInteger)
 	for i,v in pairs(vendorWallet) do
 		v[2]:DoRemoveItem(v[1]);
 		v[2]:Remove(v[1]);
-		v[2]:removeItemOnServer(v[1]);
 	end
 	for i,v in pairs(vendCash) do
 		for j=1, v[1] do
