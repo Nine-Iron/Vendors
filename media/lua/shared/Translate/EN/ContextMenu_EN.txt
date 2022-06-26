@@ -1,8 +1,5 @@
 ContextMenu_EN = {
 
-	ContextMenu_Food_For_10_Dollars = "Food for $10",
-	ContextMenu_Food_For_40_Dollars = "Food For $40",
-	ContextMenu_Food_For_100_Dollars = "Food for $100",
 	ContextMenu_NSF = "You do not have enough cash",
 	ContextMenu_Vendor_options = "Vendor options",
 	ContextMenu_ATMMachine = "ATM machine",
