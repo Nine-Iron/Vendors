@@ -1,9 +1,7 @@
 ItemName_PTBR = {
-
-	ItemName_Vendors.MoneyVendor = "Caixa 24h"
-	ItemName_Vendors.VehicleVendor = "Mec√¢nica"
-	ItemName_Vendors.ToolVendor = "Ferramentas"
-	ItemName_Vendors.FoodVendor = "Alimentos"
-	ItemName_Vendors.WeaponVendor = "Armamentos"
-
+	ItemName_Vendors.MoneyVendor = "Caixa 24h",
+	ItemName_Vendors.VehicleVendor = "Mec‚nica",
+	ItemName_Vendors.ToolVendor = "Ferramentas",
+	ItemName_Vendors.FoodVendor = "Alimentos",
+	ItemName_Vendors.WeaponVendor = "Armamentos",
 }

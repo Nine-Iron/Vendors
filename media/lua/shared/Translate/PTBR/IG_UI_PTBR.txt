@@ -1,6 +1,4 @@
-IG_UI_PTBR = {
- 
-	IGUI_ItemCat_Vendors = "MÃ¡quinas de Venda"
-	IGUI_ItemCat_Money = "Dinheiro"
-
+IG_UI_PTBR = { 
+	IGUI_ItemCat_Vendors = "Máquinas de Venda",
+	IGUI_ItemCat_Money = "Dinheiro",
 }
