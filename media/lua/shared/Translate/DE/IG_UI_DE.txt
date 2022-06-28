@@ -1,6 +1,4 @@
 IG_UI_DE = {
-
-	IGUI_ItemCat_Vendors = "Anbieter"
-	IGUI_ItemCat_Money = "Geld"
-	
+	IGUI_ItemCat_Vendors = "Anbieter",
+	IGUI_ItemCat_Money = "Geld",
 }

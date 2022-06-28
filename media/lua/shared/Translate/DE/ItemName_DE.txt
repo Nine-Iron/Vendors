@@ -1,8 +1,7 @@
 ItemName_DE = {
-	ItemName_Vendors.MoneyVendor = "Geldautomat"
-	ItemName_Vendors.VehicleVendor = "Fahrzeugh√§ndler"
-	ItemName_Vendors.ToolVendor = "Werkzeugverk√§ufer"
-	ItemName_Vendors.FoodVendor = "Lebensmittelverk√§ufer"
-	ItemName_Vendors.WeaponVendor = "Waffenverk√§ufer"
-	
-	}
+	ItemName_Vendors.MoneyVendor = "Geldautomat",
+	ItemName_Vendors.VehicleVendor = "Fahrzeugh‰ndler",
+	ItemName_Vendors.ToolVendor = "Werkzeugverk‰ufer",
+	ItemName_Vendors.FoodVendor = "Lebensmittelverk‰ufer",
+	ItemName_Vendors.WeaponVendor = "Waffenverk‰ufer",
+}

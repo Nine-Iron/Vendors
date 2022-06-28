@@ -546,29 +546,20 @@ function Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsList)
 	local playerInv = player:getInventory();
 	for i,v in pairs(vendorsList) do
 		local toolTable = v;
-		if i >=10 then
-			if i == 10 then
-				local toolOption = subSubMenu:addOption("Books", worldobjects)
-				local subSubSubMenu = ISContextMenu:getNew(subSubMenu);
-				local subContext = context:addSubMenu(toolOption, subSubSubMenu);
-			end
-			local toolSubOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
-		elseif i < 10 then
-			local toolOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
-			local subSubMenu = ISContextMenu:getNew(subSubMenu);
-			local subContext = context:addSubMenu(toolOption, subSubMenu);
-			for j,k in pairs(toolTable) do
-				local toolItemTable = k;
-				if j ~= 1 then
-					local toolItemType = toolItemTable[1];
-					local toolItemPrice = toolItemTable[2];
-					local toolItemQuantity = toolItemTable[3];
-					local toolItem = playerInv:AddItem(toolItemType);
-					toolItemName = toolItem:getName();
-					playerInv:Remove(toolItem);
-					if toolItemQuantity then toolItemPrice = toolItemPrice*toolItemQuantity .. ") for (" .. toolItemQuantity; end
-					local SubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolItemPrice .. ")", worldobjects, Buy_VendorsItem, player, toolItemTable, false, toolItemPrice);
-				end
+		local toolOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
+		local subSubMenu = ISContextMenu:getNew(subSubMenu);
+		local subContext = context:addSubMenu(toolOption, subSubMenu);
+		for j,k in pairs(toolTable) do
+			local toolItemTable = k;
+			if j ~= 1 then
+				local toolItemType = toolItemTable[1];
+				local toolItemPrice = toolItemTable[2];
+				local toolItemQuantity = toolItemTable[3];
+				local toolItem = playerInv:AddItem(toolItemType);
+				toolItemName = toolItem:getName();
+				playerInv:Remove(toolItem);
+				if toolItemQuantity then toolItemPrice = toolItemPrice*toolItemQuantity .. ") for (" .. toolItemQuantity; end
+				local SubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolItemPrice .. ")", worldobjects, Buy_VendorsItem, player, toolItemTable, false, toolItemPrice);
 			end
 		end
 	end
