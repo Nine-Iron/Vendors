@@ -1,14 +1,10 @@
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
 
-local filibuster = nil;
-
-
 local vendMoney = {};
 vendMoney.total = 0;
 local moneyContainer = nil;
 
 local vendorsSaleTotal = 0;
-
 
 local vendorWallet = {};
 
@@ -24,6 +20,7 @@ vendorsTools = {};
 vendorsVehicles = {};
 vendorsWeapons = {};
 vendorsJewelry.green = {};
+vendorsLiterature = {};
 
 vendorsTools[1] = {"Camping", {"SharpedStone", 25}, {"Lighter", 45}, {"PercedWood", 50}, {"WoodenStick", 50}};
 vendorsTools[2] = {"Construction", {"Axe", 100}, {"BucketEmpty", 250}, {"Crowbar", 75}, {"Hammer", 45}, {"Needle", 25}, {"Paintbrush", 25}, {"PropaneTank", 125}, {"BlowTorch", 250}, {"Saw", 75}, {"Screwdriver", 50}, {"AxeStone", 75}, {"HammerStone", 50}, {"WeldingMask", 50}};
@@ -32,8 +29,11 @@ vendorsTools[4] = {"Farming", {"farming.GardeningSprayEmpty", 75}, {"farming.Wat
 vendorsTools[5] = {"Fishing", {"FishingNet", 75}, {"FishingRod", 100}, {"FishingTackle", 45}};
 vendorsTools[6] = {"Light", {"Torch", 75}, {"Matches", 50}}
 vendorsTools[7] = {"Mechanics", {"PetrolCan", 100}, {"Jack", 75}, {"LugWrench", 75}, {"TirePump", 75}, {"Wrench", 75}};
-vendorsTools[8] = {"Stationary", {"Notebook", 50}, {"Eraser", 50}, {"Journal", 50}, {"Pen", 50}, {"Pencil", 50}, {"SheetPaper2", 50}};
+vendorsTools[8] = {"Stationery", {"Notebook", 50}, {"Eraser", 50}, {"Journal", 50}, {"Pen", 50}, {"Pencil", 50}, {"SheetPaper2", 50}};
 vendorsTools[9] = {"Trapping", {"TrapCage", 75}, {"TrapMouse", 25}, {"TrapSnare", 60}, {"TrapStick", 50}, {"TrapBox", 60}, {"TrapCrate", 60}};
+--vendorsTools[10] = {"SkillBooks"};
+--vendorsTools[11] = {"Magazine"};
+--vendorsTools[12] = {"GeneralReading"};
 
 vendorsVehicles = {};
 vendorsVehicles.parts = {};
@@ -66,6 +66,7 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 	Vendors_CheckMods();
 	-- reset values for inventory search.
 	local fanleaf = 0;
+	local moneyContainer = nil;
 	vendorsJewelry.stones = {};
 	vendorsJewelry.regular = {};
 	vendorsJewelry.tags = {};
@@ -79,7 +80,14 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 	vendMoney[2] = 0;
 	vendMoney[3] = 0;
 	vendMoney[4] = 0;
-	vendMoney.total = 0
+	vendMoney[5] = 0;
+	vendMoney[6] = 0;
+	vendMoney[7] = 0;
+	vendMoney[8] = 0;
+	vendMoney[9] = 0;
+	vendMoney[10] = 0;
+	vendMoney[11] = 0;
+	vendMoney.total = 0;
 	local playerObj = getSpecificPlayer(player);
 	local worldObj = worldobjects;
 	local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
@@ -108,27 +116,55 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 				end
 				if item:isInPlayerInventory() then
 					if not vendorWallet then vendorWallet = {}; end
-					if dispCat == "Money" then
+					if dispCat == "Money" or dispCat == "Material" or (dispCat == "Junk" and dispType == "Money") then
 						moneyContainer = container;
-						if dispType == "OneDollar" then
+						if dispType == "OneDollar" or dispType == "1Dollar" or dispType == "Money" then
 							local item = {item, container};
 							vendMoney[4] = vendMoney[4] + 1;
 							table.insert(vendorWallet, item);
-						elseif dispType == "TenDollar" then
+						elseif dispType == "TenDollar" or dispType == "10Dollar" then
 							local item = {item, container};
-							vendMoney[3] = vendMoney[3] + 1;
+							vendMoney[3] = vendMoney[3] + 10;
 							table.insert(vendorWallet, item);
-						elseif dispType == "HundredDollar" then
+						elseif dispType == "HundredDollar" or dispType == "100Dollar" then
 							local item = {item, container};
-							vendMoney[2] = vendMoney[2] + 1;
+							vendMoney[2] = vendMoney[2] + 100;
 							table.insert(vendorWallet, item);
-						elseif dispType == "ThousandDollar" then
+						elseif dispType == "ThousandDollar" or dispType == "1KDollar" then
 							local item = {item, container};
-							vendMoney[1] = vendMoney[1] + 1;
+							vendMoney[1] = vendMoney[1] + 1000;
 							table.insert(vendorWallet, item);
-						end
-						vendMoney.total = ((vendMoney[1]*1000)+(vendMoney[2]*100)+(vendMoney[3]*10)+(vendMoney[4]));
+						elseif dispType == "2Dollar" then
+							local item = {item, container};
+							vendMoney[5] = vendMoney[5] + 2;
+							table.insert(vendorWallet, item);
+						elseif dispType == "5Dollar" then
+							local item = {item, container};
+							vendMoney[6] = vendMoney[6] + 5;
+							table.insert(vendorWallet, item);
+						elseif dispType == "20Dollar" then
+							local item = {item, container};
+							vendMoney[7] = vendMoney[7] + 20;
+							table.insert(vendorWallet, item);
+						elseif dispType == "2KDollar" then
+							local item = {item, container};
+							vendMoney[8] = vendMoney[8] + 2000;
+							table.insert(vendorWallet, item);
+						elseif dispType == "10KDollar" then
+							local item = {item, container};
+							vendMoney[9] = vendMoney[9] + 10000;
+							table.insert(vendorWallet, item);
+						elseif dispType == "20KDollar" then
+							local item = {item, container};
+							vendMoney[10] = vendMoney[10] + 20000;
+							table.insert(vendorWallet, item);
+						elseif dispType == "100KDollar" then
+							local item = {item, container};
+							vendMoney[11] = vendMoney[11] + 100000;
+							table.insert(vendorWallet, item);
+						end						
 					elseif string.find(dispType, "DogTag") then
+					print("tag");
 															-- price for selling dog tags
 						table.insert(vendorsJewelry.tags.items, {item, vendorsJewelry.prices.tags, container});
 						if not vendorsJewelry.tags[dispType] then vendorsJewelry.tags[dispType] = {};
@@ -152,6 +188,7 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 						vendorsSaleTotal = vendorsSaleTotal + vendorsJewelry.stones[dispType].items[2];
 					elseif not string.find(dispType, "Flame") and not string.find(dispType, "Key") and not string.find(dispType, "DogTag") and (item:getDisplayCategory() == "Accessory" and ((string.find(dispType, "Ring") or string.find(dispType, "ring"))) or string.find(dispType, "necklace") or string.find(dispType, "Necklace") or string.find(dispType, "Bracelet") or string.find(dispType, "Choker") or string.find(dispType, "Bangle") or string.find(dispType, "Locket") or string.find(dispType, "Watch") or (string.find(dispType, "Nose") and string.find(dispType, "Stud")) or string.find(dispType, "BellyButton")) then
 															-- price for selling regular vendorsJewelry
+															print("reg");
 						table.insert(vendorsJewelry.regular.items, {item, vendorsJewelry.prices.regular, container});
 						if not vendorsJewelry.regular[dispType] then vendorsJewelry.regular[dispType] = {};
 							vendorsJewelry.regular[dispType].items = {item, vendorsJewelry.prices.regular};
@@ -171,6 +208,9 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 	-- if there are vendors in the area then we call the function to display the menu
 	if vendorList then
 		table.sort(vendorList.vendors);
+		for i=1, #vendMoney do
+			vendMoney.total = vendMoney.total + vendMoney[i];
+		end
 		Vendors_ContextMenu(playerObj, worldObj, context, vendorList, vendMoney);
 	end
 end
@@ -455,7 +495,7 @@ function Vendors_CalulatePrice(moneyInteger)
 end
 
 function Vendors_CalculateChange(moneyInteger)
-	if moneyContainer == nil then moneyContainer = getSpecificPlayer(0):getInventory(); end
+	if moneyContainer == nil or moneyContainer:getType() == "KeyRing" then moneyContainer = getSpecificPlayer(0):getInventory(); end
 	local vendCashToGive = vendMoney.total - moneyInteger;
 	local vendCash = {}
 	-- clean this up if you dont need floor  i do need floor but i cleaned it up anyways
@@ -506,20 +546,29 @@ function Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsList)
 	local playerInv = player:getInventory();
 	for i,v in pairs(vendorsList) do
 		local toolTable = v;
-		local toolOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
-		local subSubMenu = ISContextMenu:getNew(subSubMenu);
-		local subContext = context:addSubMenu(toolOption, subSubMenu);
-		for j,k in pairs(toolTable) do
-			local toolItemTable = k;
-			if j ~= 1 then
-				local toolItemType = toolItemTable[1];
-				local toolItemPrice = toolItemTable[2];
-				local toolItemQuantity = toolItemTable[3];
-				local toolItem = playerInv:AddItem(toolItemType);
-				toolItemName = toolItem:getName();
-				playerInv:Remove(toolItem);
-				if toolItemQuantity then toolItemPrice = toolItemPrice*toolItemQuantity .. ") for (" .. toolItemQuantity; end
-				local SubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolItemPrice .. ")", worldobjects, Buy_VendorsItem, player, toolItemTable, false, toolItemPrice);
+		if i >=10 then
+			if i == 10 then
+				local toolOption = subSubMenu:addOption("Books", worldobjects)
+				local subSubSubMenu = ISContextMenu:getNew(subSubMenu);
+				local subContext = context:addSubMenu(toolOption, subSubSubMenu);
+			end
+			local toolSubOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
+		elseif i < 10 then
+			local toolOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
+			local subSubMenu = ISContextMenu:getNew(subSubMenu);
+			local subContext = context:addSubMenu(toolOption, subSubMenu);
+			for j,k in pairs(toolTable) do
+				local toolItemTable = k;
+				if j ~= 1 then
+					local toolItemType = toolItemTable[1];
+					local toolItemPrice = toolItemTable[2];
+					local toolItemQuantity = toolItemTable[3];
+					local toolItem = playerInv:AddItem(toolItemType);
+					toolItemName = toolItem:getName();
+					playerInv:Remove(toolItem);
+					if toolItemQuantity then toolItemPrice = toolItemPrice*toolItemQuantity .. ") for (" .. toolItemQuantity; end
+					local SubVendorOption = subSubMenu:addOption(toolItemName .. "($" .. toolItemPrice .. ")", worldobjects, Buy_VendorsItem, player, toolItemTable, false, toolItemPrice);
+				end
 			end
 		end
 	end
@@ -583,7 +632,8 @@ function Vendors_CheckMods()
 	britaMod = getActivatedMods():contains("Brita");
 	brita_2Mod = getActivatedMods():contains("Brita_2");
 	GreenFireMod = getActivatedMods():contains("jiggasGreenfireMod");
-	filibuster = getActivatedMods():contains("FRUsedCars");
+	filibusterMod = getActivatedMods():contains("FRUsedCars");
+	BMSVendorMod = getActivatedMods():contains("BetterMoneySystem");
 	if britaMod then
 		-- Brita weapons ------------------------------------
 		vendorsWeapons[1] = {"Box_Ammo", {"ShotgunShellsBox", 150, true}, {"40HERound", 10000, true}, {"40INCRound",  12000, true}, {"Bullets22Box", 100, true}, {"223Box", 250, true}, {"3006Box", 250, true}, {"308Box", 250, true}, {"Bullets357Box", 150, true}, {"Bullets38Box", 100, true}, {"Bullets380Box", 150, true}, {"Bullets44Box", 150, true}, {"Bullets4570Box", 200, true}, {"Bullets45Box", 300, true}, {"Bullets45LCBox", 200, true}, {"545x39Box", 400, true}, {"556Box", 450, true}, {"Bullets57Box", 200, true}, {"Bullets50MAGBox", 500, true}, {"50BMGBox", 550, true}, {"762x39Box", 500, true}, {"762x51Box", 500, true}, {"762x54rBox", 500, true}};

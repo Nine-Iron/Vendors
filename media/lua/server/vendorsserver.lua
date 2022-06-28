@@ -15,7 +15,9 @@ function Vendors_AddItem(item, inventory)
 	local container = inventory;
 	local addedItem = container:AddItem(item);
 	maxAmmo = addedItem:getMaxAmmo();
-	if maxAmmo > 0 then
+	if addedItem:getDisplayCategory() == "Weapon" then
+		addedItem:setRoundChambered(true);
+	elseif maxAmmo > 0 then
 		addedItem:setCurrentAmmoCount(maxAmmo);
 	elseif addedItem:isCookable() and not string.find(addedItem:getType(), "Dead") then 
 		addedItem:setCooked(true); 

@@ -1,0 +1,8 @@
+ItemName_CA = {
+	ItemName_Vendors.MoneyVendor = "Màquina ATM"
+	ItemName_Vendors.VehicleVendor = "Venedor de vehicles"
+	ItemName_Vendors.ToolVendor = "Proveïdor d'eines"
+	ItemName_Vendors.FoodVendor = "Venedor d'aliments"
+	ItemName_Vendors.WeaponVendor = "Venedor d'armes"
+	
+	}

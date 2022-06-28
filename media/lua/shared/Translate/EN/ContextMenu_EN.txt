@@ -1,5 +1,5 @@
-ContextMenu_EN = {
-
+ContextMenu_EN = 
+{
 	ContextMenu_NSF = "You do not have enough cash",
 	ContextMenu_Vendor_options = "Vendor options",
 	ContextMenu_ATMMachine = "ATM machine",
@@ -43,7 +43,10 @@ ContextMenu_EN = {
 	ContextMenu_Construction = "Construction",
 	ContextMenu_Cooking = "Cooking",
 	ContextMenu_Fishing = "Fishing",
-	ContextMenu_Stationary = "Stationary",
+	ContextMenu_Stationery = "Stationery",
 	ContextMenu_Cant_Buy = "I don't have enough for that right now",
+	ContextMenu_Magazine_Skill = "Magazines",
+	ContextMenu_SkillBooks = "Skill Books",
+	ContextMenu_GeneralReading = "General Reading",
 	
 }

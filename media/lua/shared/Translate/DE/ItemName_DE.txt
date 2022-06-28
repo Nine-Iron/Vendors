@@ -1,0 +1,8 @@
+ItemName_DE = {
+	ItemName_Vendors.MoneyVendor = "Geldautomat"
+	ItemName_Vendors.VehicleVendor = "Fahrzeughändler"
+	ItemName_Vendors.ToolVendor = "Werkzeugverkäufer"
+	ItemName_Vendors.FoodVendor = "Lebensmittelverkäufer"
+	ItemName_Vendors.WeaponVendor = "Waffenverkäufer"
+	
+	}
