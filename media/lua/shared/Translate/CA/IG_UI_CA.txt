@@ -1,4 +1,0 @@
-IG_UI_CA = {
-	IGUI_ItemCat_Vendors = "Venedors",
-	IGUI_ItemCat_Money = "Diner",	
-}
