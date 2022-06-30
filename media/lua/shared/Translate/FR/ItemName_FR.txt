@@ -1,7 +1,0 @@
-ItemName_FR = {
-	ItemName_Vendors.MoneyVendor = "Distributeur automatique de billets",
-	ItemName_Vendors.VehicleVendor = "Fournisseur de véhicules",
-	ItemName_Vendors.ToolVendor = "Fournisseur d'outils",
-	ItemName_Vendors.FoodVendor = "Vendeur de nourriture",
-	ItemName_Vendors.WeaponVendor = "Fournisseur d'armes",
-}
