@@ -1,0 +1,4 @@
+IG_UI_FR = {
+	IGUI_ItemCat_Vendors = "Fournisseurs",
+	IGUI_ItemCat_Money = "Argent",
+}
