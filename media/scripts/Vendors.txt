@@ -9,7 +9,7 @@ module Vendors {
         Type            = Normal,
         DisplayName     = ATM Machine,
         icon            = ATMMachine,
-		StaticModel = ATMMachine,
+		StaticModel		= ATMMachine,
 		WorldStaticModel = ATMMachine,
 		DisplayCategory	= Vendors,
     }
