@@ -140,18 +140,18 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 				if item:isInPlayerInventory() then
 					for i,v in pairs(vendorsSellables) do
 						if v[1] == item:getType() then
-							if v[4] then
-							else
+							--if v[4] then
+							--else
 								table.insert(vendorsSellables.custom.items, {item, v[2], container, v[4]});
 								if not vendorsSellables.custom[dispType] then vendorsSellables.custom[dispType] = {};
 									vendorsSellables.custom[dispType].items = {item, v[2]};
 									vendorsSellables.custom[dispType].count = 1;
 									vendorsSellables.custom[dispType].menuCreated = false;
-								else 
+								else
 									vendorsSellables.custom[dispType].count = vendorsSellables.custom[dispType].count + 1;
 								end
 								vendorsSaleTotal = vendorsSaleTotal + vendorsSellables.custom[dispType].items[2];							
-							end
+							--end
 						end
 					end
 					if not vendorWallet then vendorWallet = {}; end
@@ -457,8 +457,7 @@ end
 
 -- yeah, it says buy but we sell items here too.  I thought i was going to need a seperate function at first, turns out i could get it all with one!  woot!
 -- item is a table containing the item we're buying or selling.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment(also for buying engine parts now), sell 100 for $10.
-function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity, sellAllOfItem, items)
-	local itemList = items;
+function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity, sellAllOfItem)
 	local playerObj = player;
 	local playerInv = playerObj:getInventory();
 	local itemTable = item;
@@ -520,25 +519,30 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 	-- now to sell individual items
 	elseif sell and not sellAll then
 		local jewelryItem = item[1];
-		print(jewelryItem);
 		if quantity then
-			if quantity > 0 then
-				-- alright, we're not just selling individual items, we're selling bulk of item types as well...
-				if sellAllOfItem then
+			-- alright, we're not just selling individual items, we're selling bulk of item types as well...
+			if sellAllOfItem then
+				if quantity == #item[1] then
 					for i,v in pairs(jewelryItem) do
-						if v[4] then print(v[4]); end
 						if v[1]:getType() == item[2] then
 							Vendors_RemoveItem(v[1], v[3]);
 						end
 						moneyInteger = item[3]*quantity;
 					end
 				else
-					jewelryItemName = jewelryItem:getName();
+					moneyInteger = item[3]*quantity;
+					print(itemTable[1][1][4]); -- === quantity  [1][1] is the item
+					for i,v in pairs(item) do
+						--print(v);
+					end
+					--[[jewelryItemName = item[1]:getName();
+					jewelryItemType = jewelryItem:getType();
 					local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
 					local itemListOfSellables = {};
-					for i=1,containers:size() do
+					for i=1,containers:size()-1 do
 						local container = containers:get(i-1);
 						for j=1,container:getItems():size() do
+							print("got it");
 							local item = container:getItems():get(j-1);
 							if item:getType() == jewelryItemType and item:isInPlayerInventory() then
 							print(item:getType(), " - ", jewelryItemType);
@@ -547,14 +551,32 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 								if quantity == 0 then break end
 							end
 						end
+					end]]
+				end
+				--for i,v in pairs(itemListOfSellables) do
+					--Vendors_RemoveItem(v[1], v[2]);
+				--end
+			else
+				jewelryItemName = jewelryItem:getName();
+				jewelryItemType = jewelryItem:getType();
+				local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
+				local itemListOfSellables = {};
+				for i=1,containers:size()-1 do
+					local container = containers:get(i-1);
+					for j=1,container:getItems():size() do
+						local item = container:getItems():get(j-1);
+						if item:getType() == jewelryItemType and item:isInPlayerInventory() then
+							table.insert(itemListOfSellables, {item, container});
+							quantity = quantity-1;
+							if quantity == 0 then break end
+						end
 					end
-					for i,v in pairs(itemListOfSellables) do
-						Vendors_RemoveItem(v[1], v[2]);
-					end
+				end
+				for i,v in pairs(itemListOfSellables) do
+					Vendors_RemoveItem(v[1], v[2]);
 				end
 			end
 		else
-		print("what...");
 			Vendors_RemoveItem(jewelryItem, item[3]);
 		end
 		-- give me that money!
@@ -708,7 +730,7 @@ function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)
 			local subVendorOption = subMenu:addOption(jewelryItemName .. " - Sell all for ($" .. jewelryItemTable[2]*jewelryTableList[jewelryItemType].count .. ")", worldobjects, Buy_VendorsItem, player, {jewelryList.items, jewelryItemType, jewelryItemPrice}, true, jewelryItemPrice, false, jewelryTableList[jewelryItemType].count, true);
 			jewelryTableList[jewelryItemType].menuCreated = true;
 		elseif jewelryTableList[jewelryItemType].count == 1 then
-			local subSubVendorOption = subSubMenu:addOption(jewelryItemName .. "($" .. jewelryDisplayPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryQuantity, false, jewelryTable);
+			local subSubVendorOption = subSubMenu:addOption(jewelryItemName .. "($" .. jewelryDisplayPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryQuantity);
 		end
 	end
 end
@@ -785,7 +807,7 @@ function Vendors_GreenFireCheck(item, container)
 					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
 				end
 				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
-			elseif string.find(dispType, "OzCannabis") then
+			elseif dispType == "OzCannabis" or dispType == "Oz" then
 				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[2][2], container});
 				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
 					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[2][2], container};
