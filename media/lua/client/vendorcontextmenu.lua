@@ -5,10 +5,11 @@
 
 -- fix jewelry "Clothing - Misc"/"Clothing - Accessory" issue  I think I have...
 -- complete the vehicle list
--- fix green fire tables to sort throught to find the prices, so it will work correctly when people add or remove items...
+-- fix green fire tables to sort throught to find the prices, so it will work correctly when people add or remove items...  no greenfire[1][2]... etc...
 -- make sure you can sell all greenfire items
 -- make sure you can enter anything into any weapons table and have it show up.
--- fix fanleaf sales.... fuck me....  
+-- fix fanleaf sales.... fuck me....  I think I have...
+-- add context menu for "for" and "Sell all for"
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
 
 local vendMoney = {};
@@ -458,7 +459,6 @@ end
 -- yeah, it says buy but we sell items here too.  I thought i was going to need a seperate function at first, turns out i could get it all with one!  woot!
 -- item is a table containing the item we're buying or selling.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment(also for buying engine parts now), sell 100 for $10.
 function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity, sellAllOfItem)
-	print("okie");
 	local playerObj = player;
 	local playerInv = playerObj:getInventory();
 	local itemTable = item;
@@ -522,25 +522,35 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		if quantity then
 			-- alright, we're not just selling individual items, we're selling bulk of item types as well...
 			if sellAllOfItem then
-				moneyInteger = item[3]*item[5]/item[4];
-				local itemQuantity = item[1][1][4]*quantity;
-				jewelryItemName = item[1][1][1]:getName();
-				jewelryItemType = item[1][1][1]:getType();
-				local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
-				local itemListOfSellables = {};
-				for i=1,containers:size()-1 do
-					local container = containers:get(i-1);
-					for j=1,container:getItems():size() do
-						local item = container:getItems():get(j-1);
-						if item:getType() == jewelryItemType and item:isInPlayerInventory() then
-							table.insert(itemListOfSellables, {item, container});
-							itemQuantity = itemQuantity-1;
-							if itemQuantity == 0 then break end
+				if item[4] then
+					moneyInteger = item[3]*item[5]/item[4];
+					local itemQuantity = item[1][1][4]*quantity;
+					jewelryItemName = item[1][1][1]:getName();
+					jewelryItemType = item[1][1][1]:getType();
+					local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
+					local itemListOfSellables = {};
+					for i=1,containers:size()-1 do
+						local container = containers:get(i-1);
+						for j=1,container:getItems():size() do
+							local item = container:getItems():get(j-1);
+							if item:getType() == jewelryItemType and item:isInPlayerInventory() then
+								table.insert(itemListOfSellables, {item, container});
+								itemQuantity = itemQuantity-1;
+								if itemQuantity == 0 then break end
+							end
 						end
 					end
-				end
-				for i,v in pairs(itemListOfSellables) do
-					Vendors_RemoveItem(v[1], v[2]);
+					for i,v in pairs(itemListOfSellables) do
+						Vendors_RemoveItem(v[1], v[2]);
+					end
+				else
+					local jewelryItem = itemTable[1];
+					for i,v in pairs(jewelryItem) do
+						if v[1]:getType() == item[2] then
+							Vendors_RemoveItem(v[1], v[3]);
+						end
+					end
+					moneyInteger = item[3]*quantity;
 				end
 			else
 				local jewelryItem = item[1];
@@ -571,7 +581,6 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		Vendors_CalculateChange(moneyInteger*-1);
 		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long, giving correct change now.  fuck me, it's broken again...
 	elseif not sell and not sellAll then
-	print(item[1]);
 		if vendMoney.total >= moneyInteger then
 			if quantity then
 				for i=1,quantity-1 do
@@ -700,6 +709,7 @@ function Vendors_ListBooks(subSubMenu, worldobjects, vendorsList, context, playe
 end
 
 function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)
+	local jewelryItemPrice = 0;
 	local jewelryTable = jewelryList.items;
 	local jewelryTableList = jewelryList;
 	for i,v in pairs(jewelryTable) do
@@ -709,17 +719,21 @@ function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)
 		local jewelryItemType = jewelryItemTable[1]:getType();
 		local jewelryQuantity = jewelryItemTable[4];
 		if jewelryQuantity then 
-			jewelryDisplayPrice = jewelryItemPrice .. " per " .. jewelryQuantity;
+			jewelryDispPrice = jewelryItemPrice .. " per " .. jewelryQuantity;
+			jewelryMultPrice = (jewelryItemTable[2]*jewelryTableList[jewelryItemType].count)/jewelryQuantity;
+		else
+			jewelryDispPrice = jewelryItemPrice;
+			jewelryMultPrice = jewelryItemPrice*jewelryTableList[jewelryItemType].count
 		end
 		if jewelryTableList[jewelryItemType].count > 1 and not jewelryTableList[jewelryItemType].menuCreated then
-			local jewelryItemOption = subSubMenu:addOption(jewelryItemName .. " ($" .. jewelryDisplayPrice .. ")", worldobjects);
+			local jewelryItemOption = subSubMenu:addOption(jewelryItemName .. " ($" .. jewelryItemPrice .. ")", worldobjects);
 			local subMenu = ISContextMenu:getNew(subSubMenu);
 			local subContext = context:addSubMenu(jewelryItemOption, subMenu);
-			local subVendorOption = subMenu:addOption(jewelryItemName .. "($" .. jewelryDisplayPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryQuantity);
-			local subVendorOption = subMenu:addOption(jewelryItemName .. " - Sell all for ($" .. (jewelryItemTable[2]*jewelryTableList[jewelryItemType].count)/jewelryQuantity .. ")", worldobjects, Buy_VendorsItem, player, {jewelryList.items, jewelryItemType, jewelryItemPrice, jewelryQuantity, jewelryTableList[jewelryItemType].count}, true, jewelryItemPrice, false, jewelryTableList[jewelryItemType].count, true);
+			local subVendorOption = subMenu:addOption(jewelryItemName .. "($" .. jewelryItemPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryQuantity);
+			local subVendorOption = subMenu:addOption(jewelryItemName .. " - Sell all for ($" .. jewelryMultPrice .. ")", worldobjects, Buy_VendorsItem, player, {jewelryList.items, jewelryItemType, jewelryItemPrice, jewelryQuantity, jewelryTableList[jewelryItemType].count}, true, jewelryItemPrice, false, jewelryTableList[jewelryItemType].count, true);
 			jewelryTableList[jewelryItemType].menuCreated = true;
 		elseif jewelryTableList[jewelryItemType].count == 1 then
-			local subSubVendorOption = subSubMenu:addOption(jewelryItemName .. "($" .. jewelryDisplayPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryQuantity);
+			local subSubVendorOption = subSubMenu:addOption(jewelryItemName .. "($" .. jewelryItemPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryQuantity);
 		end
 	end
 end
@@ -870,7 +884,7 @@ function Vendors_GreenFireCheck(item, container)
 					vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
 				end
 				salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
-			elseif dispType == "HashishBlunt" then
+			elseif dispType == "HashishBlunt" or dispType == "HashBlunt" then
 				table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[9][2], container});
 				if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
 					vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[9][2], container};
