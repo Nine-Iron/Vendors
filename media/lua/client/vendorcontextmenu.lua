@@ -458,6 +458,7 @@ end
 -- yeah, it says buy but we sell items here too.  I thought i was going to need a seperate function at first, turns out i could get it all with one!  woot!
 -- item is a table containing the item we're buying or selling.  sell is boolean, as well as sellAll.  moneyQuantity is a table, quantity is an integer.  quantity is used for only the dry fan leaves at the moment(also for buying engine parts now), sell 100 for $10.
 function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAll, quantity, sellAllOfItem)
+	print("okie");
 	local playerObj = player;
 	local playerInv = playerObj:getInventory();
 	local itemTable = item;
@@ -518,45 +519,31 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 		Vendors_CalculateChange(sellAllTotal*-1);
 	-- now to sell individual items
 	elseif sell and not sellAll then
-		local jewelryItem = item[1];
 		if quantity then
 			-- alright, we're not just selling individual items, we're selling bulk of item types as well...
 			if sellAllOfItem then
-				if quantity == #item[1] then
-					for i,v in pairs(jewelryItem) do
-						if v[1]:getType() == item[2] then
-							Vendors_RemoveItem(v[1], v[3]);
+				moneyInteger = item[3]*item[5]/item[4];
+				local itemQuantity = item[1][1][4]*quantity;
+				jewelryItemName = item[1][1][1]:getName();
+				jewelryItemType = item[1][1][1]:getType();
+				local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
+				local itemListOfSellables = {};
+				for i=1,containers:size()-1 do
+					local container = containers:get(i-1);
+					for j=1,container:getItems():size() do
+						local item = container:getItems():get(j-1);
+						if item:getType() == jewelryItemType and item:isInPlayerInventory() then
+							table.insert(itemListOfSellables, {item, container});
+							itemQuantity = itemQuantity-1;
+							if itemQuantity == 0 then break end
 						end
-						moneyInteger = item[3]*quantity;
 					end
-				else
-					moneyInteger = item[3]*quantity;
-					print(itemTable[1][1][4]); -- === quantity  [1][1] is the item
-					for i,v in pairs(item) do
-						--print(v);
-					end
-					--[[jewelryItemName = item[1]:getName();
-					jewelryItemType = jewelryItem:getType();
-					local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
-					local itemListOfSellables = {};
-					for i=1,containers:size()-1 do
-						local container = containers:get(i-1);
-						for j=1,container:getItems():size() do
-							print("got it");
-							local item = container:getItems():get(j-1);
-							if item:getType() == jewelryItemType and item:isInPlayerInventory() then
-							print(item:getType(), " - ", jewelryItemType);
-								table.insert(itemListOfSellables, {item, container});
-								quantity = quantity-1;
-								if quantity == 0 then break end
-							end
-						end
-					end]]
 				end
-				--for i,v in pairs(itemListOfSellables) do
-					--Vendors_RemoveItem(v[1], v[2]);
-				--end
+				for i,v in pairs(itemListOfSellables) do
+					Vendors_RemoveItem(v[1], v[2]);
+				end
 			else
+				local jewelryItem = item[1];
 				jewelryItemName = jewelryItem:getName();
 				jewelryItemType = jewelryItem:getType();
 				local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
@@ -577,12 +564,14 @@ function Buy_VendorsItem(worldobjects, player, item, sell, moneyQuantity, sellAl
 				end
 			end
 		else
+			local jewelryItem = item[1];
 			Vendors_RemoveItem(jewelryItem, item[3]);
 		end
 		-- give me that money!
 		Vendors_CalculateChange(moneyInteger*-1);
-		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long, giving correct change now.
+		-- not selling and not selling all, we're buying.  at this moment though its all free, i still need to fix how it removes the cash.  i was wrong, it's actually all broken at the moment, cant buy anything right now.   fixed part of it, you can now receive free items as long as you have enough to cover it, but it won't take your money.  i fixed that, it will now take your money but it will also give you more than 400x your change back.  progress...  that didn't take long, giving correct change now.  fuck me, it's broken again...
 	elseif not sell and not sellAll then
+	print(item[1]);
 		if vendMoney.total >= moneyInteger then
 			if quantity then
 				for i=1,quantity-1 do
@@ -661,7 +650,7 @@ function Vendors_DisplayFoodOptions(subSubMenu, context, player, vendorsList)
 						playerInv:Remove(foodItemType);
 					end
 				end
-				local SubVendorOption = subSubMenu:addOption(foodItemName .. "($" .. foodItemPrice .. ")", worldobjects, Buy_VendorsItem, player, foodItemTable, false, foodItemPrice, true);
+				local SubVendorOption = subSubMenu:addOption(foodItemName .. "($" .. foodItemPrice .. ")", worldobjects, Buy_VendorsItem, player, foodItemTable, false, foodItemPrice);
 			end
 		end
 	end
@@ -727,7 +716,7 @@ function Vendors_DisplayJewelryOptions(subSubMenu, context, player, jewelryList)
 			local subMenu = ISContextMenu:getNew(subSubMenu);
 			local subContext = context:addSubMenu(jewelryItemOption, subMenu);
 			local subVendorOption = subMenu:addOption(jewelryItemName .. "($" .. jewelryDisplayPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryQuantity);
-			local subVendorOption = subMenu:addOption(jewelryItemName .. " - Sell all for ($" .. jewelryItemTable[2]*jewelryTableList[jewelryItemType].count .. ")", worldobjects, Buy_VendorsItem, player, {jewelryList.items, jewelryItemType, jewelryItemPrice}, true, jewelryItemPrice, false, jewelryTableList[jewelryItemType].count, true);
+			local subVendorOption = subMenu:addOption(jewelryItemName .. " - Sell all for ($" .. (jewelryItemTable[2]*jewelryTableList[jewelryItemType].count)/jewelryQuantity .. ")", worldobjects, Buy_VendorsItem, player, {jewelryList.items, jewelryItemType, jewelryItemPrice, jewelryQuantity, jewelryTableList[jewelryItemType].count}, true, jewelryItemPrice, false, jewelryTableList[jewelryItemType].count, true);
 			jewelryTableList[jewelryItemType].menuCreated = true;
 		elseif jewelryTableList[jewelryItemType].count == 1 then
 			local subSubVendorOption = subSubMenu:addOption(jewelryItemName .. "($" .. jewelryDisplayPrice .. ")", worldobjects, Buy_VendorsItem, player, jewelryItemTable, true, jewelryItemPrice, false, jewelryQuantity);
@@ -824,10 +813,10 @@ function Vendors_GreenFireCheck(item, container)
 					table.insert(vendorsJewelry.green.items, {item, vendorsGreenFire[3][2], container, vendorsGreenFire[3][4]});
 					if not vendorsJewelry.green[dispType] then vendorsJewelry.green[dispType] = {};
 						vendorsJewelry.green[dispType].items = {item, vendorsGreenFire[3][2], container, 100};
-						vendorsJewelry.green[dispType].count = 1;
+						vendorsJewelry.green[dispType].count = 100;
 						vendorsJewelry.green[dispType].menuCreated = false;
 					else 
-						vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 1;
+						vendorsJewelry.green[dispType].count = vendorsJewelry.green[dispType].count + 100;
 					end
 					salesTotal = salesTotal + vendorsJewelry.green[dispType].items[2];
 				end
