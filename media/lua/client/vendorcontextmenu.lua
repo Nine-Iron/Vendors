@@ -1,17 +1,3 @@
--- added ablility to overwrite weapons table, third entry must be "" - {"Type", Price, ""} , added books/magazines/maps, fixed a bug that would sell revolvers with a chambered round could never be fired(gun could still fire if you loaded ammo, it would just always have one in the chamber that never fired), they now come with one loaded bullet that can be fired,
--- people will need to edit their vendorsprices mod to add new tables.  vendorsBooks, vendorsVehicles.vehicles
----Added sellables to VendorsPrices
--- added vehicles
-
--- fix jewelry "Clothing - Misc"/"Clothing - Accessory" issue  I think I have...
--- complete the vehicle list
--- fix green fire tables to sort throught to find the prices, so it will work correctly when people add or remove items...  no greenfire[1][2]... etc...
--- make sure you can sell all greenfire items I think it works...
--- make sure you can enter anything into any weapons table and have it show up. I think it works...
--- fix fanleaf sales.... fuck me....  I think I have...
--- add context menu for "for" and "Sell all for"
-
----- selling wrong item, add kilo then bag and sell all bag it sells kilos
 if not VendISWorldObjectContextMenu then VendISWorldObjectContextMenu = {}; end
 
 local vendMoney = {};
