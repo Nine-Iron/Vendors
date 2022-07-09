@@ -47,4 +47,5 @@ ContextMenu_PTBR = {
 	ContextMenu_Fishing = "Pescaria",
 	ContextMenu_Stationery = "Outros II",
 	ContextMenu_Cant_Buy = "Você não está conseguindo comprar isso",
+	ContextMenu_Vehicles = "Vroooom",
 }
