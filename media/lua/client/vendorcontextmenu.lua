@@ -53,7 +53,7 @@ vendorsVehicles.vehicles.base = {"Vehicles", {{"CarStationWagon", "CarStationWag
 
 
 vendorsWeapons = {};
-vendorsWeapons[1] = {"Box_Ammo", {"ShotgunShellsBox", 150, true}, {"223Box", 250, true}, {"308Box", 250, true}, {"Bullets38Box", 100, true}, {"Bullets45Box", 100, true}, {"556Box", 200, true}};
+vendorsWeapons[1] = {"Box_Ammo", {"ShotgunShellsBox", 150, true}, {"223Box", 250, true}, {"308Box", 250, true}, {"Bullets38Box", 100, true}, {"Bullets45Box", 100, true}, {"556Box", 200, true}, {"Bullets9mmBox", 100, true}};
 vendorsWeapons[2] = {"Magazines", {"223Clip", 300, false, ".223-REM"}, {"308Clip", 300, false, ".308"}, {"44Clip", 250, false, ".44-MAG"}, {"45Clip", 250, false, ".45 Auto"}, {"556Clip", 350, false, "5.56"}, {"M14Clip", 300, false, ".308"}, {"9mmClip", 300, false, "9mm"}};
 vendorsWeapons[3] = {"Attachments", {"ChokeTubeImproved", 200, false, "Barrel"}, {"FiberglassStock", 150, false, "Stock"}, {"IronSight", 100, false, "Sight"}, {"Laser", 200, false, "Side"}, {"RecoilPad", 100, false, "Stock"}, {"RedDot", 200, false, "Sight"}, {"Sling", 150, false, "Bottom"}, {"x2Scope", 300, false, "Sight"}, {"x4Scope", 350, false, "Sight"}, {"x8Scope", 400, false, "Sight"}};
 vendorsWeapons[4] = {"Caliber", ".223-REM", ".308", ".44-MAG", ".45 Auto", "5.56", "9mm"};
@@ -117,6 +117,7 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 				if item:getType() then
 					dispType = item:getType();
 				end
+				print(dispCat);
 				if dispCat == "Vendors" then
 					if not vendorList then vendorList = {}; vendorList.vendors = {}; end
 					if vendorList[dispType] then 
@@ -210,7 +211,7 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 							vendorsJewelry.stones[dispType].count = vendorsJewelry.stones[dispType].count + 1;
 						end
 						vendorsSaleTotal = vendorsSaleTotal + vendorsJewelry.stones[dispType].items[2];
-					elseif (not string.find(dispType, "Flame") and not string.find(dispType, "Key") and not string.find(dispType, "DogTag")) and ((dispCat == "Accessory" or dispCat == "ClothM") and ((string.find(dispType, "Ring") or string.find(dispType, "ring")) or string.find(dispType, "necklace") or string.find(dispType, "Necklace") or string.find(dispType, "Bracelet") or string.find(dispType, "Choker") or string.find(dispType, "Bangle") or string.find(dispType, "Locket") or string.find(dispType, "Watch") or (string.find(dispType, "Nose") and string.find(dispType, "Stud")) or string.find(dispType, "BellyButton"))) then															-- price for selling regular vendorsJewelry
+					elseif (not string.find(dispType, "Flame") and not string.find(dispType, "Key") and not string.find(dispType, "DogTag")) and ((dispCat == "Accessory" or dispCat == "ClothM" or dispCat == "ClothA") and ((string.find(dispType, "Ring") or string.find(dispType, "ring")) or string.find(dispType, "necklace") or string.find(dispType, "Necklace") or string.find(dispType, "Bracelet") or string.find(dispType, "Choker") or string.find(dispType, "Bangle") or string.find(dispType, "Locket") or string.find(dispType, "Watch") or (string.find(dispType, "Nose") and string.find(dispType, "Stud")) or string.find(dispType, "BellyButton"))) then															-- price for selling regular vendorsJewelry
 						table.insert(vendorsJewelry.regular.items, {item, vendorsJewelry.prices.regular, container});
 						if not vendorsJewelry.regular[dispType] then vendorsJewelry.regular[dispType] = {};
 							vendorsJewelry.regular[dispType].items = {item, vendorsJewelry.prices.regular};
@@ -222,7 +223,9 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 						vendorsSaleTotal = vendorsSaleTotal + vendorsJewelry.regular[dispType].items[2];
 					end
 					-- looking for GreenFireMod products  TODO Add more gfm items, add brita weapons
-					vendorsSaleTotal = vendorsSaleTotal + Vendors_GreenFireCheck(item, container, playerObj, vendorsSaleTotal);
+					if GreenFireMod then 
+						vendorsSaleTotal = vendorsSaleTotal + Vendors_GreenFireCheck(item, container, playerObj, vendorsSaleTotal);
+					end
 				end
 			end	
 		end
@@ -792,7 +795,7 @@ function Vendors_CheckMods()
 	BMSVendorMod = getActivatedMods():contains("BetterMoneySystem");
 	if britaMod then
 		-- Brita weapons ------------------------------------
-		vendorsWeapons[1] = {"Box_Ammo", {"ShotgunShellsBox", 150, true}, {"40HERound", 10000, true}, {"40INCRound",  12000, true}, {"Bullets22Box", 100, true}, {"223Box", 250, true}, {"3006Box", 250, true}, {"308Box", 250, true}, {"Bullets357Box", 150, true}, {"Bullets38Box", 100, true}, {"Bullets380Box", 150, true}, {"Bullets44Box", 150, true}, {"Bullets4570Box", 200, true}, {"Bullets45Box", 300, true}, {"Bullets45LCBox", 200, true}, {"545x39Box", 400, true}, {"556Box", 450, true}, {"Bullets57Box", 200, true}, {"Bullets50MAGBox", 500, true}, {"50BMGBox", 550, true}, {"762x39Box", 500, true}, {"762x51Box", 500, true}, {"762x54rBox", 500, true}};
+		vendorsWeapons[1] = {"Box_Ammo", {"ShotgunShellsBox", 150, true}, {"40HERound", 10000, true}, {"40INCRound",  12000, true}, {"Bullets22Box", 100, true}, {"223Box", 250, true}, {"3006Box", 250, true}, {"308Box", 250, true}, {"Bullets357Box", 150, true}, {"Bullets38Box", 100, true}, {"Bullets380Box", 150, true}, {"Bullets44Box", 150, true}, {"Bullets4570Box", 200, true}, {"Bullets45Box", 100, true}, {"Bullets45LCBox", 200, true}, {"545x39Box", 400, true}, {"556Box", 450, true}, {"Bullets57Box", 200, true}, {"Bullets50MAGBox", 500, true}, {"50BMGBox", 550, true}, {"762x39Box", 500, true}, {"762x51Box", 500, true}, {"762x54rBox", 500, true}, {"Bullets9mmBox", 100, true}};
 		vendorsWeapons[2] = {"Magazines", {"12gDrum", 1750, false, "12g"}, {"SPASClip", 300, false, "12g"}, {"SIX12_Cylinder", 2500, false, "12g"}, {"22Drum", 1750, false, ".22-LR"}, {"22ExtClip", 300, false, ".22-LR"}, {"22Clip", 300, false, ".22-LR"}, {"223Clip", 300, false, ".223-REM"}, {"223ExtClip", 300, false, ".223"}, {"1903Clip", 300, false, "30-06 SPRG"}, {"3006ExtClip", 300, false, "30-06 SPRG"}, {"308Belt", 1750, false, ".308"}, {"308MiniCan", 300, false, ".308"}, {"308StdClip", 300, false, ".308"}, {"308ExtClip", 300, false, ".308"}, {"357Speed", 300, false, ".357-MAG"}, {"38Clip", 300, false, ".38-SPC"}, {"38Speed", 300, false, ".38-SPC"}, {"380ExtClip", 300, false, ".380-ACP"}, {"380Clip", 300, false, ".380-ACP"}, {"44Clip", 250, false, ".44-MAG"}, {"44Speed", 300, false, ".44-MAG"}, {"45Clip", 250, false, ".45-ACP"}, {"45ExtClip", 300, false, ".45-ACP"}, {"45DSClip", 300, false, ".45-ACP"}, {"45DSExtClip", 300, false, ".45-ACP"}, {"45Drum", 1750, false, ".45-ACP"}, {"45LCSpeed", 300, false, ".45-LC"}, {"50MiniCan", 300, false, ".50 BMG"}, {"M82Clip", 350, false, ".50 BMG"}, {"545Drum", 1750, false, "5.45"}, {"545StdClip", 300, false, "5.45"}, {"556Belt", 1750, false, "5.56"}, {"556Drum", 1750, false, "5.56"}, {"556Clip", 350, false, "5.56"}, {"556MiniCan", 350, false, "5.56"}, {"57Clip", 350, false, "5.7x28"}, {"P90Clip", 350, false, "5.7x28"}, {"M14Clip", 300, false, ".308"}, {"762x39Belt", 1750, false, "7.62x39"}, {"762Drum", 1750, false, "7.62x39"}, {"AKClip", 350, false, "7.62x39"}, {"SKSClip", 350, false, "7.62x39"}, {"762x54rBelt", 1750, false, "7.62x54"}, {"SVDClip", 350, false, "7.62x54"}, {"MosinClip", 350, false, "7.62x54"}, {"9mmClip", 300, false, "9mm"}, {"9mmExtClip", 300, false, "9mm"}, {"9mmDrum", 1750, false, "9mm"}, {"ASHClip", 300, false, ".50 MAG"}};
 		vendorsWeapons[3] = {"Attachments", {"Sight_3xEOTech", 350, false, "Sight"}, {"Sight_4xACOG", 350, false, "Sight"}, {"Sight_Aimpoint_Dot", 350, false, "Sight"}, {"Sight_Thermal", 350, false, "Sight"}, {"Laser_PEQ15", 350, false, "Side"}, {"Choke_Full", 200, false, "Barrel"}, {"ChokeTubeImproved", 200, false, "Barrel"}, {"FiberglassStock", 150, false, "Stock"}, {"Sight_Malcom", 450, false, "Sight"}, {"IronSight", 100, false, "Sight"}, {"Laser", 200, false, "Side"}, {"Light_Large", 200, false, "Side"}, {"Light_Small", 100, false, "Side"}, {"Sight_VX3", 450, false, "Sight"}, {"RecoilPad", 100, false, "Stock"}, {"Pad", 100, false, "Stock"}, {"RedDot", 200, false, "Sight"}, {"Sight_G28_Scope", 450, false, "Sight"}, {"Sling_1", 150, false, "Bottom"}, {"Sling_2", 150, false, "Bottom"}, {"Sling_3", 150, false, "Bottom"}, {"Launcher", 1250, false, "Bottom"}, {"Suppressor_BMG", 500, false, "Barrel"}, {"Suppressor_ROME_BMG", 550, false, "Barrel"}, {"Suppressor_Pistol", 400, false, "Barrel"}, {"Suppressor_SOCOM_Pistol", 450, false, "Barrel"}, {"Suppressor_Shotgun", 450, false, "Barrel"}, {"Suppressor_Rifle", 450, false, "Barrel"}, {"Suppressor_PBS1_Rifle", 550, false, "Barrel"}, {"x2Scope", 300, false, "Sight"}, {"x4Scope", 350, false, "Sight"}, {"x8Scope", 400, false, "Sight"}};
 		vendorsWeapons[4] = {"Caliber", "12g", ".22-LR", ".223-REM", "30-06 SPRG", ".308", ".357-MAG", ".38-SPC", ".380-ACP", ".44-MAG", ".45-ACP", ".45-LC", "5.45", "5.56", "5.7x28", ".50 MAG", ".50 BMG", "7.62x39", "7.62x54", "9mm"};
