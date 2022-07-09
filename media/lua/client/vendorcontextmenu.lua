@@ -340,9 +340,10 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 				if j > 1 then
 					local vendorsRand = ZombRand(1, #subTable[1]+1)
 					local vehicle = subTable[1][vendorsRand];
+					local vehiclePrice = subTable[2];
 					local vendorsVehicleName = subTable[1][1];
 					if vendorsVehicleName == "TrailerAdvert" then vendorsVehicleName = "Advertising_Trailer"; end
-					local vehicleOption = subSubMenu:addOption(getText("IGUI_VehicleName" .. vendorsVehicleName) .. " ($" .. subTable[2] .. ") ", worldobjects, Buy_VendorsVehicle, vehicle);
+					local vehicleOption = subSubMenu:addOption(getText("IGUI_VehicleName" .. vendorsVehicleName) .. " ($" .. vehiclePrice .. ") ", worldobjects, Buy_VendorsVehicle, vehicle, vehiclePrice, player);
 				end
 			end
 		end
@@ -439,20 +440,25 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	end
 end
 
-function Buy_VendorsVehicle(worldObjects, vehicle)
-	local playerObj = getSpecificPlayer(0);
-	local square = playerObj:getCurrentSquare();
-	if not square then return end;
-	local x = square:getX() + 3;
-	local y = square:getY() + 1;
-	local car = addVehicleDebug(vehicle, IsoDirections.N, nil, getCell():getGridSquare(x, y, square:getZ()));
-	sendClientCommand(playerObj, "vehicle", "getKey", {vehicle = car:getId()});
-	print(car:getName());
-	for i=0,car:getPartCount() do
-		local part = car:getPartByIndex(i)
-		if part then
-			part:repair();
+function Buy_VendorsVehicle(worldObjects, vehicle, moneyInteger, playerObj)
+	if vendMoney.total >= moneyInteger then
+		local playerObj = getSpecificPlayer(0);
+		local square = playerObj:getCurrentSquare();
+		if not square then return end;
+		local x = square:getX() + 3;
+		local y = square:getY() + 1;
+		print(square:haveElectricity());
+		local car = addVehicleDebug(vehicle, IsoDirections.N, nil, getCell():getGridSquare(x, y, square:getZ()));
+		sendClientCommand(playerObj, "vehicle", "getKey", {vehicle = car:getId()});
+		print(car:getName());
+		for i=0,car:getPartCount() do
+			local part = car:getPartByIndex(i)
+			if part then
+				part:repair();
+			end
 		end
+	else
+		playerObj:Say(getText("ContextMenu_Cant_Buy"));
 	end
 end
 
