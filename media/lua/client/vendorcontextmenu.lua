@@ -73,7 +73,6 @@ vendorsFoods[7] = {"Proteins", {"farming.Bacon", 100}, {"BeefJerky", 100}, {"Chi
 vendorsFoods[8] = {"Medical", {"AlcoholWipes", 40}, {"Antibiotics", 75}, {"PillsAntiDep", 75}, {"Bandage", 40}, {"PillsBeta", 40}, {"Disinfectant", 75}, {"Cigarettes", 40}, {"FirstAidKit", 100}, {"Pills", 75}, {"AlcoholBandage", 60}, {"PillsVitamins", 75}, {"Splint", 80}, {"SutureNeedle", 40}, {"SutureNeedleHolder", 40}, {"Tweezers", 40}};
 
 function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, test)
-	Vendors_CheckMods();
 	-- reset values for inventory search.
 	local moneyContainer = nil;
 	vendorsJewelry.stones = {};
@@ -117,7 +116,6 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 				if item:getType() then
 					dispType = item:getType();
 				end
-				print(dispCat);
 				if dispCat == "Vendors" then
 					if not vendorList then vendorList = {}; vendorList.vendors = {}; end
 					if vendorList[dispType] then 
@@ -223,7 +221,7 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 						vendorsSaleTotal = vendorsSaleTotal + vendorsJewelry.regular[dispType].items[2];
 					end
 					-- looking for GreenFireMod products  TODO Add more gfm items, add brita weapons
-					if GreenFireMod then 
+					if vendorsGreenFireMod then
 						vendorsSaleTotal = vendorsSaleTotal + Vendors_GreenFireCheck(item, container, playerObj, vendorsSaleTotal);
 					end
 				end
@@ -447,10 +445,9 @@ function Buy_VendorsVehicle(worldObjects, vehicle, moneyInteger, playerObj)
 		if not square then return end;
 		local x = square:getX() + 3;
 		local y = square:getY() + 1;
-		print(square:haveElectricity());
+		--print(square:haveElectricity());
 		local car = addVehicleDebug(vehicle, IsoDirections.N, nil, getCell():getGridSquare(x, y, square:getZ()));
 		sendClientCommand(playerObj, "vehicle", "getKey", {vehicle = car:getId()});
-		print(car:getName());
 		for i=0,car:getPartCount() do
 			local part = car:getPartByIndex(i)
 			if part then
@@ -794,12 +791,12 @@ function Vendors_DisplayAttachmentSlots(subSubMenu, subTable, context, player)
 end
 
 function Vendors_CheckMods()
-	britaMod = getActivatedMods():contains("Brita");
-	brita_2Mod = getActivatedMods():contains("Brita_2");
-	GreenFireMod = getActivatedMods():contains("jiggasGreenfireMod");
-	filibusterMod = getActivatedMods():contains("FRUsedCars");
+	vendorsBritaMod = getActivatedMods():contains("Brita");
+	vendorsBrita_2Mod = getActivatedMods():contains("Brita_2");
+	vendorsGreenFireMod = getActivatedMods():contains("jiggasGreenfireMod");
+	vendorsFilibusterMod = getActivatedMods():contains("FRUsedCars");
 	BMSVendorMod = getActivatedMods():contains("BetterMoneySystem");
-	if britaMod then
+	if vendorsBritaMod then
 		-- Brita weapons ------------------------------------
 		vendorsWeapons[1] = {"Box_Ammo", {"ShotgunShellsBox", 150, true}, {"40HERound", 10000, true}, {"40INCRound",  12000, true}, {"Bullets22Box", 100, true}, {"223Box", 150, true}, {"3006Box", 100, true}, {"308Box", 150, true}, {"Bullets357Box", 150, true}, {"Bullets38Box", 100, true}, {"Bullets380Box", 150, true}, {"Bullets44Box", 150, true}, {"Bullets4570Box", 200, true}, {"Bullets45Box", 100, true}, {"Bullets45LCBox", 100, true}, {"545x39Box", 200, true}, {"556Box", 250, true}, {"Bullets57Box", 200, true}, {"Bullets50MAGBox", 350, true}, {"50BMGBox", 350, true}, {"762x39Box", 250, true}, {"762x51Box", 250, true}, {"762x54rBox", 250, true}, {"Bullets9mmBox", 100, true}};
 		vendorsWeapons[2] = {"Magazines", {"12gDrum", 1750, false, "12g"}, {"SPASClip", 300, false, "12g"}, {"SIX12_Cylinder", 2500, false, "12g"}, {"22Drum", 1750, false, ".22-LR"}, {"22ExtClip", 300, false, ".22-LR"}, {"22Clip", 300, false, ".22-LR"}, {"223Clip", 300, false, ".223-REM"}, {"223ExtClip", 300, false, ".223"}, {"1903Clip", 300, false, "30-06 SPRG"}, {"3006ExtClip", 300, false, "30-06 SPRG"}, {"308Belt", 1750, false, ".308"}, {"308MiniCan", 300, false, ".308"}, {"308StdClip", 300, false, ".308"}, {"308ExtClip", 300, false, ".308"}, {"357Speed", 300, false, ".357-MAG"}, {"38Clip", 300, false, ".38-SPC"}, {"38Speed", 300, false, ".38-SPC"}, {"380ExtClip", 300, false, ".380-ACP"}, {"380Clip", 300, false, ".380-ACP"}, {"44Clip", 250, false, ".44-MAG"}, {"44Speed", 300, false, ".44-MAG"}, {"45Clip", 250, false, ".45-ACP"}, {"45ExtClip", 300, false, ".45-ACP"}, {"45DSClip", 300, false, ".45-ACP"}, {"45DSExtClip", 300, false, ".45-ACP"}, {"45Drum", 1750, false, ".45-ACP"}, {"45LCSpeed", 300, false, ".45-LC"}, {"50MiniCan", 300, false, ".50 BMG"}, {"M82Clip", 350, false, ".50 BMG"}, {"545Drum", 1750, false, "5.45"}, {"545StdClip", 300, false, "5.45"}, {"556Belt", 1750, false, "5.56"}, {"556Drum", 1750, false, "5.56"}, {"556Clip", 350, false, "5.56"}, {"556MiniCan", 350, false, "5.56"}, {"57Clip", 350, false, "5.7x28"}, {"P90Clip", 350, false, "5.7x28"}, {"M14Clip", 300, false, ".308"}, {"762x39Belt", 1750, false, "7.62x39"}, {"762Drum", 1750, false, "7.62x39"}, {"AKClip", 350, false, "7.62x39"}, {"SKSClip", 350, false, "7.62x39"}, {"762x54rBelt", 1750, false, "7.62x54"}, {"SVDClip", 350, false, "7.62x54"}, {"MosinClip", 350, false, "7.62x54"}, {"9mmClip", 300, false, "9mm"}, {"9mmExtClip", 300, false, "9mm"}, {"9mmDrum", 1750, false, "9mm"}, {"ASHClip", 300, false, ".50 MAG"}};
@@ -811,10 +808,10 @@ function Vendors_CheckMods()
 		vendorsWeapons[9] = {"SMGs", {"CAR15SMG", 6000, false, "5.56"}, {"K1_1", 6000, false, "5.56"}, {"K7_Stock", 6000, false, "9mm"}};
 		vendorsWeapons[10] = {"LMGs", {"K3LMG",  12000, false, "5.56"}, {"G21LMG",  12000, false, ".308"}, {"XM8LMG",  12000, false, "5.56"}, {"M249",  12000, false, "5.56"}, {"K12",  12000, false, ".308"}};
 	end
-	if filibusterMod then
+	if vendorsFilibusterMod then
 		vendorsVehicles.vehicles.filibuster = {"Filibuster", {{"85vicsed"}, 65000}, {{"85vicwag", "85vicwag2"}, 65000}, {{"79brougham"}, 65000}, {{"volvo244"}, 65000}, {{"71impala"}, 65000}, {{"91crx"}, 65000}, {{"86yugo"}, 65000}, {{"87c10lb", "87c10sb"}, 65000}, {{"90ramlb", "90ramsb"}, 65000}, {{"87blazer"}, 65000}, {{"87suburban"}, 65000}, {{"87c10utility", "87c10mccoy", "87c10fire"}, 65000}, {{"astrovan"}, 65000}, {{"65gto"}, 65000}, {{"69charger"}, 65000}, {{"73falcon"}, 65000}, {{"77transam"}, 65000}, {{"70chevelle"}, 65000}, {{"70elcamino"}, 65000}, {{"68elcamino"}, 65000}, {{"73pinto"}, 65000}, {{"moveurself"}, 65000}, {{"isuzubox", "isuzuboxmccoy", "isuzuboxfood", "isuzuboxelec"}, 65000}, {{"hmmwvtr", "hmmwvht"}, 65000}, {{"m151canvas"}, 65000}, {{"pursuitspecial"}, 65000}, {{"51chevy3100", "51chevy3100old"}, 65000}, {{"72beetle"}, 65000}, {{"79datsun280z"}, 65000}, {{"80f350", "80f350ambulance", "80f350offroad", "80f350quad"}, 65000}, {{"83hilux", "83hiluxoffroad"}, 65000}, {{"86econoline", "86econolineambulance", "86econolinerv"}, 65000}, {{"87c10offroadlb", "87c10offroadsb"}, 65000}, {{"87caprice", "87capricePD"}, 65000}, {{"87blazeroffroad"}, 65000}, {{"90corolla"}, 65000}, {{"90ramoffroadlb", "90ramoffroadsb"}, 65000}, {{"91celica"}, 65000}, {{"91wagoneer"}, 65000}, {{"92crownvic", "92crownvicPD"}, 65000}, {{"92wrangler", "92wrangleroffroad", "92wranglerjurassic", "92wranglerranger"}, 65000}, {{"93explorer", "93explorerjurassic"}, 65000}, {{"chevystepvan", "chevystepvanswat"}, 65000}, {{"f700propane"}, 65000}, {{"m35a2fuel"}, 65000}, {{"tractorford7810"}, 65000}, {{"64mustang"}, 65000}, {{"71chevyc10stepside", "71chevyc10lb", "71chevyc10sb"}, 65000}, {{"91chevys10", "91chevys10ext", "91chevys10offroad", "91chevys10offroadext"}, 65000}, {{"93jeepcherokee"}, 65000}, {{"86montecarlo"}, 65000}, {{"71chevyc10offroadstepside", "71chevyc10offroadsb", "71chevyc10offroadlb"}, 65000}, {{"93jeepcherokeeoffroad"}, 65000}, {{"Trailer51chevy"}, 50000}, {{"Trailermovingbig"}, 1000000}, {{"Trailermovingmedium"}, 500000}, {{"Trailercamperscamp"}, 150000}, {{"Trailerfuelmedium"}, 120000}, {{"Trailerfuelsmall"}, 75000}, {{"generallee"}, 125000}};
 	end
-	if GreenFireMod then
+	if vendorsGreenFireMod then
 		-- Green Fire items --------------------------------
 		vendorsGreenFire = {{"KgCannabis", 4500, false}, {"OzCannabis", 100, false}, {"DryCannabisFanLeaf", 10, false, 100}, {"Hashish", 2500, false}, {"Kief", 30, false}, {"Blunt", 10, false}, {"MixedBlunt", 5, false}, {"KiefBlunt", 40, false}, {"HashBlunt", 2525, false}, {"SpaceBlunt", 2560, false}, {"CannaCigar", 45, false}, {"PreCannaCigar", 75, false}, {"DelCannaCigar", 45, false}, {"ResCannaCigar", 45, false}};
 	end
@@ -878,4 +875,5 @@ function Vendors_Compare(a,b)
   return a[1]:getName() < b[1]:getName()
 end	
 
+Events.OnLoad.Add(Vendors_CheckMods);
 Events.OnFillWorldObjectContextMenu.Add(VendISWorldObjectContextMenu.createMenu);

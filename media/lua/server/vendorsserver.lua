@@ -21,7 +21,7 @@ function Vendors_AddItem(item, inventory)
 		addedItem:setRoundChambered(true);
 	elseif addedItem:getDisplayCategory() == "Weapon" and addedItem:getMagazineType() == nil then
 		addedItem:setCurrentAmmoCount(1);
-	elseif maxAmmo > 0 and addedItem:getMagazineType() ~= nil then
+	elseif maxAmmo > 0 then
 		addedItem:setCurrentAmmoCount(maxAmmo);
 	elseif addedItem:isCookable() and not string.find(addedItem:getType(), "Dead") then 
 		addedItem:setCooked(true); 
