@@ -449,7 +449,7 @@ function Buy_VendorsVehicle(worldObjects, vehicle, moneyInteger, playerObj)
 		--print(square:haveElectricity());
 		Vendors_AddVehicle(vehicle, playerObj);
 		Events.OnTick.Add(Vendors_GetKeys);
-		Vendors_CalculateChange(moneyInteger)
+		Vendors_CalculateChange(moneyInteger);
 	else
 		playerObj:Say(getText("ContextMenu_Cant_Buy"));
 	end

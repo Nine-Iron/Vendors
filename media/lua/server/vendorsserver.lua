@@ -42,5 +42,6 @@ function Vendors_GetKeys()
 	if car ~= nil then
 		sendClientCommand(playerObj, "vehicle", "getKey", {vehicle = car:getId()});
 		sendClientCommand(playerObj, "vehicle", "repair", {vehicle = car:getId()});
+		Events.OnTick.Remove(Vendors_GetKeys);
 	end
 end
