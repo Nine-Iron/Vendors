@@ -23,7 +23,7 @@ vendorsWeapons = {};
 vendorsJewelry.green = {};
 vendorsBooks = {};
 
-vendorsSellables = {};
+vendorsSellables = {}; 
 vendorsSellables.items = {};
 
 vendorsBooks[1] = {"GeneralReading", {"Book", 40}, {"ComicBook", 25}, {"HottieZ", 50}, {"Magazine", 25}, {"Newspaper", 15}};
@@ -49,7 +49,7 @@ vendorsVehicles.parts[2] = {"Sport", {"CarBattery3", 2000}, {"FrontCarDoor3", 20
 vendorsVehicles.parts[3] = {"Heavy-Duty", {"CarBattery2", 1000}, {"FrontCarDoor2", 1000}, {"EngineDoor2", 1000}, {"ModernBrake2", 1000}, {"TrunkDoor2", 1000}, {"RearCarDoor2", 1000}, {"RearCarDoorDouble2", 1000}, {"BigGasTank2", 1000}, {"ModernCarMuffler2", 1000}, {"NormalCarSeat2", 1000}, {"ModernSuspension2", 1000}, {"ModernTire2", 1000}, {"Windshield2", 1000}, {"RearWindshield2", 1000}, {"FrontWindow2", 1000}, {"RearWindow2", 1000}};
 vendorsVehicles.engineParts = {20000, 30};
 vendorsVehicles.vehicles = {};
-vendorsVehicles.vehicles.base = {"Vehicles", {{"CarStationWagon", "CarStationWagon2"}, 35000}, {{"SportsCar", "SportsCar_ez"}, 35000}, {{"PickUpTruck", "PickUpTruckLightsFire", "PickUpTruckLights", "PickUpTruckMccoy"}, 35000}, {{"SmallCar"}, 20000}, {{"CarNormal", "CarLights", "CarLightsPolice", "CarTaxi", "CarTaxi2"}, 35000}, {{"ModernCar02"}, 20000}, {{"StepVan", "StepVanMail", "StepVan_Heralds", "StepVan_Scarlett"}, 20000}, {{"PickUpVan", "PickUpVanLights", "PickUpVanLightsFire", "PickUpVanLightsPolice", "PickUpVanMccoy"}, 20000}, {{"ModernCar"}, 20000}, {{"OffRoad"}, 20000}, {{"SUV"}, 20000}, {{"Van", "VanSeats", "VanAmbulance", "VanRadio", "VanRadio_3N", "VanSpiffo", "Van_Transit", "Van_MassGenFac", "VanKnoxDisti", "Van_LectroMax", "VanSpecial"}, 20000}, {{"SmallCar02"}, 15000}, {{"CarLuxury"}, 15000}, {{"Trailer", "TrailerCover"}, 10000}, {{"TrailerAdvert"}, 5000}};
+vendorsVehicles.vehicles.base = {"Vehicles", {{"CarStationWagon", "CarStationWagon2"}, 35000}, {{"SportsCar", "SportsCar_ez"}, 35000}, {{"PickUpTruck", "PickUpTruckLightsFire", "PickUpTruckLights", "PickUpTruckMccoy"}, 35000}, {{"SmallCar"}, 20000}, {{"CarNormal", "CarLights", "CarLightsPolice", "CarTaxi", "CarTaxi2"}, 35000}, {{"ModernCar02"}, 20000}, {{"StepVan", "StepVanMail", "StepVan_Heralds", "StepVan_Scarlet"}, 20000}, {{"PickUpVan", "PickUpVanLights", "PickUpVanLightsFire", "PickUpVanLightsPolice", "PickUpVanMccoy"}, 20000}, {{"ModernCar"}, 20000}, {{"OffRoad"}, 20000}, {{"SUV"}, 20000}, {{"Van", "VanSeats", "VanAmbulance", "VanRadio", "VanRadio_3N", "VanSpiffo", "Van_Transit", "Van_MassGenFac", "VanKnoxDisti", "Van_LectroMax", "VanSpecial"}, 20000}, {{"SmallCar02"}, 15000}, {{"CarLuxury"}, 15000}, {{"Trailer", "TrailerCover"}, 10000}, {{"TrailerAdvert"}, 5000}};
 
 
 vendorsWeapons = {};
@@ -438,22 +438,18 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 	end
 end
 
+
+
+
 function Buy_VendorsVehicle(worldObjects, vehicle, moneyInteger, playerObj)
 	if vendMoney.total >= moneyInteger then
 		local playerObj = getSpecificPlayer(0);
 		local square = playerObj:getCurrentSquare();
 		if not square then return end;
-		local x = square:getX() + 3;
-		local y = square:getY() + 1;
 		--print(square:haveElectricity());
-		local car = addVehicleDebug(vehicle, IsoDirections.N, nil, getCell():getGridSquare(x, y, square:getZ()));
-		sendClientCommand(playerObj, "vehicle", "getKey", {vehicle = car:getId()});
-		for i=0,car:getPartCount() do
-			local part = car:getPartByIndex(i)
-			if part then
-				part:repair();
-			end
-		end
+		Vendors_AddVehicle(vehicle, playerObj);
+		Events.OnTick.Add(Vendors_GetKeys);
+		Vendors_CalculateChange(moneyInteger)
 	else
 		playerObj:Say(getText("ContextMenu_Cant_Buy"));
 	end
