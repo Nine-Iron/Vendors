@@ -8,7 +8,6 @@ local vendorsFanLeaf = 0;
 local vendorsSaleTotal = 0;
 
 local vendorWallet = {};
-
 vendorsJewelry = {};
 vendorsJewelry.prices = {};
 vendorsJewelry.prices.tags = 50;
@@ -97,6 +96,14 @@ function VendISWorldObjectContextMenu.createMenu(player, context, worldobjects, 
 	vendMoney[11] = 0;
 	vendMoney.total = 0;
 	local playerObj = getSpecificPlayer(player);
+	local steamID = playerObj:getSteamID();
+	
+	
+	local square = playerObj:getCurrentSquare();
+	if not square then return end;
+	--print(square:haveElectricity());
+	
+	
 	local worldObj = worldobjects;
 	local containers = ISInventoryPaneContextMenu.getContainers(playerObj);
 	local vendorList = nil;
@@ -371,11 +378,12 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 								local magazineName = magazine[1];
 								-- price is table of x,x,x,x, value is integer.  price is used to distribute denominations, value for displaying cost inside the menu and for comparing against the wallet
 								local magazinePrice = magazine[2];
-								local magazineItem = ScriptManager.instance:getItem(magazine[1]);
-								local magazineItemType = magazineItem:getType();
-								local magazineItemName = magazineItem:getDisplayName();
+								local magazineItem = magazine[1];
+								local addedItem = playerInv:AddItem(magazineItem);
+								local magazineItemType = addedItem:getType();
+								local magazineItemName = addedItem:getDisplayName();
 								if magazineName == "M14Clip" then magazineItemName = ".308 Magazine(M14)"; end
-
+								playerInv:Remove(addedItem);
 								local subSubVendorOption = subSubMenu:addOption(magazineItemName .. " ($" .. magazinePrice .. ") ", worldobjects, Buy_VendorsItem, player, magazine, false, magazinePrice, false);
 							end
 						end
@@ -439,17 +447,29 @@ function Vendors_subSubContextMenu(subSubContext, vendorList, subSubMenu, contex
 end
 
 
+function Vendors:sendClientCommand(playerObj, mType, command, args)
+	return sendClientCommand(playerObj, mType, command, args);
+end
 
-
-function Buy_VendorsVehicle(worldObjects, vehicle, moneyInteger, playerObj)
-	if vendMoney.total >= moneyInteger then
+function Buy_VendorsVehicle(worldObjects, vehicle, moneyInteger)
 		local playerObj = getSpecificPlayer(0);
-		local square = playerObj:getCurrentSquare();
-		if not square then return end;
-		--print(square:haveElectricity());
-		Vendors_AddVehicle(vehicle, playerObj);
-		Events.OnTick.Add(Vendors_GetKeys);
-		Vendors_CalculateChange(moneyInteger);
+		if vendMoney.total >= moneyInteger then
+		local scripts = getScriptManager():getAllVehicleScripts();
+		for i = 1, scripts:size() do
+			local script = scripts:get(i - 1);
+			local vehicleName = script:getName();
+			local vehicleFullName = script:getFullName();
+			if vehicle == vehicleName then
+				if isClient() then
+					Vendors:sendClientCommand(playerObj, "Vendors", "spawnVehicle", {fullId = vehicleFullName, withKey = true, direction = S,});
+				else
+					local car = Vendors_AddVehicle(vehicle, playerObj);
+					sendClientCommand(playerObj, "vehicle", "getKey", {vehicle = car:getId()});
+					sendClientCommand(playerObj, "vehicle", "repair", {vehicle = car:getId()});
+				end
+			end
+		end
+		Vendors_CalculateChange(moneyInteger);	
 	else
 		playerObj:Say(getText("ContextMenu_Cant_Buy"));
 	end
@@ -686,25 +706,27 @@ end
 
 function Vendors_DisplayToolOptions(subSubMenu, context, player, vendorsList, worldobjects)
 	local playerInv = player:getInventory();
-	local toolOption = subSubMenu:addOption(getText("ContextMenu_Books"), worldobjects)
-	local subMenu = ISContextMenu:getNew(subSubMenu);
-	Vendors_ListBooks(subMenu, worldobjects, vendorsBooks, context, player);
-	local subContext = context:addSubMenu(toolOption, subMenu);
+	if vendorsBooks[1] ~= 0 then
+		local toolOption = subSubMenu:addOption(getText("ContextMenu_Books"), worldobjects)
+		local subMenu = ISContextMenu:getNew(subSubMenu);
+		Vendors_ListBooks(subMenu, worldobjects, vendorsBooks, context, player);
+		local subContext = context:addSubMenu(toolOption, subMenu);
+	end
 	for i,v in pairs(vendorsList) do
 		local toolTable = v;
 		local toolOption = subSubMenu:addOption(getText("ContextMenu_" .. toolTable[1]), worldobjects)
 		local subSubMenu = ISContextMenu:getNew(subSubMenu);
 		local subContext = context:addSubMenu(toolOption, subSubMenu);
 		for j,k in pairs(toolTable) do
-			local toolItemTable = k;
-			if j ~= 1 then
-				local toolItemType = toolItemTable[1];
-				local toolItemPrice = toolItemTable[2];
-				local toolItemQuantity = toolItemTable[3];
-				local toolItem = playerInv:AddItem(toolItemType);
-				toolItemName = toolItem:getName();
-				playerInv:Remove(toolItem);
-				if toolItemQuantity then toolItemPrice = toolItemPrice .. ") for (" .. toolItemQuantity; end
+		local toolItemTable = k;
+		if j ~= 1 then
+			local toolItemType = toolItemTable[1];
+			local toolItemPrice = toolItemTable[2];
+			local toolItemQuantity = toolItemTable[3];
+			local toolItem = playerInv:AddItem(toolItemType);
+			toolItemName = toolItem:getName();
+			playerInv:Remove(toolItem);
+			if toolItemQuantity then toolItemPrice = toolItemPrice .. ") for (" .. toolItemQuantity; end
 				local SubVendorOption = subSubMenu:addOption(toolItemName .. " ($" .. toolItemPrice .. ")", worldobjects, Buy_VendorsItem, player, toolItemTable, false, toolItemPrice, false);
 			end
 		end
